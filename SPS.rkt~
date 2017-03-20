@@ -1,0 +1,8 @@
+#lang racket
+(define fibXsub-com
+  (lambda (n store)
+    (cond
+      [(assv n store) => (lambda (pr) (values (cdr pr) store))]
+      [(zero? n) (values 0 `((,n . 0) . ,store))]
+      [(zero? (sub1 n)) (values 1 `((,n . 1) . store))]
+      

@@ -1,0 +1,11 @@
+#lang racket
+
+
+(define pie 3)
+
+(define chakka "Ae chikne")
+
+(define (piece str)      
+  ((substring str 0 pie)))
+
+  

@@ -1,0 +1,8 @@
+#lang racket
+
+(define valof
+  (λ (exp env)
+    (match exp
+      [`,n #:when (number? n) n]
+      [`,y #:when (symbol? y) (env y)]
+      [`(λ (,x) ,b) 

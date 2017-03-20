@@ -1,0 +1,583 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0059)https://cgi.soic.indiana.edu/~c311/doku.php?id=assignment-5 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="google-site-verification" content="CHpL8-yKEGFx7Gy37uNcU2lz9oRZydQdifkiJNj6-P4">
+  
+  <title>
+    C311/B521/A596 Programming Languages    [Assignment 5: Parameter-Passing Conventions]
+  </title>
+
+  <meta name="generator" content="DokuWiki Release 2009-02-14b">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2015-09-25T00:39:28-0400">
+<meta name="keywords" content="assignment-5">
+<link rel="search" type="application/opensearchdescription+xml" href="https://cgi.soic.indiana.edu/~c311/lib/exe/opensearch.php" title="C311/B521/A596 Programming Languages">
+<link rel="start" href="https://cgi.soic.indiana.edu/~c311/">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cgi.soic.indiana.edu/~c311/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="https://cgi.soic.indiana.edu/~c311/feed.php?mode=list&amp;ns=">
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cgi.soic.indiana.edu/~c311/doku.php?do=export_xhtml&amp;id=assignment-5">
+<link rel="stylesheet" media="all" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 5_ Parameter-Passing Conventions]_files/css.php">
+<link rel="stylesheet" media="screen" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 5_ Parameter-Passing Conventions]_files/css(1).php">
+<link rel="stylesheet" media="print" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 5_ Parameter-Passing Conventions]_files/css(2).php">
+<script type="text/javascript" charset="utf-8" src="./C311_B521_A596 Programming Languages [Assignment 5_ Parameter-Passing Conventions]_files/js.php"></script>
+
+  <link rel="shortcut icon" href="https://cgi.soic.indiana.edu/~c311/lib/tpl/doogiestpl/images/favicon.ico">
+
+  </head>
+
+
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+      <div class="header_left"></div>
+      <div class="logo">
+        <a href="https://cgi.soic.indiana.edu/~c311/doku.php" name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]">C311/B521/A596 Programming Languages</a>      </div>
+
+      <div id="tabnavi" class="tabnavi">
+	    <ul>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=home">Home</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=course-policies">Policies</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=instructors">Instructors</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=resources">Resources</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=schedule">Schedule</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignments">Assignments</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=b621">B621</a></li>
+</ul>
+	  </div>
+	  
+	  <div class="clearer"></div>
+      	</div>  
+  </div>
+    
+  
+   <div style="float: right;">
+            <form class="button btn_login" method="get" action="https://cgi.soic.indiana.edu/~c311/doku.php"><div class="no"><input type="hidden" name="do" value="login"><input type="hidden" name="sectok" value="bb41d96766a4f618105208cecf4ca075"><input type="hidden" name="id" value="assignment-5"><input type="submit" value="Login" class="button" title="Login"></div></form>       &nbsp;  &nbsp;  &nbsp;
+   </div>
+  <div class="clearer">&nbsp;</div>
+
+
+  <div class="page">
+    <!-- ......... wikipage start ......... -->
+    
+
+
+<h1><a name="assignment-5parameter-passing-conventions" id="assignment-5parameter-passing-conventions">Assignment 5: Parameter-Passing Conventions</a></h1>
+<div class="level1">
+
+<blockquote cite="./C311_B521_A596 Programming Languages [Assignment 5_ Parameter-Passing Conventions]_files/Randall Munroe, xkcd" class="blockquote-plugin">
+<p>
+<a href="./C311_B521_A596 Programming Languages [Assignment 5_ Parameter-Passing Conventions]_files/fetch.php" class="media" title="http://imgs.xkcd.com/comics/lisp_cycles.png"><img src="./C311_B521_A596 Programming Languages [Assignment 5_ Parameter-Passing Conventions]_files/fetch.php" class="media" title="I&#39;ve just received word that the Emperor has dissolved the MIT computer science program permamently." alt="I&#39;ve just received word that the Emperor has dissolved the MIT computer science program permamently."></a>
+</p>
+
+</blockquote>
+
+</div>
+
+<h2><a name="note" id="note">Note</a></h2>
+<div class="level2">
+
+<p>
+
+You may find the following resources to be useful as you work on this assignment:
+</p>
+
+<p>
+<!---* [[Call-by Notes]] -->
+* <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=call-by.pdf" class="media mediafile mf_pdf" title="call-by.pdf">An in-depth look at parameter-passing variations</a> from notes on Sep 29, 2011 and Feb 6, 2014.
+</p>
+
+<p>
+You should be able to use the <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=a5-student-tests.rkt" class="media mediafile mf_rkt" title="a5-student-tests.rkt">a5 student tests</a> to test your assignment; as usual these should not be considered exhaustive tests.
+</p>
+
+</div>
+
+<h2><a name="assignment" id="assignment">Assignment</a></h2>
+<div class="level2">
+
+</div>
+
+<h3><a name="part-1" id="part-1">Part 1</a></h3>
+<div class="level3">
+
+<p>
+Below is an interpreter that is complete except for its five helpers <code>empty-env</code>, <code>extend-env</code>, <code>apply-env</code>, <code>closure</code>, and <code>apply-closure</code>.  This interpreter should look quite familiar to you, except that it adds two new forms to our language, <code>begin2</code> and <code>random</code>.
+</p>
+<pre class="code lisp"><span class="br0">(</span>define value<span class="sy0">-</span>of
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">exp</span> env<span class="br0">)</span>
+    <span class="br0">(</span>match <span class="kw1">exp</span>
+      <span class="br0">[</span>`,b #:<span class="me1">when</span> <span class="br0">(</span>boolean? b<span class="br0">)</span> b<span class="br0">]</span>
+      <span class="br0">[</span>`,n #:<span class="me1">when</span> <span class="br0">(</span>number? n<span class="br0">)</span>  n<span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span>zero? ,n<span class="br0">)</span> <span class="br0">(</span>zero? <span class="br0">(</span>value<span class="sy0">-</span>of n env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span>sub1 ,n<span class="br0">)</span> <span class="br0">(</span>sub1 <span class="br0">(</span>value<span class="sy0">-</span>of n env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span><span class="sy0">*</span> ,n1 ,n2<span class="br0">)</span> <span class="br0">(</span><span class="sy0">*</span> <span class="br0">(</span>value<span class="sy0">-</span>of n1 env<span class="br0">)</span> <span class="br0">(</span>value<span class="sy0">-</span>of n2 env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span><span class="kw1">if</span> ,test ,conseq ,alt<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>value<span class="sy0">-</span>of test env<span class="br0">)</span>
+                                  <span class="br0">(</span>value<span class="sy0">-</span>of conseq env<span class="br0">)</span>
+                                  <span class="br0">(</span>value<span class="sy0">-</span>of alt env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span>begin2 ,e1 ,e2<span class="br0">)</span> <span class="br0">(</span>begin <span class="br0">(</span>value<span class="sy0">-</span>of e1 env<span class="br0">)</span> <span class="br0">(</span>value<span class="sy0">-</span>of e2 env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span><span class="kw1">random</span> ,n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">random</span> <span class="br0">(</span>value<span class="sy0">-</span>of n env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`,y <span class="br0">(</span><span class="kw1">symbol</span>? y<span class="br0">)</span> <span class="br0">(</span>apply<span class="sy0">-</span>env env y<span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>,x<span class="br0">)</span> ,body<span class="br0">)</span> <span class="br0">(</span>closure x body env<span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span>,rator ,rand<span class="br0">)</span> <span class="br0">(</span>apply<span class="sy0">-</span>closure <span class="br0">(</span>value<span class="sy0">-</span>of rator env<span class="br0">)</span>
+                                      <span class="br0">(</span>value<span class="sy0">-</span>of rand env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Your task is to implement four new versions of this interpreter, each one using a different parameter-passing convention.
+</p>
+
+<p>
+Name your interpreters as follows:
+
+</p>
+<table class="inline">
+	<tbody><tr class="row0">
+		<th class="col0"> Convention </th><th class="col1"> Interpreter Name </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0">call-by-value </td><td class="col1"><code>val-of-cbv</code> </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">call-by-reference </td><td class="col1"><code>val-of-cbr</code> </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">call-by-name </td><td class="col1"><code>val-of-cbname</code> </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">call-by-need </td><td class="col1"><code>val-of-cbneed</code> </td>
+	</tr>
+</tbody></table>
+<ul>
+<li class="level1"><div class="li"> You will need to implement the <code>empty-env</code>, <code>extend-env</code>, <code>apply-env</code>, <code>closure</code>, and <code>apply-closure</code> helpers.  Use a <strong>functional representation</strong> of both environments and closures.</div>
+</li>
+<li class="level1"><div class="li"> For the most part, you can use the same set of helpers for every interpreter.  However, since <code>closure</code> calls the interpreter, you'll need to implement versions of <code>closure</code> to go along with each interpreter.</div>
+</li>
+<li class="level1"><div class="li"> All interpreters must handle the following: booleans, numbers, variables, <code>lambda</code>, application, <code>zero?</code>, <code>sub1</code>, <code>*</code>, <code>if</code>, and <code>random</code>.</div>
+</li>
+<li class="level1"><div class="li"> Your <code>val-of-cbr</code> and <code>val-of-cbv</code> interpreters (not the other two) must also handle <code>begin2</code> and <code>set!</code>.</div>
+</li>
+<li class="level1"><div class="li"> You can use <em>boxes</em> to help implement parameter-passing conventions. For more about boxes and the operations you can perform with them, see the <a href="http://docs.racket-lang.org/reference/boxes.html" class="urlextern" title="http://docs.racket-lang.org/reference/boxes.html" rel="nofollow">Racket Documentation</a>.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="suggested-tests" id="suggested-tests">Suggested Tests</a></h4>
+<div class="level4">
+
+<p>
+
+Remember, these tests are just a few examples; always write your own tests to help verify your code.
+</p>
+<pre class="code lisp"><span class="co1">;; Making sure set! works</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>val<span class="sy0">-</span>of<span class="sy0">-</span>cbr
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>begin2 <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> x #t<span class="br0">)</span>
+                         <span class="br0">(</span><span class="kw1">if</span> x <span class="nu0">3</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> #f<span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">3</span>
+<span class="co1">;; Returns 4 under CBR...</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>val<span class="sy0">-</span>of<span class="sy0">-</span>cbr
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span>
+       <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>p<span class="br0">)</span>
+          <span class="br0">(</span>begin2
+           <span class="br0">(</span>p a<span class="br0">)</span>
+           a<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> x <span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">3</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">4</span>
+<span class="co1">;; ...but returns 3 under CBV.</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>val<span class="sy0">-</span>of<span class="sy0">-</span>cbv
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span>
+       <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>p<span class="br0">)</span>
+          <span class="br0">(</span>begin2
+           <span class="br0">(</span>p a<span class="br0">)</span>
+           a<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> x <span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">3</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">3</span>
+<span class="co1">;; returns 44 under CBR...</span>
+<span class="br0">(</span>test <span class="st0">"interesting-cbr-2"</span>
+  <span class="br0">(</span>val<span class="sy0">-</span>of<span class="sy0">-</span>cbr
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+       <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>g<span class="br0">)</span>
+          <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>z<span class="br0">)</span> <span class="br0">(</span>begin2
+                        <span class="br0">(</span>g z<span class="br0">)</span>
+                        z<span class="br0">)</span><span class="br0">)</span>
+           <span class="nu0">55</span><span class="br0">)</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span>f y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> x <span class="nu0">44</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+  <span class="nu0">44</span><span class="br0">)</span>
+<span class="co1">;; ...but returns 55 under CBV!  You can change the "begin2" to</span>
+<span class="co1">;; "begin" and evaluate this in the Racket REPL as evidence that</span>
+<span class="co1">;; Racket uses CBV.</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>val<span class="sy0">-</span>of<span class="sy0">-</span>cbv
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+       <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>g<span class="br0">)</span>
+          <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>z<span class="br0">)</span> <span class="br0">(</span>begin2
+                        <span class="br0">(</span>g z<span class="br0">)</span>
+                        z<span class="br0">)</span><span class="br0">)</span>
+           <span class="nu0">55</span><span class="br0">)</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span>f y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> x <span class="nu0">44</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">55</span>
+<span class="co1">;; Returns 44 under CBR...</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>val<span class="sy0">-</span>of<span class="sy0">-</span>cbr
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>swap<span class="br0">)</span>
+       <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span>
+          <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>b<span class="br0">)</span>
+             <span class="br0">(</span>begin2
+              <span class="br0">(</span><span class="br0">(</span>swap a<span class="br0">)</span> b<span class="br0">)</span>
+              a<span class="br0">)</span><span class="br0">)</span> <span class="nu0">44</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">33</span><span class="br0">)</span><span class="br0">)</span>
+     <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span>
+       <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span>
+         <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>temp<span class="br0">)</span>
+            <span class="br0">(</span>begin2
+             <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> x y<span class="br0">)</span>
+             <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> y temp<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">44</span>
+<span class="co1">;; ...but returns 33 under CBV.</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>val<span class="sy0">-</span>of<span class="sy0">-</span>cbv
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>swap<span class="br0">)</span>
+       <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span>
+          <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>b<span class="br0">)</span>
+             <span class="br0">(</span>begin2
+              <span class="br0">(</span><span class="br0">(</span>swap a<span class="br0">)</span> b<span class="br0">)</span>
+              a<span class="br0">)</span><span class="br0">)</span> <span class="nu0">44</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">33</span><span class="br0">)</span><span class="br0">)</span>
+     <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span>
+       <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span>
+         <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>temp<span class="br0">)</span>
+            <span class="br0">(</span>begin2
+             <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> x y<span class="br0">)</span>
+             <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> y temp<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">33</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>define random<span class="sy0">-</span>sieve
+    '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span>
+            <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> #t #f<span class="br0">)</span> #f<span class="br0">)</span> #f<span class="br0">)</span> #f<span class="br0">)</span> #f<span class="br0">)</span> #f<span class="br0">)</span>
+            <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> #f <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> #f <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> #f <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> #f <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> #f <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> #f #t<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">random</span> <span class="nu0">2</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="co1">;; call-by-name</span>
+<span class="co1">;;P(false positive) &lt;= .01</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>val<span class="sy0">-</span>of<span class="sy0">-</span>cbname random<span class="sy0">-</span>sieve <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+#f
+<span class="co1">;; call-by-need</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>val<span class="sy0">-</span>of<span class="sy0">-</span>cbneed random<span class="sy0">-</span>sieve <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+#t
+<span class="co1">;; Does not terminate with val-of-cbr or val-of-cbv -- try it!</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>val<span class="sy0">-</span>of<span class="sy0">-</span>cbname
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>z<span class="br0">)</span> <span class="nu0">100</span><span class="br0">)</span>
+     <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x x<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">100</span></pre>
+<p>
+<!----
+==== Part II ==== 
+5. The are other possible parameter-passing conventions---many of them much worse. Consider the following program:
+
+&lt;code lisp&gt;
+(let ([f (lambda (x)
+           (let ([a 0])
+             (+ a x)))])
+  (let ([a 10])
+    (f a)))
+&lt;/code&gt;
+
+Under any normal circumstances (call-by-value, call-by-reference, call-by-name, or call-by-need!), this program should evaluate to 10.  As an example, consider what happens under call-by-name evaluation.  When &#039;&#039;(f a)&#039;&#039; is called, we don&#039;t evaluate &#039;&#039;a&#039;&#039; just yet, but we get ready to evaluate it in the future //using the environment of the present//.  Later on, &#039;&#039;f&#039;&#039;&#039;s argument is actually used in the body of &#039;&#039;f&#039;&#039;.  We evaluate it then and get the result of evaluating &#039;&#039;a&#039;&#039; in its original environment, which is 10.  We add 0 to 10 and return 10 as the final answer.
+
+But suppose that we evaluated the argument to &#039;&#039;f&#039;&#039; not using the environment that was current at the time &#039;&#039;(f a)&#039;&#039; was called, but instead using the environment that&#039;s current at the time the argument is actually used in the body of &#039;&#039;f&#039;&#039;.  In that case, we would add 0 to 0, and the entire program would evaluate to 0.
+
+In general, we evaluate the &#039;&#039;rand&#039;&#039; of a procedure application
+using the environment that was current at the time that the
+procedure application happened.  However, we could instead evaluate
+&#039;&#039;rand&#039;&#039; using the environment that&#039;s current at the time that the
+evaluation of &#039;&#039;rand&#039;&#039; actually happens.  Under call-by-value, these two situations are the same.  But under
+call-by-name, the distinction is important.  When we evaluate
+&#039;&#039;rand&#039;&#039; using the environment that&#039;s current at the time &#039;&#039;rand&#039;&#039;
+is evaluated, we get a very strange evaluation strategy known as //call-by-denotation//.
+Call-by-denotation turns up in so-called &quot;macro
+languages&quot;, such as the TeX typesetting language, and //cpp//,
+the C preprocessor!
+
+For this part of the assignment, your task is to implement &#039;&#039;val-of-cbden&#039;&#039;,
+an interpreter that evaluates expressions using call-by-denotation.  (//Hint//: if you have a
+working &#039;&#039;val-of-cbname&#039;&#039;, you will only have to change the application line and the variable line to get &#039;&#039;val-of-cbden&#039;&#039;.  The key is to pay attention to which &#039;&#039;env&#039;&#039; is being used where.)
+
+Call-by-denotation is fairly straightforward to implement, but it&#039;s
+difficult to write understandable programs for it because the meaning of
+an expression can change unpredictably depending on the environment
+in which it is finally evaluated.  To help you with this brainteaser, then, the file {{:cbden-tests.scm|}} contains several example tests that show how &#039;&#039;val-of-cbden&#039;&#039; and &#039;&#039;val-of-cbname&#039;&#039; should behave differently on the same program.  (Some of the tests use &#039;&#039;+&#039;&#039;, which should be easy to add to your interpreters.) 
+--->
+<!---
+
+===== Brainteasers =====
+
+
+==== Reducer ====
+
+When we apply &#039;&#039;value-of&#039;&#039; (or one of its variants) to an expression, we get back a value, an error occurs, or it goes into an infinite loop. We don&#039;t usually get back something that looks like part of the original program. For example:
+
+&lt;code lisp&gt;
+(value-of &#039;((lambda (x) x) (lambda (y) y)) (empty-env))
+&lt;/code&gt;
+
+This returns some representation of procedures, depending on how we implement &#039;&#039;closure&#039;&#039; and &#039;&#039;apply-closure&#039;&#039;.
+
+If we think of the language interpreted by &#039;&#039;value-of&#039;&#039; as a set of symbolic terms, though, we don&#039;t concern ourselves with more than one representation. Instead, we just rewrite one term to another term according to some rules. For example:
+
+&lt;code lisp&gt;
+((lambda (x) x) (lambda (y) y))
+-&gt; (lambda (y) y)
+&lt;/code&gt;
+
+Let&#039;s call this language &#039;&#039;lambda-n&#039;&#039;, and describe its syntax:
+
+&lt;code lisp&gt;
+expressions
+e ::= x (variables)
+    | n (natural numbers 0, 1, ...)
+    | b (booleans #t, #f)
+    | (if e e e)
+    | (zero? e)
+    | (sub1 e)
+    | (* e e)
+    | (lambda (x) e)
+    | (e e)
+
+values
+v ::= x
+    | n
+    | b
+    | (lambda (x) v)
+&lt;/code&gt;
+
+With this syntax, we can define our main rewriting rule, &#039;&#039;beta-n&#039;&#039;:
+
+&lt;code lisp&gt;
+((lambda (x) e1) e2) beta-n e1[e2/x]
+&lt;/code&gt;
+
+This relation tells us that when we have an expression of the form:
+&lt;code lisp&gt;((lambda (x) e1) e2)&lt;/code&gt;
+
+We can rewrite it to the expression &#039;&#039;e1&#039;&#039; where &#039;&#039;e2&#039;&#039; has been substituted for &#039;&#039;x&#039;&#039;. This substitution is not
+trivial, however, since it must not change the scope of variables
+involved in the substitution. So, we define e1[e2/x] as:
+
+&lt;code lisp&gt;
+               x1[e/x1] = e
+               x2[e/x1] = x2 if x1 is not x2
+(lambda (x1) e1)[e2/x1] = (lambda (x1) e1)
+(lambda (x1) e1)[e2/x2] = (lambda (x3) e1[x3/x1][e2/x2])
+                          if x1 is not x2,
+                             x2 is not x3,
+                             x3 is not a free variable in (lambda (x1) e1)
+                             and x3 is not a free variable in e2
+          (e1 e2)[e3/x] = (e1[e3/x] e2[e3/x])
+                 n[e/x] = n if n is a constant
+    (if e1 e2 e3)[e4/x] = (if e1[e4/x] e2[e4/x] e3[e4/x])
+       (zero? e1)[e2/x] = (zero? e1[e2/x])
+                  and so on  ...
+&lt;/code&gt;
+
+There are other rewriting rules for constants as well as for deciding
+where in a nested expression to apply the next rewriting rule. We
+aren&#039;t providing those here, but we are including them in the provided
+starter code.
+
+If we rewrite a term until no more rewriting rules apply, we have
+found a term&#039;s //normal form//, or we&#039;ve encountered an error. This
+process is called //normalization//.
+
+&lt;code lisp&gt;
+   ((lambda (x) (+ x 3)) 5)
+-&gt; (+ 5 3)
+-&gt; 8 ;; normal form
+&lt;/code&gt;
+
+&lt;code lisp&gt;
+   ((lambda (x) (3 x)) 5)
+-&gt; (3 5) ;; error
+&lt;/code&gt;
+
+==== Assignment ====
+
+Complete the following definitions to implement normalization for
+&#039;&#039;lambda-n&#039;&#039;. After testing your code, answer the questions at the
+bottom of the page. Remember, you can use &#039;&#039;(gensym &quot;x&quot;)&#039;&#039; to get a
+new unique symbol. Use &#039;&#039;(print-gensym #f)&#039;&#039; at the REPL to make those
+unique symbols print nicely.
+
+&lt;code lisp&gt;
+(define subst
+  (lambda (e^ x e)
+    (pmatch e
+      [,n (guard (integer? n)) n]
+      [,b (guard (boolean? b)) b]
+      [(if ,e1 ,e2 ,e3)
+       (let ([e1^ (subst e^ x e1)]
+             [e2^ (subst e^ x e2)]
+             [e3^ (subst e^ x e3)])
+         `(if ,e1^ ,e2^ ,e3^))]
+      [(zero? ,e1)
+       (let ([e1^ (subst e^ x e1)])
+         `(zero? ,e1^))]
+      [(sub1 ,e1)
+       (let ([e1^ (subst e^ x e1)])
+         `(sub1 ,e1^))]
+      [(* ,e1 ,e2)
+       (let ([e1^ (subst e^ x e1)]
+             [e2^ (subst e^ x e2)])
+         `(* ,e1^ ,e2^))]
+      ;; Finish me!
+      [(,e1 ,e2)
+       (let ([e1^ (subst e^ x e1)]
+             [e2^ (subst e^ x e2)])
+         `(,e1^ ,e2^))])))
+
+(define value?
+  (lambda (exp)
+    (pmatch exp
+      [,x (guard (symbol? x)) #t]
+      [,n (guard (integer? n)) #t]
+      [,b (guard (boolean? b)) #t]
+      ;; Finish me!
+      [,else #f])))
+
+(define norm
+  (lambda (exp)
+    (pmatch exp
+      [,v (guard (value? v)) v]
+      [(if #t ,conseq ,altern)
+       (norm conseq)]
+      [(if #f ,conseq ,altern)
+       (norm altern)]
+      [(if ,test ,conseq, altern)
+       (let ([test^ (norm test)])
+         (norm `(if ,test^ ,conseq ,altern)))]
+      [(zero? 0) #t]
+      [(zero? ,e)
+       (let ([e^ (norm e)])
+         (norm `(zero? ,e^)))]
+      [(sub1 ,n)
+       (guard (integer? n))
+       (sub1 n)]
+      [(sub1 ,e)
+       (let ([e^ (norm e)])
+         (norm `(sub1 ,e^)))]
+      [(* ,n1 ,n2)
+       (guard (integer? n1) (integer? n2))
+       (* n1 n2)]
+      [(* ,n1 ,e)
+       (guard (integer? n1))
+       (let ([e^ (norm e)])
+         (norm `(* ,n1 ,e^)))]
+      [(* ,e1 ,e2)
+       (let ([e1^ (norm e1)])
+         (norm `(* ,e1^ e2)))]
+      [(lambda (,x) ,e)
+       (let ([e^ (norm e)])
+         (norm `(lambda (,x) ,e^)))]
+      [(,x ,v)
+       (guard (symbol? x) (value? v))
+       `(,x ,v)]
+      [(,x ,e)
+       (guard (symbol? x))
+       (let ([e^ (norm e)])
+         (norm `(,x ,e^)))]
+      [((lambda (,x) ,e1) ,e2)
+       ;; Finish me!
+       ]
+      [(,e1 ,e2)
+       (let ([e1^ (norm e1)])
+         (norm `(,e1^ ,e2)))]
+      [,x (errorf &#039;norm &quot;invalid expression ~s&quot; x)])))
+&lt;/code&gt;
+
+  - Which &#039;&#039;value-of&#039;&#039; interpreter is &#039;&#039;norm&#039;&#039; most similar to? Why?
+  - For your choice of interpreter in #1, give an example expression where that interpreter still behaves differently from &#039;&#039;norm&#039;&#039;.
+--->
+</p>
+
+</div>
+
+<h3><a name="brainteaser" id="brainteaser">Brainteaser</a></h3>
+<div class="level3">
+
+<p>
+
+One of the highly influential papers during the 1970s in PL was the paper <a href="http://www.cs.indiana.edu/pub/techreports/TR44.pdf" class="urlextern" title="http://www.cs.indiana.edu/pub/techreports/TR44.pdf" rel="nofollow"> "CONS should not Evaluate its Arguments"</a>, which points out the need for lazy data structures. Cons that does not evaluate its arguments is easy to implement as a macro in Racket, but you will be adding it to your interpreter. To your “val-of-cbv” interpreter, add “cons^” that does NOT evaluate its arguments strictly (in other words, it evaluates them lazily). You should also create the corresponding versions of car and cdr (“car^” and “cdr^”) that operate on “cons^”. You should add the strict versions (regular “cons”, “car”, “cdr”) to your <code>val-of-cbv</code> interpreter along with add1, empty list, let, and null?.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define cons<span class="sy0">-</span>test
+    '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>fix <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+                 <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>f <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>v<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>x x<span class="br0">)</span> v<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+                  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>f <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>v<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>x x<span class="br0">)</span> v<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>map <span class="br0">(</span>fix <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>map<span class="br0">)</span>
+                          <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+                            <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">l</span><span class="br0">)</span>
+                               <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span><span class="kw1">null</span>? <span class="kw1">l</span><span class="br0">)</span>
+                                   '<span class="br0">(</span><span class="br0">)</span>
+                                   <span class="br0">(</span><span class="kw1">cons</span><span class="sy0">^</span> <span class="br0">(</span>f <span class="br0">(</span><span class="kw1">car</span><span class="sy0">^</span> <span class="kw1">l</span><span class="br0">)</span><span class="br0">)</span>
+                                          <span class="br0">(</span><span class="br0">(</span>map f<span class="br0">)</span> <span class="br0">(</span><span class="kw1">cdr</span><span class="sy0">^</span> <span class="kw1">l</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+          <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>take <span class="br0">(</span>fix <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>take<span class="br0">)</span>
+                             <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">l</span><span class="br0">)</span>
+                               <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span>
+                                 <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span>
+                                     '<span class="br0">(</span><span class="br0">)</span>
+                                      <span class="br0">(</span><span class="kw1">cons</span> <span class="br0">(</span><span class="kw1">car</span><span class="sy0">^</span> <span class="kw1">l</span><span class="br0">)</span> 
+                                            <span class="br0">(</span><span class="br0">(</span>take <span class="br0">(</span><span class="kw1">cdr</span><span class="sy0">^</span> <span class="kw1">l</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+            <span class="br0">(</span><span class="br0">(</span>take <span class="br0">(</span><span class="br0">(</span>fix <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>m<span class="br0">)</span>
+                           <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>i<span class="br0">)</span>
+                             <span class="br0">(</span><span class="kw1">cons</span><span class="sy0">^</span> <span class="nu0">1</span> <span class="br0">(</span><span class="br0">(</span>map <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>add1 x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>m i<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> 0<span class="br0">)</span><span class="br0">)</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>val<span class="sy0">-</span>of<span class="sy0">-</span>cbv cons<span class="sy0">-</span>test <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span><span class="br0">)</span></pre>
+</div>
+
+<h2><a name="just-dessert" id="just-dessert">Just Dessert</a></h2>
+<div class="level2">
+
+<p>
+
+Loeb (and Moeb) are cool functions. Read <a href="https://github.com/quchen/articles/blob/master/loeb-moeb.md" class="urlextern" title="https://github.com/quchen/articles/blob/master/loeb-moeb.md" rel="nofollow"> this</a> and do something neat with it. You could get it working in your call-by-need interpreter, for instance. Or make a spreadsheet thingy with it, I guess. If you have trouble with the syntax, well, then <a href="http://learnyouahaskell.com/" class="urlextern" title="http://learnyouahaskell.com/" rel="nofollow"> learn you a Haskell for great good!</a>.
+</p>
+
+</div>
+
+    <!-- ......... wikipage stop  ......... -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+ 
+  <!--  footer -->  
+  <div class="stylefoot">
+
+        <div class="meta">
+      <div class="doc">
+		<p>assignment-5.txt · Last modified: 2015/09/25 00:39 by jhemann</p>
+      </div>
+   </div>
+
+    <div>
+       <!--  breadcrumbs and search -->
+	  	
+	  
+
+       
+      <div class="clearer"></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="no"><img src="./C311_B521_A596 Programming Languages [Assignment 5_ Parameter-Passing Conventions]_files/indexer.php" width="1" height="1" alt=""></div>
+
+
+</body></html>

@@ -1,0 +1,200 @@
+/*   
+#59595c#3a3531#94afad#cf9556#e7e6e0#505150"Helvetica Neue", Helvetica, Arial, sans-serifbackground: 59595c
+text: 3a3531
+highlight: 94afad
+selected: cf9556
+inactive: e7e6e0
+title: 505150
+font: Helvetica Neue
+*/
+.timeSlotHeader strong{
+    
+}
+body {
+  background-color: #59595c; 
+  color: #3a3531;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+a:link, a:visited, a:active{
+    color: #cf9556;
+}
+input[type='submit'],
+input[type='reset'],
+input[type='button']{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #cf9556;
+}
+h1{
+    color: #505150;
+}
+h1 a:link, h1 a:visited, h1 a:active{
+  color: #505150;
+}
+h2{
+  background-color: #94afad;
+  color: #ffffff;
+}
+.column a{
+  background-color: #e7e6e0;
+  color: #3a3531;
+}
+.column a:hover, .column a.selected {
+    background-color: #cf9556;
+    color: #c5cace;
+}
+#customerFormWrap input.text:focus, #customerFormWrap textarea:focus{
+  border: solid 1px #cf9556;
+}
+ul.errors{
+  border: 1px solid #cf9556;
+    background: #cf9556;
+    color: #c5cace;
+}
+ul.errors li{
+  color:#fff ;
+}
+input.errors{
+    border: 1px solid #cf9556 !important;
+}
+input.errors:focus{
+    border: 1px solid #cf9556 !important;
+}
+#customerFormWrap{
+  background-color: #e7e6e0;
+}
+
+.tooltip {
+  background-color: #94afad;
+  color: #ffffff;
+  border:1px solid #505150;
+  padding:10px 15px;
+  width:200px;
+  display:none;
+  text-align:left;
+  font-size:12px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* outline radius for mozilla/firefox only */
+  -moz-box-shadow:0 0 10px #000;
+  -webkit-box-shadow:0 0 10px #000;
+}
+
+
+/* JQUERY UI */
+
+/* This section contains only selectors that we have chosen to modify. The original jQuery UI
+* CSS file is now called before this dynamic CSS file.  Only overwrite classes that we want to be
+* different than jQuery UI's default CSS file.
+*/
+
+/* Component containers
+----------------------------------*/
+.ui-widget-content { 
+  border: 1px solid #94afad;
+  color: #3a3531;
+}
+.ui-widget-content a { color: #3a3531; }
+.ui-widget-header {
+  border: 1px solid #94afad;
+  background: #94afad;
+  color: #ffffff;
+}
+.ui-widget-header a {
+  color: #ffffff;
+}
+
+/* Interaction states
+----------------------------------*/
+.ui-state-default, .ui-widget-content .ui-state-default { 
+  border: 1px solid #e7e6e0; 
+  color: #3a3531; 
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { 
+  border: 1px solid #94afad; 
+  background: #94afad; 
+  color: #3a3531; 
+}
+.ui-state-selected a {
+  background: #94afad; 
+  color: #94afad;  
+}
+.ui-state-hover a, .ui-state-hover a:hover {
+  color: #3a3531; 
+}
+.ui-state-active, .ui-widget-content .ui-state-active { 
+  border: 1px solid #e7e6e0;
+}
+.ui-state-active {
+  background: none !important;
+  background-image: none;
+  border: none;
+}
+.disabled { 
+  background: #e7e6e0;
+  outline: #ffffff;
+  border: none;
+}
+.st-state-active { 
+  background: #cf9556;
+  background-image: none;
+  border: none;
+}
+#jq_datePicker td.st-state-active-override-opacity { 
+  background: #cf9556;
+  background-image: none;
+  border: none;
+  opacity: 100;
+  filter: Alpha(Opacity=100);
+}
+
+/* Interaction Cues
+----------------------------------*/
+.ui-state-highlight, .ui-widget-content .ui-state-highlight {
+  color: #3a3531; 
+}
+.ui-state-highlight a, .ui-widget-content .ui-state-highlight a {
+  color: #3a3531;
+}
+
+/* Icons
+----------------------------------*/
+
+/* states and images */
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(/provider/img/jqueryui/ui-icons_ffffff_256x240.png); }
+
+/*Datepicker
+----------------------------------*/
+.ui-datepicker th { 
+  padding: 0; 
+}
+.ui-datepicker td span, .ui-datepicker td a {
+  padding: 0 .2em;
+}
+
+/* Widget Only Stuff
+----------------------------------*/
+#stWidgetTag {
+  position:fixed;
+  bottom: 0px;
+  right: 0px;
+  padding: 0px 4px;
+  font-size: 10px;
+}
+
+a.moreoptions {
+  font-size: 12pt;
+  color: #ffffff;
+}
+
+a.moreoptions:active {
+  color: #ffffff;
+  text-decoration: underline;
+}
+a.moreoptions:visited {
+  color: #ffffff;
+  text-decoration: underline;
+}
+a.moreoptions:hover {
+  text-decoration: underline;
+}
+

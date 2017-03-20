@@ -1,0 +1,46 @@
+#lang racket
+(require "mk.rkt")
+
+(define-relation (lookup x vars vals o)
+  (fresh (y vars^ v vals^)
+    (== `(,y . ,vars^) vars)
+    (== `(,v . ,vals^) vals)
+    (conde
+      ((== y x) (== v o))
+      ((=/= x y) (lookup x vars^ vals^ o)))))
+
+(define-relation (valof* exps vars vals o)
+  (conde
+    ((== `() exps) (== o `()))
+    ((fresh (exp exps^) 
+       (== `(,exp . ,exps^) exps)
+       (fresh (v v^)
+         (== o `(,v . ,v^))
+         (valof exp vars vals v)
+         (valof* exps^ vars vals v^))))))
+
+(define-relation (valof exp vars vals o)
+  (conde
+;;    ((numbero exp) (== o exp))
+    ((symbolo exp) (lookup exp vars vals o))
+    ((== `(quote ,o) exp)
+     (absento 'quote vars)
+     (absento 'closure o))
+    ((fresh (exps)
+       (== `(list . ,exps) exp)
+       (absento 'list vars)
+       (valof* exps vars vals o)))
+    ((fresh (x b)
+       (== `(λ (,x) ,b) exp)
+       (absento 'λ vars)
+       (== o `(closure ,x ,b ,vars ,vals))
+       (symbolo x)))
+    ((fresh (rator rand)
+       (== `(,rator ,rand) exp) 
+       (fresh (x b vars^ vals^ a) 
+         (valof rator vars vals `(closure ,x ,b ,vars^ ,vals^))
+         (valof rand vars vals a)
+         (valof b `(,x . ,vars^) `(,a . ,vals^) o))))))
+
+(define-relation (evalo e o)
+  (valof e '() '() o))

@@ -1,0 +1,584 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0059)https://cgi.soic.indiana.edu/~c311/doku.php?id=assignment-3 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="google-site-verification" content="CHpL8-yKEGFx7Gy37uNcU2lz9oRZydQdifkiJNj6-P4">
+  
+  <title>
+    C311/B521/A596 Programming Languages    [Assignment 3: Environments and Interpreters]
+  </title>
+
+  <meta name="generator" content="DokuWiki Release 2009-02-14b">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2015-10-25T17:10:06-0400">
+<meta name="keywords" content="assignment-3">
+<link rel="search" type="application/opensearchdescription+xml" href="https://cgi.soic.indiana.edu/~c311/lib/exe/opensearch.php" title="C311/B521/A596 Programming Languages">
+<link rel="start" href="https://cgi.soic.indiana.edu/~c311/">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cgi.soic.indiana.edu/~c311/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="https://cgi.soic.indiana.edu/~c311/feed.php?mode=list&amp;ns=">
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cgi.soic.indiana.edu/~c311/doku.php?do=export_xhtml&amp;id=assignment-3">
+<link rel="stylesheet" media="all" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 3_ Environments and Interpreters]_files/css.php">
+<link rel="stylesheet" media="screen" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 3_ Environments and Interpreters]_files/css(1).php">
+<link rel="stylesheet" media="print" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 3_ Environments and Interpreters]_files/css(2).php">
+<script type="text/javascript" charset="utf-8" src="./C311_B521_A596 Programming Languages [Assignment 3_ Environments and Interpreters]_files/js.php"></script>
+
+  <link rel="shortcut icon" href="https://cgi.soic.indiana.edu/~c311/lib/tpl/doogiestpl/images/favicon.ico">
+
+  </head>
+
+
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+      <div class="header_left"></div>
+      <div class="logo">
+        <a href="https://cgi.soic.indiana.edu/~c311/doku.php" name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]">C311/B521/A596 Programming Languages</a>      </div>
+
+      <div id="tabnavi" class="tabnavi">
+	    <ul>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=home">Home</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=course-policies">Policies</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=instructors">Instructors</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=resources">Resources</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=schedule">Schedule</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignments">Assignments</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=b621">B621</a></li>
+</ul>
+	  </div>
+	  
+	  <div class="clearer"></div>
+      	</div>  
+  </div>
+    
+  
+   <div style="float: right;">
+            <form class="button btn_login" method="get" action="https://cgi.soic.indiana.edu/~c311/doku.php"><div class="no"><input type="hidden" name="do" value="login"><input type="hidden" name="sectok" value="bb41d96766a4f618105208cecf4ca075"><input type="hidden" name="id" value="assignment-3"><input type="submit" value="Login" class="button" title="Login"></div></form>       &nbsp;  &nbsp;  &nbsp;
+   </div>
+  <div class="clearer">&nbsp;</div>
+
+
+  <div class="page">
+    <!-- ......... wikipage start ......... -->
+    
+
+
+<h1><a name="assignment-3environments-and-interpreters" id="assignment-3environments-and-interpreters">Assignment 3: Environments and Interpreters</a></h1>
+<div class="level1">
+
+<blockquote cite="./C311_B521_A596 Programming Languages [Assignment 3_ Environments and Interpreters]_files/Alan Kay" class="blockquote-plugin">
+<p>
+It (the computer) is a medium that can dynamically simulate the details of any other medium, including media that cannot exist physically. It is not a tool, although it can act like many tools.
+
+</p>
+
+</blockquote>
+
+</div>
+
+<h2><a name="assignment" id="assignment">Assignment</a></h2>
+<div class="level2">
+
+</div>
+
+<h5><a name="testing-your-homeworks" id="testing-your-homeworks">Testing your homeworks</a></h5>
+<div class="level5">
+
+<p>
+
+We have provided a suite of test cases your interpreter must pass. To run these tests, you must download <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=a3-student-tests.rkt" class="media mediafile mf_rkt" title="a3-student-tests.rkt">a3-student-tests.rkt</a> test file, and do the following.
+<!---
+  1. Download and unzip the C311 course archive to a permanent location.
+  2. In that location run &#039;&#039;raco link &lt;/path/to/C311/&gt;&#039;&#039;.
+  3. Upon doing so, you should be able to, within Racket:
+--->
+
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>require <span class="st0">"a3-student-tests.rkt"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>test<span class="sy0">-</span>file #:<span class="me1">file</span><span class="sy0">-</span><span class="kw1">name</span> <span class="st0">"a3.rkt"</span><span class="br0">)</span>
+...</pre>
+<p>
+
+and that should get you going. Of course, <strong>these tests are not exhaustive; you should add your own tests as well</strong>. 
+</p>
+
+</div>
+
+<h3><a name="notes" id="notes">Notes</a></h3>
+<div class="level3">
+
+<p>
+
+As you proceed on this assignment, you may find the following <a href="http://www.cs.indiana.edu/usr/local/www/classes/c311/a3/ri_interpreter.pdf" class="urlextern" title="http://www.cs.indiana.edu/usr/local/www/classes/c311/a3/ri_interpreter.pdf" rel="nofollow">Notes on representation independence</a> to be of use. 
+</p>
+
+</div>
+
+<h3><a name="part-1interpreters-and-environments" id="part-1interpreters-and-environments">Part 1: Interpreters and Environments</a></h3>
+<div class="level3">
+
+<p>
+
+In recent lectures, we've learned how to write an interpreter that
+takes a Racket expression and returns the result of evaluating that
+expression. We have also learned to make it representation independent
+with respect to environments. In fact, we have written two different
+representations for the helpers <code>extend-env</code>, <code>apply-env</code>, and
+<code>empty-env</code>. In this assignment, we will implement <strong>four</strong>
+interpreters. During Part 1, we will implement 3 interpreters: the
+three interpreters presented in lecture, along with the two different
+sets of environments helpers for the 2nd and 3rd interpreter. Part 2
+implements a new interpreter for a language that you haven't seen
+before. Place your code for <strong>all four interpreters</strong> in a file named
+<code>a3.rkt</code> and submit it to Oncourse.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>You must define <em>two</em> sets of environment helpers: one that uses functional (higher-order) representation of environments, and one that uses data-structural representation of environments.</strong> Call the representation-dependent version <code>value-of</code>, the version with functional helpers <code>value-of-fn</code>, and the version with data-structural helpers <code>value-of-ds</code>. Your data structures should be the <strong>tagged list</strong> representation demonstrated in class. Notice these names may be different from those presented in lecture. This is a framework for how you should name your procedures and helpers:</div>
+</li>
+</ul>
+<pre class="code lisp"><span class="br0">(</span>define value<span class="sy0">-</span>of ...<span class="br0">)</span>
+&nbsp;
+<span class="br0">(</span>define value<span class="sy0">-</span>of<span class="sy0">-</span>fn ...<span class="br0">)</span>
+<span class="br0">(</span>define empty<span class="sy0">-</span>env<span class="sy0">-</span>fn ...<span class="br0">)</span>
+<span class="br0">(</span>define extend<span class="sy0">-</span>env<span class="sy0">-</span>fn ...<span class="br0">)</span>
+<span class="br0">(</span>define apply<span class="sy0">-</span>env<span class="sy0">-</span>fn ...<span class="br0">)</span>
+&nbsp;
+<span class="br0">(</span>define value<span class="sy0">-</span>of<span class="sy0">-</span>ds ...<span class="br0">)</span>
+<span class="br0">(</span>define empty<span class="sy0">-</span>env<span class="sy0">-</span>ds ...<span class="br0">)</span>
+<span class="br0">(</span>define extend<span class="sy0">-</span>env<span class="sy0">-</span>ds ...<span class="br0">)</span>
+<span class="br0">(</span>define apply<span class="sy0">-</span>env<span class="sy0">-</span>ds ...<span class="br0">)</span></pre><ul>
+<li class="level1"><div class="li"> Your interpreter must handle the following forms: numbers, booleans, variables, lambda-abstraction, application, <code>zero?</code>, <code>sub1</code>, <code>*</code>, <code>if</code>, and <code>let</code>.</div>
+</li>
+<li class="level1"><div class="li"> Remember, your solutions should be compositional. </div>
+</li>
+<li class="level1"><div class="li"> You may have seen the expansion of <code>(let ([x e]) body)</code> as <code>(</code><code>(lambda (x) body) e)</code>.  However, when you have a handle on the environment, you can implement <code>let</code> in its own right. Therefore, you must not use <code>lambda</code> in this way for your interpreter's line for <code>let</code> expressions.</div>
+</li>
+<li class="level1"><div class="li"> As usual, brainteasers are required for 521 and H311 students.</div>
+</li>
+</ul>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? x<span class="br0">)</span>
+                     #t
+                     #f<span class="br0">)</span><span class="br0">)</span>
+     0<span class="br0">)</span>
+   <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#t                  
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of 
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? x<span class="br0">)</span> 
+                     <span class="nu0">12</span> 
+                     <span class="nu0">47</span><span class="br0">)</span><span class="br0">)</span> 
+     0<span class="br0">)</span> 
+   <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">12</span>    
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>y <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">3</span> <span class="nu0">4</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="sy0">*</span> x y<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>sub1 <span class="nu0">6</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">60</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>y <span class="br0">(</span>sub1 x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="sy0">*</span> x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">30</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span>sub1 x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="sy0">*</span> x x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">25</span> 
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of 
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span><span class="sy0">!</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="sy0">*</span> x x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span><span class="sy0">!</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span>
+                 <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="nu0">1</span> <span class="br0">(</span><span class="sy0">*</span> n <span class="br0">(</span><span class="sy0">!</span> <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="sy0">!</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">80</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of
+   '<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="nu0">1</span> <span class="br0">(</span><span class="sy0">*</span> n <span class="br0">(</span><span class="br0">(</span>f f<span class="br0">)</span> <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="nu0">1</span> <span class="br0">(</span><span class="sy0">*</span> n <span class="br0">(</span><span class="br0">(</span>f f<span class="br0">)</span> <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+     <span class="nu0">5</span><span class="br0">)</span>
+   <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">120</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>fn
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? x<span class="br0">)</span>
+                     #t
+                     #f<span class="br0">)</span><span class="br0">)</span>
+     0<span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>fn<span class="br0">)</span><span class="br0">)</span>
+#t                  
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>fn 
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? x<span class="br0">)</span> 
+                     <span class="nu0">12</span> 
+                     <span class="nu0">47</span><span class="br0">)</span><span class="br0">)</span> 
+     0<span class="br0">)</span> 
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>fn<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">12</span>    
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>fn
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>y <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">3</span> <span class="nu0">4</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="sy0">*</span> x y<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>sub1 <span class="nu0">6</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>fn<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">60</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>fn
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>y <span class="br0">(</span>sub1 x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="sy0">*</span> x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>fn<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">30</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>fn
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span>sub1 x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="sy0">*</span> x x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>fn<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">25</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>fn
+   '<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="nu0">1</span> <span class="br0">(</span><span class="sy0">*</span> n <span class="br0">(</span><span class="br0">(</span>f f<span class="br0">)</span> <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="nu0">1</span> <span class="br0">(</span><span class="sy0">*</span> n <span class="br0">(</span><span class="br0">(</span>f f<span class="br0">)</span> <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+     <span class="nu0">5</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>fn<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">120</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ds
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? x<span class="br0">)</span>
+                     #t
+                     #f<span class="br0">)</span><span class="br0">)</span>
+     0<span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>ds<span class="br0">)</span><span class="br0">)</span>
+#t                  
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ds
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? x<span class="br0">)</span> 
+                     <span class="nu0">12</span> 
+                     <span class="nu0">47</span><span class="br0">)</span><span class="br0">)</span> 
+     0<span class="br0">)</span> 
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>ds<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">12</span>    
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ds
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>y <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">3</span> <span class="nu0">4</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="sy0">*</span> x y<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>sub1 <span class="nu0">6</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>ds<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">60</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ds
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>y <span class="br0">(</span>sub1 x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="sy0">*</span> x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>ds<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">30</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ds
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span>sub1 x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="sy0">*</span> x x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>ds<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">25</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ds
+   '<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="nu0">1</span> <span class="br0">(</span><span class="sy0">*</span> n <span class="br0">(</span><span class="br0">(</span>f f<span class="br0">)</span> <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="nu0">1</span> <span class="br0">(</span><span class="sy0">*</span> n <span class="br0">(</span><span class="br0">(</span>f f<span class="br0">)</span> <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+     <span class="nu0">5</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>ds<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">120</span></pre>
+</div>
+
+<h3><a name="part-2-fo-eulav" id="part-2-fo-eulav">Part 2 ''fo-eulav''</a></h3>
+<div class="level3">
+
+<p>
+
+4. Having successfully completed the first part of the assignment, you are now well prepared to implement <code>fo-eulav</code>. Sample runs are provided below. Only forms present in those sample runs are required. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="co1">;; Ppa</span>
+<span class="br0">(</span>fo<span class="sy0">-</span>eulav '<span class="br0">(</span><span class="nu0">5</span> <span class="br0">(</span>x <span class="br0">(</span>x<span class="br0">)</span> adbmal<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'fo<span class="sy0">-</span>eulav <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">5</span>
+<span class="sy0">&gt;</span> <span class="co1">;; Stnemugra sa Snoitcnuf </span>
+<span class="br0">(</span>fo<span class="sy0">-</span>eulav '<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>x 1bus<span class="br0">)</span> <span class="br0">(</span>x<span class="br0">)</span> adbmal<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span><span class="nu0">5</span> f<span class="br0">)</span> <span class="br0">(</span>f<span class="br0">)</span> adbmal<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'fo<span class="sy0">-</span>eulav <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">4</span>
+<span class="sy0">&gt;</span> <span class="co1">;; Tcaf</span>
+<span class="br0">(</span>fo<span class="sy0">-</span>eulav   '<span class="br0">(</span><span class="nu0">5</span>
+ <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>n 1bus<span class="br0">)</span> <span class="br0">(</span>f f<span class="br0">)</span><span class="br0">)</span> n <span class="sy0">*</span><span class="br0">)</span> <span class="nu0">1</span> <span class="br0">(</span>n ?orez<span class="br0">)</span> fi<span class="br0">)</span>
+                                   <span class="br0">(</span>n<span class="br0">)</span> adbmal<span class="br0">)</span>
+                                     <span class="br0">(</span>f<span class="br0">)</span> adbmal<span class="br0">)</span>
+  <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>n 1bus<span class="br0">)</span> <span class="br0">(</span>f f<span class="br0">)</span><span class="br0">)</span> n <span class="sy0">*</span><span class="br0">)</span> <span class="nu0">1</span> <span class="br0">(</span>n ?orez<span class="br0">)</span> fi<span class="br0">)</span>
+                                  <span class="br0">(</span>n<span class="br0">)</span> adbmal<span class="br0">)</span>
+                                    <span class="br0">(</span>f<span class="br0">)</span> adbmal<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> 
+ <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'fo<span class="sy0">-</span>eulav <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">120</span></pre>
+<p>
+
+<!--
+==== Assignment Pt. 2 =====
+
+As discussed in class, it is important to understand why pmatch works. Consider the following pmatch expression:
+
+&lt;code lisp&gt;
+(dmatch (list 1 2 3)
+       [(,a ,b ,c) (+ a b c)])
+&lt;/code&gt;
+
+and its expansion:
+
+&lt;code lisp&gt;
+(let ([v (list 1 2 3)])
+  (let ([fk (lambda () (error &#039;pmatch &quot;failed: ~s&quot; v))])
+    (if (pair? v)
+        (let ([vx (car v)] [vy (cdr v)])
+          (let ([a vx])
+            (if (pair? vy)
+                (let ([vx (car vy)] [vy (cdr vy)])
+                  (let ([b vx])
+                    (if (pair? vy)
+                        (let ([vx (car vy)] [vy (cdr vy)])
+                          (let ([c vx])
+                            (if (null? vy) (+ a b c) (fk))))
+                        (fk))))
+                (fk))))
+        (fk))))
+&lt;/code&gt;
+
+Write a paragraph or so in a comment at the head of a3.scm and explain what, exactly, is going on here.
+-->
+</p>
+
+</div>
+
+<h2><a name="brainteasers" id="brainteasers">Brainteasers</a></h2>
+<div class="level2">
+
+<p>
+
+5. Extend your interpreter <code>value-of</code> to support <code>set!</code> and <code>begin2</code>, where <code>begin2</code> is a variant of Racket's <code>begin</code> that takes exactly two arguments, and <code>set!</code> mutates variables. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of
+    '<span class="br0">(</span><span class="sy0">*</span> <span class="br0">(</span>begin2 <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span> <span class="nu0">3</span><span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">3</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of
+    '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span>
+        <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>p<span class="br0">)</span>
+           <span class="br0">(</span>begin2
+             <span class="br0">(</span>p a<span class="br0">)</span>
+             a<span class="br0">)</span><span class="br0">)</span>
+	 <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> x <span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="nu0">3</span><span class="br0">)</span>
+     <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">3</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of
+   '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+       <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>g<span class="br0">)</span>
+          <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>z<span class="br0">)</span> <span class="br0">(</span>begin2
+                        <span class="br0">(</span>g z<span class="br0">)</span>
+                        z<span class="br0">)</span><span class="br0">)</span>
+           <span class="nu0">55</span><span class="br0">)</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span>f y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> x <span class="nu0">44</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">55</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of
+    '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span>
+        <span class="br0">(</span>begin2 <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> x <span class="nu0">5</span><span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span>
+      <span class="nu0">6</span><span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">5</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of 
+    '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>a <span class="nu0">3</span><span class="br0">)</span><span class="br0">)</span> 
+        <span class="br0">(</span>begin2 <span class="br0">(</span>begin2 a <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> a <span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span> a<span class="br0">)</span><span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">4</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of 
+    '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span>
+        <span class="br0">(</span>begin2
+          <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span>
+	     <span class="br0">(</span>begin2
+	       <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> x 0<span class="br0">)</span>
+	       <span class="nu0">98</span><span class="br0">)</span><span class="br0">)</span>
+           <span class="nu0">99</span><span class="br0">)</span>
+          x<span class="br0">)</span><span class="br0">)</span>
+      <span class="nu0">97</span><span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+0
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of 
+    '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>x <span class="br0">(</span>begin2
+                   <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> y <span class="nu0">7</span><span class="br0">)</span>
+                   <span class="nu0">8</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+          <span class="br0">(</span>begin2
+            <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> y <span class="nu0">3</span><span class="br0">)</span>
+              <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>z<span class="br0">)</span> y<span class="br0">)</span>
+               x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="nu0">4</span><span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">3</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of 
+    '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>a <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+       <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>y <span class="br0">(</span>begin2 <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> a <span class="br0">(</span>sub1 a<span class="br0">)</span><span class="br0">)</span> <span class="nu0">6</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+         <span class="br0">(</span>begin2
+           <span class="br0">(</span><span class="sy0">*</span> y y<span class="br0">)</span>
+           a<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">error</span> 'value<span class="sy0">-</span>of <span class="st0">"unbound variable ~s"</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">4</span></pre>
+<p>
+6. Consider the following interpreter for a deBruijnized version of the lambda-calculus (i.e. lambda-calculus expressions using lexical addresses instead of variables). Notice this interpreter is representation-independent with respect to environments. 
+</p>
+<pre class="code lisp"><span class="br0">(</span>define value<span class="sy0">-</span>of<span class="sy0">-</span>lex
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">exp</span> env<span class="br0">)</span>
+    <span class="br0">(</span>match <span class="kw1">exp</span>
+      <span class="br0">(</span>`,b #:<span class="me1">when</span> <span class="br0">(</span>boolean? b<span class="br0">)</span> <span class="kw1">exp</span><span class="br0">)</span>
+      <span class="br0">(</span>`,n #:<span class="me1">when</span> <span class="br0">(</span>number? n<span class="br0">)</span> <span class="kw1">exp</span><span class="br0">)</span>
+      <span class="br0">(</span>`<span class="br0">(</span>sub1 ,body<span class="br0">)</span> <span class="br0">(</span>sub1 <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>lex body env<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span>`<span class="br0">(</span>zero? ,body<span class="br0">)</span> <span class="br0">(</span>zero? <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>lex body env<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span>`<span class="br0">(</span><span class="sy0">*</span> ,n1 ,n2<span class="br0">)</span> <span class="br0">(</span><span class="sy0">*</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>lex n1 env<span class="br0">)</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>lex n2 env<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span>`<span class="br0">(</span><span class="kw1">if</span> ,t ,c ,a<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>lex t env<span class="br0">)</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>lex c env<span class="br0">)</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>lex a env<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span>`<span class="br0">(</span>var ,num<span class="br0">)</span> <span class="br0">(</span>apply<span class="sy0">-</span>env<span class="sy0">-</span>lex env num<span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span>`<span class="br0">(</span><span class="kw1">lambda</span> ,body<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>lex body <span class="br0">(</span>extend<span class="sy0">-</span>env<span class="sy0">-</span>lex a env<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span>`<span class="br0">(</span>,rator ,rand<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>lex rator env<span class="br0">)</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>lex rand env<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="br0">(</span>define empty<span class="sy0">-</span>env<span class="sy0">-</span>lex 
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+From the following call one can see we're using a data-structure representation of environments.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>lex '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>var 0<span class="br0">)</span><span class="br0">)</span> <span class="nu0">5</span><span class="br0">)</span> <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="sy0">-</span>lex<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">5</span></pre>
+<p>
+Define <code>apply-env-lex</code> and <code>extend-env-lex</code>. Your definitions should be short; in fact, they <strong>should not use <code>lambda</code></strong>. As ever, you are not required to handle bad data.
+</p>
+
+</div>
+
+<h2><a name="just-dessert" id="just-dessert">Just Dessert</a></h2>
+<div class="level2">
+
+<p>
+
+7. The lambda calculus can be used to define a representation of natural numbers, called Church numerals, and arithmetic over them. For instance, <code>c5</code> is the definition of the Church numeral for 5. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define c0 <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>define c5 <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>f <span class="br0">(</span>f <span class="br0">(</span>f <span class="br0">(</span>f <span class="br0">(</span>f x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>c5 add1<span class="br0">)</span> 0<span class="br0">)</span>
+<span class="nu0">5</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>c0 add1<span class="br0">)</span> 0<span class="br0">)</span>
+0</pre>
+<p>
+The following is a definition for Church plus, which performs addition over Church numerals. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define c<span class="sy0">+</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>m<span class="br0">)</span> 
+               <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span> 
+                 <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>b<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>m a<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>n a<span class="br0">)</span> b<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>c10 <span class="br0">(</span><span class="br0">(</span>c<span class="sy0">+</span> c5<span class="br0">)</span> c5<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+    <span class="br0">(</span><span class="br0">(</span>c10 add1<span class="br0">)</span> 0<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">10</span></pre>
+<p>
+One way to understand the definition of <code>c+</code> is that it, when provided two Church numerals, returns a function that, when provided a meaning for add1 and a meaning for zero, uses provides to <code>m</code> the meaning for add1 and, instead of the meaning for zero, provides it the meaning for its second argument. <code>m</code> is the sort of thing that will count up m times, so the result is the meaning of m + n. 
+</p>
+
+<p>
+Your task, however, is to implement <code>csub1</code>, Church predecessor. The following tests should pass.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>csub1 c5<span class="br0">)</span> add1<span class="br0">)</span> 0<span class="br0">)</span>
+<span class="nu0">4</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>csub1 c0<span class="br0">)</span> add1<span class="br0">)</span> 0<span class="br0">)</span>
+0</pre>
+<p>
+In the second case, the Church predecessor of Church zero is zero, as we haven't a notion of negative numbers.
+</p>
+
+<p>
+This was a difficult problem, but it's fun, so don't Google it. If you think it might help though, consider taking a <a href="http://link.springer.com/chapter/10.1007%2FBFb0062850" class="urlextern" title="http://link.springer.com/chapter/10.1007%2FBFb0062850" rel="nofollow">trip to the dentist</a>.
+</p>
+
+<p>
+<!--- The old Monads Brainteaser. Here, until I know a better way to store old HW questions. 
+Here is &#039;&#039;rembersum*even&#039;&#039;, with its helpers &#039;&#039;base&#039;&#039;, &#039;&#039;stuff&#039;&#039;, and &#039;&#039;grow&#039;&#039;. &#039;&#039;rembersum*even&#039;&#039; takes a nested list &#039;&#039;ls&#039;&#039; of values, removes all of the even numbers, and returns a sum of the even numbers in a pair with the new nested list. For example:
+
+&lt;code lisp&gt;
+&gt; (rembersum*even &#039;(5 (((7)) 9) 11))
+(0 5 (((7)) 9) 11)
+&gt; (rembersum*even  &#039;(2 3 (8 (c 6 7) 4 8 #t) 8 () 2 9))
+(38 3 ((c 7) #t) () 9)
+&lt;/code&gt;
+
+Complete the definition of &#039;&#039;grow&#039;&#039; so that &#039;&#039;rembersum*even&#039;&#039; works properly, and include all four definitions in the file you turn in.
+
+&lt;code lisp&gt;
+(define base
+  (lambda (t)
+    `(0 . ,t)))
+
+(define stuff
+  (lambda (w)
+    `(,w . macht-nicht)))
+
+(define grow
+  (lambda (c f)
+    (let ((c^ _____))
+      __________)))
+ 
+(define rembersum*even
+  (lambda (ls)
+    (cond
+      [(null? ls) (base &#039;())]
+      [(pair? (car ls))
+       (grow (rembersum*even (car ls))
+         (lambda (a) (grow (rembersum*even (cdr ls)) (lambda (d) (base (cons a d))))))]
+      [(and (number? (car ls)) (even? (car ls)))
+       (grow (stuff (car ls)) (lambda (__) (rembersum*even (cdr ls))))]
+      [else (grow (rembersum*even (cdr ls)) (lambda (d) (base (cons (car ls) d))))])))
+&lt;/code&gt;
+
+== Brainteaser for Dessert ==
+
+Change the behavior of &#039;&#039;rembersum*even&#039;&#039; so that it returns a pair with a flat list of the even numbers it removes. Do this by changing **only** the definitions of &#039;&#039;base&#039;&#039;, &#039;&#039;stuff&#039;&#039;, and &#039;&#039;grow&#039;&#039;. Name the new procedure &#039;&#039;remberlist*even&#039;&#039;. For example:
+
+&lt;code lisp&gt;
+&gt; (remberlist*even &#039;(5 (((7)) 9) 11))
+(() 5 (((7)) 9) 11)
+&gt; (remberlist*even  &#039;(2 3 (8 (5 6 7) 4 8 7) 8 () 2 9))
+((2 8 6 4 8 8 2) 3 ((5 7) 7) () 9)
+&lt;/code&gt;
+-->
+
+</p>
+
+</div>
+
+    <!-- ......... wikipage stop  ......... -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+ 
+  <!--  footer -->  
+  <div class="stylefoot">
+
+        <div class="meta">
+      <div class="doc">
+		<p>assignment-3.txt · Last modified: 2015/10/25 17:10 by jhemann</p>
+      </div>
+   </div>
+
+    <div>
+       <!--  breadcrumbs and search -->
+	  	
+	  
+
+       
+      <div class="clearer"></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="no"><img src="./C311_B521_A596 Programming Languages [Assignment 3_ Environments and Interpreters]_files/indexer.php" width="1" height="1" alt=""></div>
+
+
+</body></html>

@@ -1,0 +1,356 @@
+#lang racket
+
+(require "mk.rkt")
+(require "numbers.rkt")
+
+;1
+
+(define listo
+  (lambda (ls)
+    (conde
+     [(== '() ls)]
+     [(fresh (n s temp)
+             (== `(,n . ,s) ls)
+             (listo s))]
+     )
+    )
+  )
+
+(define eveno?
+  (lambda (ls ns)
+    (conde
+     [(== '() ls) (== '() ns)]
+     [(even? (car ls)) (fresh (l s res)
+                              (== `(,l . ,s) ls)
+                              (eveno? s res)
+                              (== `(,l . ,res) ns))]
+     [(odd? (car ls)) (eveno? (cdr ls) ns)])))
+
+;(run 1 (q) (listo '(a b c d e)))
+;(_.0)
+ 
+;(run 1 (q) (listo '(a b c d . e)))
+;()
+ 
+;(run 4 (q) (listo q))
+;(() (_.0) (_.0 _.1) (_.0 _.1 _.2))
+ 
+;(run 4 (q) (listo `(a b ,q)))
+;(_.0)
+
+;2
+
+(define facto
+  (lambda (ls ns)
+    (conde
+     [(== (build-num 0) ls) (== (build-num 1) ns)]
+     [(fresh (n s)
+             (facto s n)
+             (minuso ls (build-num 1) s)
+             (*o ls n ns)
+             )]
+     )
+    )
+  )
+
+;(run 1 (q) (facto  q '(0 0 0 1 1 1 1)))
+;((1 0 1))
+ 
+;(run 1 (q) (facto (build-num 5) q))
+;((0 0 0 1 1 1 1))
+ 
+;(run 6 (q) (fresh (n1 n2) (facto n1 n2) (== `(,n1 ,n2) q)))
+;((() (1)) 
+ ;((1) (1)) 
+ ;((0 1) (0 1)) 
+ ;((1 1) (0 1 1))
+ ;((0 0 1) (0 0 0 1 1)) 
+ ;((1 0 1) (0 0 0 1 1 1 1)))
+
+;3
+
+(define fibs
+  (lambda (n)
+    (cond
+      ((eqv? n 0) (values 1 1))
+      (else
+       (let ((n- (- n 1)))
+         (let-values (((u v) (fibs n-)))
+           (let ((u+v (+ u v)))
+             (values v u+v))))))))
+
+;(fibs 0)
+;1
+;1
+
+;(fibs 1)
+;1
+;2
+
+;(fibs 2)
+;2
+;3
+
+;(fibs 3)
+;3
+;5
+
+(define fibso
+  (lambda (ns n s)
+    (conde
+     [(== (build-num 0) ns)
+      (== (build-num 1) n)
+      (== (build-num 1) s)]
+     [(fresh (v1 v2)
+             (fibso v1 v2 n)
+             (pluso v1 (build-num 1) ns)
+             (pluso v2 n s)
+             )]
+     )
+    )
+  )
+
+;(run 4 (q) 
+ ;   (fresh (n o1 o2) 
+  ;    (== q `(,n ,o1 ,o2))
+   ;   (fibso n o1 o2)))
+;((() (1) (1))
+ ;((1) (1) (0 1)))
+ ;((0 1) (0 1) (1 1))
+ ;((1 1) (1 1) (1 0 1)))
+
+;(run 1 (q) 
+ ;   (fresh (n o1) 
+  ;    (== q `(,n ,o1))
+   ;   (fibso n o1 (build-num 5))))
+;(((1 1) (1 1)))
+
+;(run 1 (q) 
+ ;   (fresh (n o2) 
+  ;    (== q `(,n ,o2))
+   ;   (fibso n (build-num 5) o2)))
+;(((0 0 1) (0 0 0 1)))
+
+;4
+
+(define lookup
+  (lambda (x vars vals o)
+    (fresh (y vars^ a vals^)
+           (== `(,y . ,vars^) vars)
+           (== `(,a . ,vals^) vals)
+           (conde
+            ((== x y) (== o a))
+            ((=/= x y) (lookup x vars^ vals^ o))))))
+
+(define val-ofo*
+  (lambda (exps vars vals o)
+    (conde
+     ((== `() exps) (== o `()))
+     ((fresh (exp exps^)
+             (== exps `(,exp . ,exps^))
+             (fresh (v v^)
+                    (== o `(,v . ,v^))
+                    (val-ofo exp vars vals v)
+                    (val-ofo* exps^ vars vals v^)
+                    ))))))
+
+(define val-ofo
+  (lambda (exp vars vals o)
+    (conde
+     ((symbolo exp) (lookup exp vars vals o))
+     ((== exp `(quote ,o))
+      (absento 'closure o)
+      (absento 'quote vars)
+      )
+     ((fresh (exps)
+             (== exp `(list . ,exps))
+             (absento 'list vars)
+             (val-ofo* exps vars vals o)))
+     ((fresh (x b)
+             (== exp `(lambda (,x) ,b))
+             (absento 'lambda vars)
+             (symbolo x)
+             (== o `(closure ,x ,b ,vars ,vals))))
+     ((fresh (rator rand)
+             (== exp `(,rator ,rand))
+             (fresh (x b vars^ vals^ a)
+                    (val-ofo rator vars vals `(closure ,x ,b ,vars^ ,vals^))
+                    (val-ofo rand vars vals a)
+                    (val-ofo b `(,x . ,vars^) `(,a . ,vals^) o)
+                    ))))))
+
+(define cdro
+  (lambda (p d)
+    (fresh (a)
+           (== (cons a d) p))))
+
+(define caro
+  (lambda (p a)
+    (fresh (d)
+           (== (cons a d) p))))
+
+(define nullo
+  (lambda (x)
+    (== '() x)))
+
+(define conso
+  (lambda (a d p)
+    (== (cons a d) p)))
+
+(define reverseo
+  (lambda (ls o)
+    (conde
+     ((nullo ls) (== '() o))
+     ((fresh (ocdr rout cout)
+             (cdro ls ocdr)
+             (reverseo ocdr rout)
+             (caro ls cout)
+             (appendo rout `(,cout) o))))))
+
+(define pairo
+  (lambda (p)
+    (fresh (a d)
+           (conso a d p))))
+
+(define membero
+  (lambda (x l)
+    (conde
+     ((caro l x))
+     ((fresh (d)
+             (cdro l d)
+             (membero x d))))))
+
+(define fo-lavo*
+  (lambda (exps vars vals o)
+    (conde
+     ((== `() exps) (== o `()))
+     ((fresh (exp exps^)
+             (== exps `(,exp . ,exps^))
+             (fresh (v v^)
+                    (== o `(,v . ,v^))
+                    (fo-lavo* exps^ vars vals v^)
+                    (fo-lavo exp vars vals v)
+                    ))))))
+
+(define fo-lavo
+  (lambda (exp vars vals o)
+    (conde
+     ((symbolo exp) (lookup exp vars vals o))
+     ((== exp `(,o etouq))
+      (absento 'closure o)
+      (absento 'etouq vars))
+     ((fresh (exps rexp ns)
+             (reverseo exp rexp)
+             (== `(tsil . ,exps) rexp)
+             (reverseo exps ns)
+             (absento 'tsil vars)
+             (fo-lavo* ns vars vals o)
+             ))
+     ((fresh (x b)
+             (== exp `(,b (,x) adbmal))
+             (symbolo x)
+             (absento 'adbmal vars)
+             (== o `(closure ,x ,b ,vars ,vals))))
+     ((fresh (rator rand)
+             (== exp `(,rand ,rator))
+             (fresh (x b vars^ vals^ a)
+                    (fo-lavo rator vars vals `(closure ,x ,b ,vars^ ,vals^))
+                    (fo-lavo rand vars vals a)
+                    (fo-lavo b `(,x . ,vars^) `(,a . ,vals^) o)
+                    ))))))
+
+;(run 1 (q) (fo-lavo '(etouq etouq) '() '() q))
+;(etouq)
+;; testing tsil
+
+;(run 1 (q) (fo-lavo '((cat etouq) tsil) '() '() q))
+;((cat))
+
+;(run 1 (q) (fo-lavo '((cat etouq) . tsil) '() '() q))
+;()
+
+;(run 1 (q) (fo-lavo '((dog etouq) (cat etouq) tsil) '() '() q))
+;((dog cat))
+;; fo-lav quines
+
+;(run 1 (q) (fo-lavo q '() '() q))
+#|
+(((((((_.0 (etouq etouq) tsil) _.0 tsil) (_.0) adbmal)
+     etouq)
+    (((_.0 (etouq etouq) tsil) _.0 tsil) (_.0) adbmal))
+   (=/= ((_.0 closure)) ((_.0 etouq)) ((_.0 tsil)))
+   (sym _.0)))
+|#
+
+;(run 3 (q) (fresh (a c d)
+;	       (val-ofo `(,a ,d) '() '() c)
+;	       (fo-lavo `(,c ,d) '() '() a)
+;	       (== `(,a ,c ,d) q)))
+#|
+(((quote ('etouq (_.0) adbmal) ('etouq (_.0) adbmal))
+   (=/= ((_.0 closure)) ((_.0 etouq)))
+   (sym _.0))
+  ((quote
+     (((_.0 etouq) ('etouq (_.1) adbmal)) (_.2) adbmal)
+     (((_.0 etouq) ('etouq (_.1) adbmal)) (_.2) adbmal))
+    (=/= ((_.1 closure)) ((_.1 etouq)) ((_.2 adbmal))
+         ((_.2 closure)) ((_.2 etouq)))
+    (sym _.1 _.2)
+    (absento (closure _.0)))
+  ((quote
+     ((_.0 etouq) (('etouq (_.1) adbmal) (_.2) adbmal))
+     ((_.0 etouq) (('etouq (_.1) adbmal) (_.2) adbmal)))
+    (=/= ((_.1 closure))
+         ((_.1 etouq))
+         ((_.2 adbmal))
+         ((_.2 closure))
+	 ((_.2 etouq)))
+    (sym _.1 _.2)
+    (absento (closure _.0))))
+|#
+
+;(run 2 (q) (fresh (a b) (val-ofo q '() '() a) (fo-lavo q '() '() b)))
+;('etouq ((lambda (_.0) adbmal) (sym _.0)))
+;; Note, this one takes a while
+
+;(run 3 (q) (fresh (a b) (val-ofo q '() '() a) (fo-lavo q '() '() b)))
+;('etouq
+ ; ((lambda (_.0) adbmal) (sym _.0))
+  ;((lambda (adbmal) adbmal) (lambda (lambda) adbmal)))
+
+;5
+
+(define middle-earth
+    '((lindon eriador forodwaith)
+      (forodwaith lindon rhovanion eriador)
+      (eriador lindon forodwaith rhovanion enedwaith)
+      (rhovanion forodwaith eriador enedwaith rohan rhun)
+      (enedwaith eriador rhovanion rohan gondor)
+      (rohan enedwaith rhovanion rhun gondor mordor)
+      (gondor enedwaith rohan mordor)
+      (rhun rohan rhovanion khand mordor)
+      (mordor gondor rohan rhun khand harad)
+      (khand mordor rhun harad)
+      (harad mordor khand)))
+
+(define color-middle-earth
+  (lambda (ls)
+    (run 1 (q)
+         (fresh (c1 c2 c3 c4 c5 c6 c7 c8 c9 c0 c10)
+                (== `((lindon . ,c0) (forodwaith . ,c1) (eriador . ,c2)
+                 (rhovanion . ,c3) (enedwaith . ,c4) (rohan . ,c5)
+                 (gondor . ,c6) (rhun . ,c7) (mordor . ,c8)
+                 (khand . ,c9) (harad . ,c10)) q)
+                (=/= c0 c2) (=/= c0 c1) (=/= c1 c3) (=/= c1 c2) (=/= c2 c3)
+                (=/= c2 c4) (=/= c3 c4) (=/= c3 c5) (=/= c3 c7) (=/= c4 c5)
+                (=/= c4 c6) (=/= c5 c7) (=/= c5 c6) (=/= c5 c8) (=/= c6 c8)
+                (=/= c7 c9) (=/= c7 c8) (=/= c8 c9) (=/= c8 c10) (=/= c9 c10)
+                (membero c0 ls) (membero c1 ls) (membero c2 ls) (membero c3 ls)
+                (membero c4 ls) (membero c5 ls) (membero c6 ls) (membero c7 ls)
+                (membero c8 ls) (membero c9 ls) (membero c10 ls)))))
+
+;(color-middle-earth '(red orange purple black))
+;(((lindon . red) (forodwaith . orange) (eriador . purple) (rhovanion . red)
+ ;  (enedwaith . orange) (rohan . purple) (gondor . red)
+  ; (rhun . orange) (mordor . black) (khand . red)
+   ;(harad . orange)))

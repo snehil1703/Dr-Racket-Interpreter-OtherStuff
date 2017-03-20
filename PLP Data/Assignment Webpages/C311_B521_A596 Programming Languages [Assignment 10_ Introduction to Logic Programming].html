@@ -1,0 +1,598 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0052)https://cgi.soic.indiana.edu/~c311/doku.php?id=lp-a2 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="google-site-verification" content="CHpL8-yKEGFx7Gy37uNcU2lz9oRZydQdifkiJNj6-P4">
+  
+  <title>
+    C311/B521/A596 Programming Languages    [Assignment 10: Introduction to Logic Programming]
+  </title>
+
+  <meta name="generator" content="DokuWiki Release 2009-02-14b">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2015-10-31T03:27:04-0400">
+<meta name="keywords" content="lp-a2">
+<link rel="search" type="application/opensearchdescription+xml" href="https://cgi.soic.indiana.edu/~c311/lib/exe/opensearch.php" title="C311/B521/A596 Programming Languages">
+<link rel="start" href="https://cgi.soic.indiana.edu/~c311/">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cgi.soic.indiana.edu/~c311/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="https://cgi.soic.indiana.edu/~c311/feed.php?mode=list&amp;ns=">
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cgi.soic.indiana.edu/~c311/doku.php?do=export_xhtml&amp;id=lp-a2">
+<link rel="stylesheet" media="all" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 10_ Introduction to Logic Programming]_files/css.php">
+<link rel="stylesheet" media="screen" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 10_ Introduction to Logic Programming]_files/css(1).php">
+<link rel="stylesheet" media="print" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 10_ Introduction to Logic Programming]_files/css(2).php">
+<script type="text/javascript" charset="utf-8" src="./C311_B521_A596 Programming Languages [Assignment 10_ Introduction to Logic Programming]_files/js.php"></script>
+
+  <link rel="shortcut icon" href="https://cgi.soic.indiana.edu/~c311/lib/tpl/doogiestpl/images/favicon.ico">
+
+  </head>
+
+
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+      <div class="header_left"></div>
+      <div class="logo">
+        <a href="https://cgi.soic.indiana.edu/~c311/doku.php" name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]">C311/B521/A596 Programming Languages</a>      </div>
+
+      <div id="tabnavi" class="tabnavi">
+	    <ul>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=home">Home</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=course-policies">Policies</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=instructors">Instructors</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=resources">Resources</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=schedule">Schedule</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignments">Assignments</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=b621">B621</a></li>
+</ul>
+	  </div>
+	  
+	  <div class="clearer"></div>
+      	</div>  
+  </div>
+    
+  
+   <div style="float: right;">
+            <form class="button btn_login" method="get" action="https://cgi.soic.indiana.edu/~c311/doku.php"><div class="no"><input type="hidden" name="do" value="login"><input type="hidden" name="sectok" value="bb41d96766a4f618105208cecf4ca075"><input type="hidden" name="id" value="lp-a2"><input type="submit" value="Login" class="button" title="Login"></div></form>       &nbsp;  &nbsp;  &nbsp;
+   </div>
+  <div class="clearer">&nbsp;</div>
+
+
+  <div class="page">
+    <!-- ......... wikipage start ......... -->
+    
+
+
+<h1><a name="assignment-10introduction-to-logic-programming" id="assignment-10introduction-to-logic-programming">Assignment 10: Introduction to Logic Programming</a></h1>
+<div class="level1">
+
+<blockquote cite="./C311_B521_A596 Programming Languages [Assignment 10_ Introduction to Logic Programming]_files/Winston Churchill" class="blockquote-plugin">
+<p>
+Success is the ability to go from one failure to another with no loss of enthusiasm.
+
+</p>
+
+</blockquote>
+
+</div>
+
+<h2><a name="preliminaries" id="preliminaries">Preliminaries</a></h2>
+<div class="level2">
+
+<p>
+
+This week we've begun our discussion of relational programming using miniKanren.  Before you start the assignment, make sure you have <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=mk.rkt" class="media mediafile mf_rkt" title="mk.rkt">mk.rkt</a> and <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=numbers.rkt" class="media mediafile mf_rkt" title="numbers.rkt">numbers.rkt</a>.
+</p>
+<pre class="code lisp"><span class="br0">(</span>require <span class="st0">"mk.rkt"</span><span class="br0">)</span>
+<span class="br0">(</span>require <span class="st0">"numbers.rkt"</span><span class="br0">)</span></pre>
+<p>
+To further familiarize yourself with miniKanren, you should consult any class code posted to OnCourse, your own notes from class.
+</p>
+
+</div>
+
+<h2><a name="assignment" id="assignment">Assignment</a></h2>
+<div class="level2">
+
+<p>
+
+<strong>This assignment is composed of two parts, plus a brainteaser.</strong>
+To test your assignment, you can used the attached <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=a10-student-tests.rkt" class="media mediafile mf_rkt" title="a10-student-tests.rkt">a10-student-tests.rkt</a>
+</p>
+
+</div>
+
+<h2><a name="notes" id="notes">Notes</a></h2>
+<div class="level2">
+
+<p>
+
+You may find the following <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=mk-convert.pdf" class="media mediafile mf_pdf" title="mk-convert.pdf">notes</a> on transforming Racket programs to miniKanren to be useful. You might also want to consult the documentation on <a href="http://docs.racket-lang.org/reference/match.html?q=match-let#%28form._%28%28lib._racket%2Fmatch..rkt%29._match-let%2A%29%29" class="urlextern" title="http://docs.racket-lang.org/reference/match.html?q=match-let#%28form._%28%28lib._racket%2Fmatch..rkt%29._match-let%2A%29%29" rel="nofollow"> match-let*</a>.
+</p>
+
+<p>
+You might also be interested in the <a href="http://www.cs.indiana.edu/l/www/classes/c311/miniaop.pdf" class="urlextern" title="http://www.cs.indiana.edu/l/www/classes/c311/miniaop.pdf" rel="nofollow">following</a> <a href="http://www.cs.indiana.edu/l/www/classes/c311/minirop.pdf" class="urlextern" title="http://www.cs.indiana.edu/l/www/classes/c311/minirop.pdf" rel="nofollow"> sequence</a> of <a href="http://www.cs.indiana.edu/l/www/classes/c311/minilop.pdf" class="urlextern" title="http://www.cs.indiana.edu/l/www/classes/c311/minilop.pdf" rel="nofollow">notes</a> on logic programming, or <a href="http://www.cs.indiana.edu/l/www/classes/c311/miniunify.pdf" class="urlextern" title="http://www.cs.indiana.edu/l/www/classes/c311/miniunify.pdf" rel="nofollow"> these notes</a> on unification. 
+</p>
+
+</div>
+
+<h3><a name="part-i" id="part-i">Part I</a></h3>
+<div class="level3">
+
+<p>
+
+Write the answers to the questions found in the <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=a10.rkt" class="media mediafile mf_rkt" title="a10.rkt">a10.rkt</a> file provided to you. <strong>For each problem, explain <code>how</code> miniKanren arrived at the answer.</strong> You will be graded on the quality and completeness of your explanation; a full explanation will require several sentences.
+</p>
+
+<p>
+<!---
+Assume the following definitions for &#039;&#039;alwayso&#039;&#039;, &#039;&#039;nevero&#039;&#039;, &#039;&#039;succeed&#039;&#039;, and &#039;&#039;fail&#039;&#039;.
+
+&lt;code&gt;
+(define succeed (== #f #f))
+(define fail (== #f #t))
+
+(define anyo
+  (lambda (g)
+    (conde
+      [g]
+      [(anyo g)])))
+
+(define alwayso (anyo succeed))
+(define nevero (anyo fail))
+
+&lt;/code&gt;
+
+Make sure to verify your answers by running the programs in miniKanren. You will need to load &#039;&#039;mk.rkt&#039;&#039; and the definitions above before evaluating the run expressions. 
+
+**1.** What is the value of
+
+&lt;code&gt;
+(run 2 (q)
+  (== 5 q)
+  (conde
+    [(conde
+       [(== 5 q) (== 6 q)]) (== 5 q)]
+    [(== q 5)]))
+&lt;/code&gt;
+
+**2.** What is the value of
+
+&lt;code&gt;
+(run* (q)
+  (fresh (x y)
+    (== `(,x ,y) q)
+    (conde
+      [fail succeed]
+      [(conde
+         [(== 5 x) (== y x)]
+         [(== `(,x) y)]
+         [(== x y)])]
+      [succeed])))
+&lt;/code&gt;
+
+**3.** What is the value of
+
+&lt;code&gt;
+(run 1 (q)
+  alwayso
+  fail)
+&lt;/code&gt;
+
+**4.** What is the value of
+
+&lt;code&gt;
+(run 1 (q)
+  fail
+  alwayso)
+&lt;/code&gt;
+
+**5.** What is the value of
+
+&lt;code&gt;
+(run 2 (q)
+  (conde
+    [succeed]
+    [nevero]))
+&lt;/code&gt;
+
+**6.** What is the value of
+
+&lt;code&gt; 
+(run* (q)
+  (fresh (a b c d)
+    (== `(,a ,b) `(,c (,a . ,d)))
+    (== `(,b ,c) `((,a) ,d))
+    (== `(,a ,b ,c ,d) q)))
+&lt;/code&gt;
+
+**7.** What is the value of 
+
+&lt;code&gt;
+(run 1 (q)  (== `(,q ,q) q))
+&lt;/code&gt;
+
+**8.** What is the value of 
+
+&lt;code&gt;
+(run 1 (q) 
+  (fresh (a b) 
+    (== `(,a ,b) q)
+    (noo &#039;tag q)
+    (symbolo a)))
+&lt;/code&gt;
+
+**9.** What is the value of 
+
+&lt;code&gt;
+(run 1 (q) 
+  (fresh (x) 
+    (== q x) 
+    (fresh (q) 
+      (=/= x q))))
+&lt;/code&gt;
+
+**10.** What is the result of running
+
+&lt;code&gt;
+(run 1 (q) (noo q &#039;tag))
+&lt;/code&gt;
+--->
+</p>
+
+</div>
+
+<h3><a name="part-ii" id="part-ii">Part II</a></h3>
+<div class="level3">
+
+<p>
+
+Here are the Racket procedures <code>assoc</code>, and <code>reverse</code>, <code>stutter</code>:
+</p>
+<pre class="code">(define assoc
+  (lambda (x ls)
+    (match-let* ((`(,a . ,d) ls)
+                 (`(,aa . ,da) a))
+      (cond
+        ((equal? aa x) a)
+        ((not (equal? aa x)) (assoc x d))))))
+
+(define reverse
+  (lambda (ls)
+    (cond
+      ((equal? '() ls) '())
+      (else
+       (match-let* ((`(,a . ,d) ls)
+                    (res (reverse d)))
+         (append res `(,a)))))))
+
+(define stutter
+  (lambda (ls)
+    (cond
+      ((equal? '() ls) '())
+      (else 
+        (match-let* ((`(,a . ,d) ls)
+		     (res (stutter d)))
+          `(,a ,a . ,res))))))
+</pre>
+
+<p>
+Take <code>assoc</code>, <code>reverse</code>, and <code>stutter</code>, and translate them into the equivalent miniKanren relations (<code>assoco</code>, and <code>reverseo</code>, <code>stuttero</code>) and put them at the end of your <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=a10.rkt" class="media mediafile mf_rkt" title="a10.rkt">a10.rkt</a> file. Your <code>numbers.rkt</code> file already contains an implementation of <code>appendo</code>.
+</p>
+
+<p>
+The below tests are a guide. Your relations might not pass these tests, as implementing goals in a different order may cause the stream to return results in a different order. So it is possible that your code is correct though the tests fail.
+</p>
+
+<p>
+Remember that you may need to rearrange some of the goals in your relations to ensure termination (and therefore to pass the tests). In general, recursive calls should come at the end of a sequence of goals, while explicit or implicit calls to <code>==</code> should come at the beginning.
+</p>
+
+<p>
+Here are the tests.
+<!--
+(define-syntax test
+  (syntax-rules ()
+    ((_ title tested-expression expected-result)
+     (let* ((expected expected-result)
+            (produced tested-expression))
+       (if (equal? expected produced)
+           (printf &quot;~s works!\n&quot; title)
+           (errorf
+            &#039;test
+            &quot;Failed ~s: ~a\nExpected: ~a\nComputed: ~a&quot;
+            title &#039;tested-expression expected produced))))))
+
+(define-syntax multi-test
+  (syntax-rules ()
+    ((_ title tested-expression expected-result* ...)
+     (let* ((expected* expected-result*)
+            ...
+            (produced tested-expression))
+       (cond
+         [(equal? produced expected-result*) (printf &quot;~s works!\n&quot; title)]
+         ...
+         [else (errorf
+                &#039;test
+                &quot;Failed ~s: ~a\nComputed: ~a&quot;
+                title &#039;tested-expression produced)])))))
+-->
+
+</p>
+<pre class="code">&gt; (require "a10.rkt")
+
+&gt; (run 1 (q) (stuttero q '(1 1 2 2 3 3)))
+((1 2 3))
+
+&gt; (run* (q) (stuttero q '(1 1 2 2 3 3)))
+((1 2 3))
+
+&gt; (run 1 (q) (fresh (a b c d) (== q `(,a ,b ,c ,d)) (stuttero a `(1 ,b ,c 2 3 ,d))))
+(((1 2 3) 1 2 3))
+
+&gt; (run 1 (q) (fresh (a b c d) (== q `(,a ,b ,c ,d)) (stuttero `(,b 1) `(,c . ,d))))
+((_.0 _.1 _.1 (_.1 1 1)))
+
+&gt; (run 1 (q) (fresh (e f g) (== q `(,e ,f ,g)) (stuttero `(,e . ,f) g)))
+((_.0 () (_.0 _.0)))
+
+&gt; (run 2 (q) (fresh (e f g) (== q `(,e ,f ,g)) (stuttero `(,e . ,f) g)))
+((_.0 () (_.0 _.0)) (_.0 (_.1) (_.0 _.0 _.1 _.1)))
+
+&gt; (run* (q) (assoco 'x '() q))
+()
+
+&gt; (run* (q) (assoco 'x '((x . 5)) q))
+((x . 5))
+
+&gt; (run* (q) (assoco 'x '((y . 6) (x . 5)) q))
+((x . 5))
+
+&gt; (run* (q) (assoco 'x '((x . 6) (x . 5)) q))
+((x . 6))
+
+&gt; (run* (q) (assoco 'x '((x . 5)) '(x . 5)))
+(_.0)
+
+&gt; (run* (q) (assoco 'x '((x . 6) (x . 5)) '(x . 6)))
+(_.0)
+
+&gt; (run* (q) (assoco 'x '((x . 6) (x . 5)) '(x . 5)))
+()
+
+&gt; (run* (q) (assoco q '((x . 6) (x . 5)) '(x . 5)))
+()
+
+&gt; (run* (q) (assoco 'x '((x . 6) . ,q) '(x . 6)))
+(_.0)
+
+&gt; (run 5 (q) (assoco 'x q '(x . 5)))
+(((x . 5) . _.0)
+ (((_.0 . _.1) (x . 5) . _.2) (=/= ((_.0 x))))
+ (((_.0 . _.1) (_.2 . _.3) (x . 5) . _.4) (=/= ((_.0 x)) ((_.2 x))))
+ (((_.0 . _.1) (_.2 . _.3) (_.4 . _.5) (x . 5) . _.6)
+  (=/= ((_.0 x)) ((_.2 x)) ((_.4 x))))
+ (((_.0 . _.1) (_.2 . _.3) (_.4 . _.5) (_.6 . _.7) (x . 5) . _.8)
+  (=/= ((_.0 x)) ((_.2 x)) ((_.4 x)) ((_.6 x)))))
+
+&gt; (run 5 (q) (fresh (x y z)
+                (assoco x y z)
+                (== `(,x ,y ,z) q)))
+((_.0 ((_.0 . _.1) . _.2) (_.0 . _.1))
+ ((_.0 ((_.1 . _.2) (_.0 . _.3) . _.4) (_.0 . _.3)) (=/= ((_.0 _.1))))
+ ((_.0 ((_.1 . _.2) (_.3 . _.4) (_.0 . _.5) . _.6) (_.0 . _.5))
+  (=/= ((_.0 _.1)) ((_.0 _.3))))
+ ((_.0 ((_.1 . _.2) (_.3 . _.4) (_.5 . _.6) (_.0 . _.7) . _.8) (_.0 . _.7))
+  (=/= ((_.0 _.1)) ((_.0 _.3)) ((_.0 _.5))))
+ ((_.0
+   ((_.1 . _.2) (_.3 . _.4) (_.5 . _.6) (_.7 . _.8) (_.0 . _.9) . _.10)
+   (_.0 . _.9))
+  (=/= ((_.0 _.1)) ((_.0 _.3)) ((_.0 _.5)) ((_.0 _.7)))))
+
+&gt; (run* (q) (reverseo '() q))
+(())
+
+&gt; (run* (q) (reverseo '(a) q))
+((a))
+
+&gt; (run* (q) (reverseo '(a b c d) q))
+((d c b a))
+
+&gt; (run* (q) (fresh (x) (reverseo `(a b ,x c d) q)))
+((d c _.0 b a))
+
+&gt; (run* (x) (reverseo `(a b ,x d) '(d c b a)))
+(c)
+
+&gt; (run* (x) (reverseo `(a b c d) `(d . ,x)))
+((c b a))
+
+&gt; (run* (q) (fresh (x) (reverseo `(a b c d) `(d . (,q . ,x)))))
+(c)
+
+&gt; (run 10 (q) (fresh (x y) (reverseo x y) (== `(,x ,y) q)))
+((() ()) ((_.0) (_.0)) ((_.0 _.1) (_.1 _.0))
+ ((_.0 _.1 _.2) (_.2 _.1 _.0))
+ ((_.0 _.1 _.2 _.3) (_.3 _.2 _.1 _.0))
+ ((_.0 _.1 _.2 _.3 _.4) (_.4 _.3 _.2 _.1 _.0))
+ ((_.0 _.1 _.2 _.3 _.4 _.5) (_.5 _.4 _.3 _.2 _.1 _.0))
+ ((_.0 _.1 _.2 _.3 _.4 _.5 _.6)
+  (_.6 _.5 _.4 _.3 _.2 _.1 _.0))
+ ((_.0 _.1 _.2 _.3 _.4 _.5 _.6 _.7)
+  (_.7 _.6 _.5 _.4 _.3 _.2 _.1 _.0))
+ ((_.0 _.1 _.2 _.3 _.4 _.5 _.6 _.7 _.8)
+  (_.8 _.7 _.6 _.5 _.4 _.3 _.2 _.1 _.0)))
+
+</pre>
+
+</div>
+
+<h3><a name="brainteaser" id="brainteaser">Brainteaser</a></h3>
+<div class="level3">
+
+<p>
+
+Chapter 7 of <em>The Reasoned Schemer</em> introduces a way to handle integers in relational programming. These are provided in the <code>numbers</code> suite. 
+</p>
+
+<p>
+Write <code>lengtho</code>, which associates its output with the length of a list as a binary number in reverse order (if you use the provided helpers, this is the normal representation of numbers). Here are some tests:
+</p>
+<pre class="code">&gt; (require "a10.rkt")
+
+&gt; (run 1 (q) (lengtho '() q))
+(())
+
+&gt; (run 1 (q) (lengtho '(a b) q))
+((0 1))
+
+&gt; (run 1 (q) (lengtho '(a b c) q))
+((1 1))
+
+&gt; (run 1 (q) (lengtho '(a b c d e f g) q))
+((1 1 1))
+
+&gt; (run 1 (q) (lengtho q (build-num 0)))
+(())
+
+&gt; (run 1 (q) (lengtho q (build-num 5)))
+((_.0 _.1 _.2 _.3 _.4))
+
+&gt; (run 10 (q) (fresh (x y) (lengtho x y) (== `(,x ,y) q)))
+((() ()) ((_.0) (1)) ((_.0 _.1) (0 1)) ((_.0 _.1 _.2) (1 1))
+ ((_.0 _.1 _.2 _.3) (0 0 1)) ((_.0 _.1 _.2 _.3 _.4) (1 0 1))
+ ((_.0 _.1 _.2 _.3 _.4 _.5) (0 1 1))
+ ((_.0 _.1 _.2 _.3 _.4 _.5 _.6) (1 1 1))
+ ((_.0 _.1 _.2 _.3 _.4 _.5 _.6 _.7) (0 0 0 1))
+ ((_.0 _.1 _.2 _.3 _.4 _.5 _.6 _.7 _.8) (1 0 0 1)))
+</pre>
+
+</div>
+
+<h3><a name="just-dessert" id="just-dessert">Just Dessert</a></h3>
+<div class="level3">
+
+<p>
+
+We saw how to implement a microKanren with <code>==</code>, and we saw in lab how to build an miniKanren on top of that. But we haven't added the other constraints. Given the file <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=micro-for-diseq.rkt" class="media mediafile mf_rkt" title="micro-for-diseq.rkt">micro-for-diseq.rkt</a> add <code>=/=</code> to the microKanren implementation. You can make use of the file of helper macros <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=mini.rkt" class="media mediafile mf_rkt" title="mini.rkt">mini.rkt</a> if you would like a higher-level language from which to work.
+</p>
+
+<p>
+<!--
+
+Right now, when you do a &#039;&#039;(run 10 (q) ...)&#039;&#039;, you get 10 answers. If you want the 11th, you gotta start over and get the first 10. Change the implementation that we built in class/lab and handed out to you, so that &#039;&#039;run&#039;&#039; returns to you both the 10 answers reified, and the stream in a global variable of your choice. That&#039;s incidental. The real point of this exercise is to build an operator which will use said globally-defined variable.
+
+&lt;code lisp&gt;
+&gt; (run 5 (q) (hot-dogs q))
+(dog (hot . dog) (hot hot . dog) (hot hot hot . dog) (hot hot hot hot . dog))
+&gt; (next 5)
+((hot hot hot hot hot . dog)
+ (hot hot hot hot hot hot . dog)
+ (hot hot hot hot hot hot hot . dog)
+ (hot hot hot hot hot hot hot hot . dog)
+ (hot hot hot hot hot hot hot hot hot . dog))
+&gt; (next 5)
+((hot hot hot hot hot hot hot hot hot hot . dog)
+ (hot hot hot hot hot hot hot hot hot hot hot . dog)
+ (hot hot hot hot hot hot hot hot hot hot hot hot . dog)
+ (hot hot hot hot hot hot hot hot hot hot hot hot hot . dog)
+ (hot hot hot hot hot hot hot hot hot hot hot hot hot hot . dog))
+&lt;/code&gt;
+
+-->
+</p>
+
+<p>
+<!---
+(test &quot;one-itemo-1&quot;
+  (run* (q)
+    (one-itemo &#039;a &#039;(b c d) q))
+  &#039;(((a . b) (a . c) (a . d))))
+
+(test &quot;one-itemo-2&quot;
+  (run* (q)
+    (one-itemo q &#039;(b c d) &#039;((a . b) (a . c) (a . d))))
+  &#039;(a))
+
+(test &quot;one-itemo-3&quot;
+  (run* (q)
+    (one-itemo &#039;a q &#039;((a . b) (a . c) (a . d))))
+  &#039;((b c d)))
+
+(test &quot;one-itemo-4&quot;
+  (run* (q)
+    (one-itemo &#039;a &#039;(b c d) `((a . b) . ,q)))
+  &#039;(((a . c) (a . d))))
+
+(test &quot;one-itemo-5&quot;
+  (run* (q)
+    (one-itemo &#039;a &#039;(b c d) &#039;((a . b) (a . c) (a . d))))
+  &#039;(_.0))
+
+(test &quot;one-itemo-6&quot;
+  (run* (q)
+    (one-itemo &#039;a `(b ,q d) &#039;((a . b) (a . c) (a . d))))
+  &#039;(c))
+
+(test &quot;one-itemo-7&quot;
+  (run* (q)
+    (fresh (x y)
+      (one-itemo x y &#039;((a . b) (a . c) (a . d)))
+      (== `(,x ,y) q)))
+  &#039;((a (b c d))))
+
+(test &quot;one-itemo-8&quot;
+  (run 6 (q)
+    (fresh (x y z)
+      (one-itemo x y z)
+      (== `(,x ,y ,z) q)))
+  &#039;((_.0 () ()) (_.0 (_.1) ((_.0 . _.1)))
+    (_.0 (_.1 _.2) ((_.0 . _.1) (_.0 . _.2)))
+    (_.0 (_.1 _.2 _.3) ((_.0 . _.1) (_.0 . _.2) (_.0 . _.3)))
+    (_.0 (_.1 _.2 _.3 _.4) ((_.0 . _.1) (_.0 . _.2) (_.0 . _.3) (_.0 . _.4)))
+    (_.0 (_.1 _.2 _.3 _.4 _.5) ((_.0 . _.1) (_.0 . _.2) (_.0 . _.3) (_.0 . _.4) (_.0 . _.5)))))
+--->
+
+</p>
+
+</div>
+
+    <!-- ......... wikipage stop  ......... -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+ 
+  <!--  footer -->  
+  <div class="stylefoot">
+
+        <div class="meta">
+      <div class="doc">
+		<p>lp-a2.txt · Last modified: 2015/10/31 03:27 by jhemann</p>
+      </div>
+   </div>
+
+    <div>
+       <!--  breadcrumbs and search -->
+	  	
+	  
+
+       
+      <div class="clearer"></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="no"><img src="./C311_B521_A596 Programming Languages [Assignment 10_ Introduction to Logic Programming]_files/indexer.php" width="1" height="1" alt=""></div>
+
+
+</body></html>

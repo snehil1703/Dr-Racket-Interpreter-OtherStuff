@@ -1,0 +1,127 @@
+#lang racket
+
+#|
+1. Make a tail-recursion
+2. CPS it
+3. Add apply-k
+4. Make continuations RI
+5. Alias continuation constructor variable names
+6. Make continuations data structures
+7. let* for a-normal form
+8. Create global variables, set!s out the wazoo
+|#
+
+(define empty-k
+  (lambda ()
+    `(empty-k)
+    ))
+
+(define apply-k
+  (lambda (k v)
+    (match k
+      [`(empty-k) v]
+      [`(ack-k ,m^ ,k^) (let* ((m (sub1 m^))
+                               (n v)
+                               (k k^))
+                          (ack m n k))]
+      [`(depth-outer-k ,ls^ ,k^) (let* ((ls (cdr ls^))
+                                        (k (depth-inner-k v k^)))
+                                   (depth ls k))]
+      [`(depth-inner-k ,l^ ,k^) (let ((l (add1 l^)))
+                                  (if (< l v)
+                                      (let* ((k k^))
+                                        (apply-k k v))
+                                      (let* ((k k^)
+                                             (v l))
+                                        (apply-k k v))))]
+      [`(fact-k ,k^ ,n^) (let* ((k k^)
+                                (v (* n^ v)))
+                           (apply-k k v))]
+      )))
+    
+;1
+
+(define ack
+  (lambda (m n k)
+    (cond
+      [(zero? m) (let* ((v (add1 n)))
+                   (apply-k k v))]
+      [(zero? n) (let* ((m (sub1 m))
+                        (n 1))
+                   (ack m n k))]
+      [else (let* ((n (sub1 n))
+                   (k (ack-k m k)))
+              (ack m n k))]
+      )))
+
+(define ack-k
+  (lambda (m^ k^)
+    `(ack-k ,m^ ,k^)
+    ))
+
+;2
+
+(define depth
+  (lambda (ls k)
+    (cond
+      [(null? ls) (let* ((v 1))
+                    (apply-k k v))]
+      [(pair? (car ls)) (let* ((ls (car ls))
+                               (k (depth-outer-k ls k)))
+                          (depth ls k))]
+      [else (let* ((ls (cdr ls)))
+              (depth ls k))]
+      )))
+
+(define depth-outer-k
+  (lambda (ls^ k^)
+    `(depth-outer-k ,ls^ ,k^)
+    ))
+    
+(define depth-inner-k
+  (lambda (l^ k^)
+    `(depth-inner-k ,l^ ,k^)
+    ))
+
+;3
+
+(define fact
+  (lambda (n k)
+    ((lambda (fact k)
+       (fact fact n k))
+     (lambda (fact n k)
+       (cond
+         [(zero? n) (let* ((v 1))
+                      (apply-k k v))]
+         [else (let* ((k (fact-k k n))
+                      (n (sub1 n)))
+                 (fact fact n k))]
+         ))
+     k)))
+
+(define fact-k
+  (lambda (k^ n^)
+    `(fact-k ,k^ ,n^)
+    ))
+    
+;4
+
+;(define pascal
+ ; (lambda (n k)
+  ;  (let ((pascal
+   ;        (lambda (pascal k)
+    ;         (k (lambda (m a k)
+;		  (cond
+;		    [(> m n) (k '())]
+;		    [else (let ((a (+ a m)))
+;			    (pascal pascal (lambda (f) (f (add1 m) a (lambda (v) (k (cons a v)))))))]))))))
+ ;     (pascal pascal (lambda (f) (f 1 0 k))))))
+
+(ack 2 2 (empty-k))
+;7
+(depth '(1 (2 (3 (4)))) (empty-k))
+;4
+(fact 5 (empty-k))
+;120
+;(pascal 10 (empty-k))
+;(1 3 6 10 15 21 28 36 45 55)

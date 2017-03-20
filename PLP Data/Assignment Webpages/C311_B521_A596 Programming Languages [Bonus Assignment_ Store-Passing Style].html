@@ -1,0 +1,592 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0050)https://cgi.soic.indiana.edu/~c311/doku.php?id=sps -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="google-site-verification" content="CHpL8-yKEGFx7Gy37uNcU2lz9oRZydQdifkiJNj6-P4">
+  
+  <title>
+    C311/B521/A596 Programming Languages    [Bonus Assignment: Store-Passing Style]
+  </title>
+
+  <meta name="generator" content="DokuWiki Release 2009-02-14b">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2015-11-06T04:45:53-0500">
+<meta name="keywords" content="sps">
+<link rel="search" type="application/opensearchdescription+xml" href="https://cgi.soic.indiana.edu/~c311/lib/exe/opensearch.php" title="C311/B521/A596 Programming Languages">
+<link rel="start" href="https://cgi.soic.indiana.edu/~c311/">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cgi.soic.indiana.edu/~c311/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="https://cgi.soic.indiana.edu/~c311/feed.php?mode=list&amp;ns=">
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cgi.soic.indiana.edu/~c311/doku.php?do=export_xhtml&amp;id=sps">
+<link rel="stylesheet" media="all" type="text/css" href="./C311_B521_A596 Programming Languages [Bonus Assignment_ Store-Passing Style]_files/css.php">
+<link rel="stylesheet" media="screen" type="text/css" href="./C311_B521_A596 Programming Languages [Bonus Assignment_ Store-Passing Style]_files/css(1).php">
+<link rel="stylesheet" media="print" type="text/css" href="./C311_B521_A596 Programming Languages [Bonus Assignment_ Store-Passing Style]_files/css(2).php">
+<script type="text/javascript" charset="utf-8" src="./C311_B521_A596 Programming Languages [Bonus Assignment_ Store-Passing Style]_files/js.php"></script>
+
+  <link rel="shortcut icon" href="https://cgi.soic.indiana.edu/~c311/lib/tpl/doogiestpl/images/favicon.ico">
+
+  </head>
+
+
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+      <div class="header_left"></div>
+      <div class="logo">
+        <a href="https://cgi.soic.indiana.edu/~c311/doku.php" name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]">C311/B521/A596 Programming Languages</a>      </div>
+
+      <div id="tabnavi" class="tabnavi">
+	    <ul>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=home">Home</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=course-policies">Policies</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=instructors">Instructors</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=resources">Resources</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=schedule">Schedule</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignments">Assignments</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=b621">B621</a></li>
+</ul>
+	  </div>
+	  
+	  <div class="clearer"></div>
+      	</div>  
+  </div>
+    
+  
+   <div style="float: right;">
+            <form class="button btn_login" method="get" action="https://cgi.soic.indiana.edu/~c311/doku.php"><div class="no"><input type="hidden" name="do" value="login"><input type="hidden" name="sectok" value="bb41d96766a4f618105208cecf4ca075"><input type="hidden" name="id" value="sps"><input type="submit" value="Login" class="button" title="Login"></div></form>       &nbsp;  &nbsp;  &nbsp;
+   </div>
+  <div class="clearer">&nbsp;</div>
+
+
+  <div class="page">
+    <!-- ......... wikipage start ......... -->
+    
+
+
+<h1><a name="bonus-assignmentstore-passing-style" id="bonus-assignmentstore-passing-style">Bonus Assignment: Store-Passing Style</a></h1>
+<div class="level1">
+
+<blockquote cite="./C311_B521_A596 Programming Languages [Bonus Assignment_ Store-Passing Style]_files/J.R.R. Tolkien, The Hobbit" class="blockquote-plugin">
+<p>
+Trolls' purses are the mischief, and this was no exception. ” 'Ere, 'oo are you?” it squeaked, as it left the pocket.
+
+</p>
+
+</blockquote>
+
+</div>
+
+<h2><a name="introduction" id="introduction">Introduction</a></h2>
+<div class="level2">
+
+<p>
+
+Place all of your code in a file named <code>bonus.rkt</code>, and submit it via <a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=oncourse" class="wikilink1" title="oncourse">Oncourse</a>. 
+</p>
+
+<p>
+Make use of the macros and SPS material from class this week, and you might consult the macro tutorials below.
+</p>
+
+<p>
+For SPS, you could also consult _Essentials of Programming Languages_. 
+For macros, you should probably look through <a href="http://www.phyast.pitt.edu/~micheles/syntax-rules.pdf" class="urlextern" title="http://www.phyast.pitt.edu/~micheles/syntax-rules.pdf" rel="nofollow">Syntax rules for the merely eccentric</a>.
+If you're still hungry for more after that, try <a href="http://petrofsky.org/src/primer.txt" class="urlextern" title="http://petrofsky.org/src/primer.txt" rel="nofollow">Syntax rules for the mildly insane</a>.
+</p>
+
+<p>
+You probably (maybe?) used <code>let-pair</code> in class to implement SPS. On your homework, we'll be using <code>values</code> and <code>let-values</code>. These operate similarly.
+</p>
+
+</div>
+
+<h2><a name="assignment" id="assignment">Assignment</a></h2>
+<div class="level2">
+
+</div>
+
+<h4><a name="part-1-sps" id="part-1-sps">Part 1 SPS</a></h4>
+<div class="level4">
+
+<p>
+
+Your task is to transform the functions below into store-passing style such that they have the correct semantics described. <strong>You will remember in class we used <code>let-pair</code> to implement SPS. On your homework, we'll be using <a href="http://docs.racket-lang.org/reference/values.html?q=values#%28def._%28%28quote._~23~25kernel%29._values%29%29" class="urlextern" title="http://docs.racket-lang.org/reference/values.html?q=values#%28def._%28%28quote._~23~25kernel%29._values%29%29" rel="nofollow">values</a> and <a href="http://docs.racket-lang.org/reference/let.html?q=let-values#%28form._%28%28quote._~23~25kernel%29._let-values%29%29" class="urlextern" title="http://docs.racket-lang.org/reference/let.html?q=let-values#%28form._%28%28quote._~23~25kernel%29._let-values%29%29" rel="nofollow">let-values</a>. These operate similarly.</strong>
+</p>
+
+<p>
+<strong>1</strong> Recall <code>filter</code> from <a href="https://www.cs.indiana.edu/cgi-pub/c311/doku.php?id=assignment-1" class="urlextern" title="https://www.cs.indiana.edu/cgi-pub/c311/doku.php?id=assignment-1" rel="nofollow">assignment 1</a>. It would be useful if all of the results removed from the list were also handed back to us. That way, we could <code>partition</code> the input based on a predicate. Implement <code>filter-sps</code> that does exactly that.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>filter<span class="sy0">-</span>sps even? '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span> <span class="nu0">7</span> <span class="nu0">8</span> <span class="nu0">9</span> <span class="nu0">10</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">2</span> <span class="nu0">4</span> <span class="nu0">6</span> <span class="nu0">8</span> <span class="nu0">10</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">3</span> <span class="nu0">5</span> <span class="nu0">7</span> <span class="nu0">9</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>filter<span class="sy0">-</span>sps odd? '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span> <span class="nu0">7</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">3</span> <span class="nu0">5</span> <span class="nu0">7</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">2</span> <span class="nu0">4</span> <span class="nu0">6</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>filter<span class="sy0">-</span>sps <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">or</span> <span class="br0">(</span><span class="sy0">&gt;</span> x <span class="nu0">6</span><span class="br0">)</span> <span class="br0">(</span><span class="sy0">&lt;</span> x <span class="nu0">2</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span> <span class="nu0">7</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">7</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span><span class="br0">)</span></pre>
+<p>
+<strong>2</strong> Consider a function <code>filter*</code> which performs filter on (potentially) deep lists as follows:
+</p>
+<pre class="code lisp"><span class="br0">(</span>define filter<span class="sy0">*</span>
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f ls<span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">cond</span>
+      <span class="br0">[</span><span class="br0">(</span><span class="kw1">null</span>? ls<span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span><span class="br0">(</span>pair? <span class="br0">(</span><span class="kw1">car</span> ls<span class="br0">)</span><span class="br0">)</span>
+       <span class="br0">(</span><span class="kw1">cons</span> <span class="br0">(</span>filter<span class="sy0">*</span> f <span class="br0">(</span><span class="kw1">car</span> ls<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>filter<span class="sy0">*</span> f <span class="br0">(</span><span class="kw1">cdr</span> ls<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span><span class="br0">(</span><span class="kw1">null</span>? <span class="br0">(</span><span class="kw1">car</span> ls<span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span><span class="br0">(</span>f <span class="br0">(</span><span class="kw1">car</span> ls<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">cons</span> <span class="br0">(</span><span class="kw1">car</span> ls<span class="br0">)</span> <span class="br0">(</span>filter<span class="sy0">*</span> f <span class="br0">(</span><span class="kw1">cdr</span> ls<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>else <span class="br0">(</span>filter<span class="sy0">*</span> f <span class="br0">(</span><span class="kw1">cdr</span> ls<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>filter<span class="sy0">*</span> even? '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">2</span> <span class="nu0">4</span> <span class="nu0">6</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>filter<span class="sy0">*</span> odd? '<span class="br0">(</span><span class="nu0">1</span> <span class="br0">(</span><span class="nu0">2</span> <span class="nu0">3</span> <span class="br0">(</span><span class="nu0">4</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">6</span> <span class="nu0">7</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">1</span> <span class="br0">(</span><span class="nu0">3</span> <span class="br0">(</span><span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">7</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>filter<span class="sy0">*</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">or</span> <span class="br0">(</span>even? x<span class="br0">)</span> <span class="br0">(</span><span class="sy0">&lt;</span> <span class="nu0">7</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span><span class="nu0">1</span> <span class="br0">(</span><span class="nu0">2</span> <span class="nu0">3</span> <span class="br0">(</span><span class="nu0">4</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">6</span> <span class="nu0">7</span> <span class="br0">(</span><span class="br0">(</span><span class="nu0">8</span> <span class="nu0">9</span><span class="br0">)</span> <span class="nu0">10</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">2</span> <span class="br0">(</span><span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">6</span> <span class="br0">(</span><span class="br0">(</span><span class="nu0">8</span> <span class="nu0">9</span><span class="br0">)</span> <span class="nu0">10</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Produce a function <code>filter*-sps</code> that performs the same function as <code>filter-sps</code>, but works on deep lists and preserves the structure of each.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>filter<span class="sy0">*-</span>sps even? '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">2</span> <span class="nu0">4</span> <span class="nu0">6</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">3</span> <span class="nu0">5</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>filter<span class="sy0">*-</span>sps odd? '<span class="br0">(</span><span class="nu0">1</span> <span class="br0">(</span><span class="nu0">2</span> <span class="nu0">3</span> <span class="br0">(</span><span class="nu0">4</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">6</span> <span class="nu0">7</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">1</span> <span class="br0">(</span><span class="nu0">3</span> <span class="br0">(</span><span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">7</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">2</span> <span class="br0">(</span><span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">6</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>filter<span class="sy0">*-</span>sps <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">or</span> <span class="br0">(</span>even? x<span class="br0">)</span> <span class="br0">(</span><span class="sy0">&lt;</span> <span class="nu0">7</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span><span class="nu0">1</span> <span class="br0">(</span><span class="nu0">2</span> <span class="nu0">3</span> <span class="br0">(</span><span class="nu0">4</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">6</span> <span class="nu0">7</span> <span class="br0">(</span><span class="br0">(</span><span class="nu0">8</span> <span class="nu0">9</span><span class="br0">)</span> <span class="nu0">10</span><span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">2</span> <span class="br0">(</span><span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">6</span> <span class="br0">(</span><span class="br0">(</span><span class="nu0">8</span> <span class="nu0">9</span><span class="br0">)</span> <span class="nu0">10</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">1</span> <span class="br0">(</span><span class="nu0">3</span> <span class="br0">(</span><span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span> <span class="nu0">7</span> <span class="br0">(</span><span class="br0">(</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+<strong>3</strong> It is possible to exploit store-passing style for greater efficiency in programs. One such usage is <a href="http://en.wikipedia.org/wiki/Memoization" class="urlextern" title="http://en.wikipedia.org/wiki/Memoization" rel="nofollow">memoization</a> of results, which can greatly speed up computation. Implement <code>fib-sps</code> that uses the store for memoization as follows. (The answers below are written with the <code>.</code> explicitly, this is simply to clarify the results)
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>fib<span class="sy0">-</span>sps 0 '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+0
+<span class="br0">(</span><span class="br0">(</span>0 . 0<span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>fib<span class="sy0">-</span>sps <span class="nu0">1</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">1</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> . <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>fib<span class="sy0">-</span>sps <span class="nu0">3</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">2</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">3</span> . <span class="nu0">2</span><span class="br0">)</span> <span class="br0">(</span><span class="nu0">2</span> . <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>0 . 0<span class="br0">)</span> <span class="br0">(</span><span class="nu0">1</span> . <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>fib<span class="sy0">-</span>sps <span class="nu0">10</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">55</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">10</span> . <span class="nu0">55</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="nu0">9</span> . <span class="nu0">34</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="nu0">8</span> . <span class="nu0">21</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="nu0">7</span> . <span class="nu0">13</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="nu0">6</span> . <span class="nu0">8</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="nu0">5</span> . <span class="nu0">5</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="nu0">4</span> . <span class="nu0">3</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="nu0">3</span> . <span class="nu0">2</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="nu0">2</span> . <span class="nu0">1</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="nu0">1</span> . <span class="nu0">1</span><span class="br0">)</span>
+ <span class="br0">(</span>0 . 0<span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Depending upon your implementation, your store may not print in precisely this order. That is acceptable. But to ensure your program is correct, ensure that you arent' duplicating any subcomputations, and that you have all the subcomputations.
+</p>
+
+<p>
+<!--try tracing the output and ensuring that &#039;&#039;fib-sps&#039;&#039; is as efficient as possible:
+
+&lt;code lisp&gt;
+&gt; (require racket/trace)
+&gt; (trace fib-sps)
+&gt; (fib-sps 5 &#039;())
+&gt;(fib-sps 5 ())
+&gt; (fib-sps 3 ())
+&gt; &gt;(fib-sps 1 ())
+&lt; &lt;(1 (1 . 1))
+&gt; &gt;(fib-sps 2 ((1 . 1)))
+&gt; &gt; (fib-sps 0 ((1 . 1)))
+&lt; &lt; (0 (0 . 0) (1 . 1))
+&gt; &gt; (fib-sps 1 ((0 . 0) (1 . 1)))
+&lt; &lt; (1 (0 . 0) (1 . 1))
+&lt; &lt;(1 (2 . 1) (0 . 0) (1 . 1))
+&lt; (2 (3 . 2) (2 . 1) (0 . 0) (1 . 1))
+&gt; (fib-sps 4 ((3 . 2) (2 . 1) (0 . 0) (1 . 1)))
+&gt; &gt;(fib-sps 2 ((3 . 2) (2 . 1) (0 . 0) (1 . 1)))
+&lt; &lt;(1 (3 . 2) (2 . 1) (0 . 0) (1 . 1))
+&gt; &gt;(fib-sps 3 ((3 . 2) (2 . 1) (0 . 0) (1 . 1)))
+&lt; &lt;(2 (3 . 2) (2 . 1) (0 . 0) (1 . 1))
+&lt; (3 (4 . 3) (3 . 2) (2 . 1) (0 . 0) (1 . 1))
+&lt;(5 (5 . 5) (4 . 3) (3 . 2) (2 . 1) (0 . 0) (1 . 1))
+(5 (5 . 5) (4 . 3) (3 . 2) (2 . 1) (0 . 0) (1 . 1))
+&lt;/code&gt;
+-->
+
+</p>
+
+</div>
+
+<h4><a name="part-2-macros" id="part-2-macros">Part 2 Macros</a></h4>
+<div class="level4">
+
+<p>
+
+Let's implement some macros. For the following questions, make sure to use only <code>syntax-rules</code> macros, as we wrote in class. For the <code>and*</code> and <code>cons*</code> problems, it is <em>not</em> acceptable to use the <code>and</code> and <code>cons*</code> built into Racket in your implementations. Also, don't use <code>match</code> in your solutions.
+</p>
+
+<p>
+Note: As you work on the following problems, remember you can use the macro stepper in DrRacket, <code>(syntax→datum (expand &lt;syntax expr&gt;))</code> and <code>expand-only</code> as we did in class, or some of the utilities found <a href="http://docs.racket-lang.org/reference/Expanding_Top-Level_Forms.html" class="urlextern" title="http://docs.racket-lang.org/reference/Expanding_Top-Level_Forms.html" rel="nofollow">here</a> to see what a macro expands to.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>syntax<span class="sy0">-&gt;</span>datum <span class="br0">(</span>expand '<span class="br0">(</span><span class="kw1">cond</span> <span class="br0">(</span>#t #f<span class="br0">)</span> <span class="br0">(</span>else <span class="nu0">7</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="kw1">if</span> '#t <span class="br0">(</span>let<span class="sy0">-</span>values <span class="br0">(</span><span class="br0">)</span> '#f<span class="br0">)</span> <span class="br0">(</span>let<span class="sy0">-</span>values <span class="br0">(</span><span class="br0">)</span> '<span class="nu0">7</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+<strong>4.</strong> <code>and*</code> This should work similarly to Racket's <code>and</code>. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">and</span><span class="sy0">*</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span>
+<span class="nu0">3</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">and</span><span class="sy0">*</span> #f<span class="br0">)</span>
+#f
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">and</span><span class="sy0">*</span><span class="br0">)</span>
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">and</span><span class="sy0">*</span> 'a<span class="br0">)</span>
+a</pre>
+<p>
+<strong>5.</strong> <code>cons*</code>
+</p>
+
+<p>
+<code>cons*</code> cons-es together its arguments. If the final argument is not a list, <code>cons*</code> should return an improper list. If a single argument is passed, it should simply return that argument. When called with no arguments, your macro should report an error by calling: (syntax-error “Incorrect argument-count to cons*”). Your answer should operate similarly to Racket's <code>cons*</code>.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">cons</span><span class="sy0">*</span> 'a 'b 'c 'd<span class="br0">)</span>
+<span class="br0">(</span>a b c . d<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">cons</span><span class="sy0">*</span> 'a<span class="br0">)</span>
+a</pre>
+<p>
+
+<strong>5.</strong> macro-list
+</p>
+
+<p>
+The Racket function <code>list</code> can be implemented simply as a function in Racket using _variadic_ (n-ary) lambdas. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define <span class="kw1">list</span> <span class="br0">(</span><span class="kw1">lambda</span> a a<span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">list</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span><span class="br0">)</span></pre>
+<p>
+Note the absence of parentheses around the formal parameter to the function. But in the early days of Lisp, there were no variadic functions. Instead, <code>list</code> was implemented as a macro. Implement <code>macro-list</code>, which takes any number of arguments and builds a list of them.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>macro<span class="sy0">-</span><span class="kw1">list</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>macro<span class="sy0">-</span><span class="kw1">list</span> <span class="nu0">1</span> 'b <span class="nu0">2</span> 'd<span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">1</span> b <span class="nu0">2</span> d<span class="br0">)</span></pre>
+<p>
+<strong>6.</strong> mcond
+</p>
+
+<p>
+We know that we can treat cond as a series of <code>if</code> statements. Write an <code>mcond</code> macro which acts like cond, but desugars to a series of nested <code>if</code>s. Make sure to provide the appropriate treatment for <code>else</code> clauses. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>mcond
+    <span class="br0">(</span>#f #t<span class="br0">)</span>
+    <span class="br0">(</span>else 'dog<span class="br0">)</span><span class="br0">)</span>
+dog
+<span class="sy0">&gt;</span> <span class="br0">(</span>mcond 
+    <span class="br0">(</span>else 'cat<span class="br0">)</span><span class="br0">)</span>
+cat
+<span class="sy0">&gt;</span> <span class="br0">(</span>mcond 
+    <span class="br0">(</span>#t #t<span class="br0">)</span> 
+    <span class="br0">(</span>unbound variables<span class="br0">)</span><span class="br0">)</span>
+#t</pre>
+<p>
+Standard Racket <code>cond</code> has a good deal of extra behavior, including support for one-element clauses, <code>⇒</code> notation, multiple bodies in a clause, etc. You aren't required to implement this behavior, but if the mood strikes you then go hogwild.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">cond</span> <span class="br0">(</span>#t 'a 'b 'c<span class="br0">)</span><span class="br0">)</span>
+c
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">cond</span>
+    <span class="br0">(</span>#f 'a<span class="sy0">-</span>thing<span class="br0">)</span>
+    <span class="br0">(</span>#f<span class="br0">)</span>
+    <span class="br0">(</span>'turtle<span class="br0">)</span>
+    <span class="br0">(</span>else 'rock<span class="br0">)</span><span class="br0">)</span>
+turtle
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">cond</span>
+    <span class="br0">(</span><span class="br0">(</span><span class="kw1">member</span> 'a '<span class="br0">(</span>d a g w o o d<span class="br0">)</span><span class="br0">)</span> <span class="sy0">=&gt;</span> <span class="kw1">length</span><span class="br0">)</span>
+    <span class="br0">(</span>else 'not<span class="sy0">-</span>a<span class="sy0">-</span><span class="kw1">member</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">6</span></pre>
+<p>
+<strong>7.</strong> Macro-map.
+</p>
+
+<p>
+Notice that we cannot use <code>map</code> with a macro:
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>map <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">list</span> x x<span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span>a b c<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span>a a<span class="br0">)</span> <span class="br0">(</span>b b<span class="br0">)</span> <span class="br0">(</span>c c<span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>define<span class="sy0">-</span>syntax copy<span class="sy0">-</span>code
+    <span class="br0">(</span>syntax<span class="sy0">-</span>rules <span class="br0">(</span><span class="br0">)</span>
+      <span class="br0">[</span><span class="br0">(</span>_ x<span class="br0">)</span> `<span class="br0">(</span>,x x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>copy<span class="sy0">-</span>code <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>#<span class="sy0">&lt;</span>procedure<span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>copy<span class="sy0">-</span>code 'a<span class="br0">)</span>
+<span class="br0">(</span>a 'a<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>map copy<span class="sy0">-</span>code '<span class="br0">(</span>a b c<span class="br0">)</span><span class="br0">)</span>
+stdin::<span class="nu0">167</span>: <span class="me1">copy</span><span class="sy0">-</span>code: <span class="me1">bad</span> syntax
+  in: <span class="me1">copy</span><span class="sy0">-</span>code
+  context...:</pre>
+<p>
+It's for the same reason we couldn't use (lambda () loop), as Dan demonstrated in class. To get around this problem, let's define a macro <code>macro-map</code>, which <em>will</em> allow us to map a macro.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>macro<span class="sy0">-</span>map <span class="kw1">quote</span> '<span class="br0">(</span><span class="br0">(</span>trinidad <span class="kw1">and</span> tobago<span class="br0">)</span> <span class="br0">(</span>saint vincent <span class="kw1">and</span> the grenadines<span class="br0">)</span> <span class="br0">(</span>antigua <span class="kw1">and</span> barbuda<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span>trinidad <span class="kw1">and</span> tobago<span class="br0">)</span>
+ <span class="br0">(</span>saint vincent <span class="kw1">and</span> the grenadines<span class="br0">)</span>
+ <span class="br0">(</span>antigua <span class="kw1">and</span> barbuda<span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>macro<span class="sy0">-</span>map copy<span class="sy0">-</span>code '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="sy0">+</span> <span class="nu0">2</span> x<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="nu0">7</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span>#<span class="sy0">&lt;</span>procedure<span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span>
+ <span class="br0">(</span>#<span class="sy0">&lt;</span>procedure<span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="sy0">+</span> <span class="nu0">2</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+ <span class="br0">(</span>#<span class="sy0">&lt;</span>procedure<span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="nu0">7</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>define<span class="sy0">-</span>syntax quote<span class="sy0">-</span><span class="kw1">quote</span>
+    <span class="br0">(</span>syntax<span class="sy0">-</span>rules <span class="br0">(</span><span class="br0">)</span>
+      <span class="br0">[</span><span class="br0">(</span>_ e<span class="br0">)</span> <span class="br0">(</span><span class="kw1">quote</span> <span class="br0">(</span><span class="kw1">quote</span> e<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>macro<span class="sy0">-</span>map quote<span class="sy0">-</span><span class="kw1">quote</span> '<span class="br0">(</span><span class="br0">(</span>trinidad <span class="kw1">and</span> tobago<span class="br0">)</span> <span class="br0">(</span>saint vincent <span class="kw1">and</span> the grenadines<span class="br0">)</span> <span class="br0">(</span>antigua <span class="kw1">and</span> barbuda<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>'<span class="br0">(</span>trinidad <span class="kw1">and</span> tobago<span class="br0">)</span>
+ '<span class="br0">(</span>saint vincent <span class="kw1">and</span> the grenadines<span class="br0">)</span>
+ '<span class="br0">(</span>antigua <span class="kw1">and</span> barbuda<span class="br0">)</span><span class="br0">)</span></pre>
+</div>
+
+<h2><a name="brainteaser" id="brainteaser">Brainteaser</a></h2>
+<div class="level2">
+
+<p>
+<!---
+**7.** We have typically been treating environments as mappings from variables to values. We can instead implement the environment as a mapping from variables to ``store locations&#039;&#039; (L-values), where our store is now a mapping from store locations to expressed values. This might be implemented as follows: 
+
+&lt;code lisp&gt;
+(define empty-env (lambda () &#039;()))
+
+(define extend-env (lambda (x a env) `((,x . ,a) . ,env)))
+
+(define apply-env
+  (lambda (env y)
+    (let ((lookup (assq y env)))
+      (if lookup
+        (cdr lookup)
+        (errorf &#039;lookup &quot;Unbound variable ~s\n&quot; y)))))
+
+(define closure
+  (lambda (x body env)
+    `(closure (lambda (,x) ,body) ,env)))
+
+(define apply-proc
+  (lambda (p a s)
+    (pmatch p
+      [(closure (lambda (,x) ,body) ,env)
+        (value-of-sps body (extend-env x a env) s)])))
+
+(define rator?
+  (lambda (e)
+    (not (memq e &#039;(zero? sub1)))))
+
+(define value-of-sps
+  (lambda (exp env s)
+    (pmatch exp
+      [,x (guard (symbol? x)) `(,(apply-env env x) . ,s)]
+      [,x (guard (or (boolean? x) (number? x))) `(,x . ,s)]
+      [(zero? ,e)
+        (let-pair ((v . s^) (value-of-sps e env s))
+          `(,(zero? v) . ,s^))]
+      [(sub1 ,e)
+        (let-pair ((v . s^) (value-of-sps e env s))
+          `(,(sub1 v) . ,s^))]
+      [(* ,e1 ,e2) 
+        ;; You Complete
+        ]
+      [(if ,e1 ,e2 ,e3) 
+        ;; You Complete
+        ]
+      [(lambda (,x) ,body)
+        ;; You Complete
+        ]
+      [(,rator ,rand) (guard (rator? rator))
+        ;; You Complete
+        ])))
+&lt;/code&gt;
+
+Having done so, we can now implement variable assignment [[http://en.wikipedia.org/wiki/Reference_(computer_science)|references]] in our interpreter. We should be able to set a reference to a value (creating a new reference if needed) via &#039;&#039;setref&#039;&#039; and dereference a reference to a value &#039;&#039;deref&#039;&#039;. This will mean we can achieve call-by-reference like behavior in a call-by-value language: we can simply pass references by value. 
+
+It may be helpful to examine these calls to get a better idea of how the results show be returned.
+
+&lt;code lisp&gt;
+&gt;  (value-of-sps &#039;((lambda (x) x) 5) (empty-env) 0)
+(5 . 1)
+
+&gt;  (value-of-sps &#039;((lambda (x) ((lambda (y) y) x)) ((lambda (x) x) 5)) (empty-env) 0)
+(5 . 3)
+
+&gt; (value-of-sps &#039;(((lambda (f)
+                      (lambda (n) (if (zero? n) 1 (* n ((f f) (sub1 n))))))
+                        (lambda (f)
+                          (lambda (n) (if (zero? n) 1 (* n ((f f) (sub1 n)))))))
+                    5)
+                (empty-env) 
+               0)
+(120 . 8)
+&lt;/code&gt;
+
+--->
+<em>Omitted. No worries this week.</em>
+</p>
+
+<p>
+<!--
+**Write the following store-passing-style Racket procedures. Place all of your code in a file named &#039;&#039;bonus.rkt&#039;&#039;, and submit it via [[OnCourse]].**
+
+**1.** Define and test a procedure &#039;&#039;rember*8-sps&#039;&#039; that takes a list and a number and, using store-passing style, returns the list with ever &#039;&#039;8&#039;&#039; removed and a count of how many it removed.
+
+&lt;code lisp&gt;
+&gt; (rember*8-sps &#039;(1 2 3 4 5 6 7) 0)
+((1 2 3 4 5 6 7) . 0)
+&gt; (rember*8-sps &#039;(1 2 (3 4 8 8 ) 5 6 7) 0)
+((1 2 (3 4) 5 6 7) . 2)
+&gt; (rember*8-sps &#039;(8 8 (8 8) 5 6 7) 0)
+((() 5 6 7) . 4)
+&gt; (rember*8-sps &#039;(8 8 (8 (8)) ((8)) 8 8) 0)
+(((()) (())) . 7)
+&lt;/code&gt;
+-->
+</p>
+
+</div>
+
+<h3><a name="just-dessert" id="just-dessert">Just Dessert</a></h3>
+<div class="level3">
+
+<p>
+
+<strong>8.</strong> condre
+</p>
+
+<p>
+There are some unfortunate limitations to <code>cond</code>. For instance, how many times have you had to do something like the following:
+</p>
+<pre class="code lisp"><span class="br0">(</span>define proc<span class="sy0">-</span><span class="kw1">list</span>
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>ls<span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">cond</span>
+      <span class="br0">(</span><span class="br0">(</span><span class="kw1">null</span>? ls<span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span>else <span class="co1">;; This part here.</span>
+        <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>a <span class="br0">(</span><span class="kw1">car</span> ls<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+          <span class="br0">(</span><span class="kw1">cond</span>
+            <span class="br0">(</span><span class="br0">(</span>number? a<span class="br0">)</span> <span class="br0">(</span><span class="kw1">cons</span> <span class="br0">(</span>even? a<span class="br0">)</span> <span class="br0">(</span>proc<span class="sy0">-</span><span class="kw1">list</span> <span class="br0">(</span><span class="kw1">cdr</span> ls<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+            <span class="br0">(</span><span class="br0">(</span>boolean? a<span class="br0">)</span> <span class="br0">(</span><span class="kw1">cons</span> a <span class="br0">(</span>proc<span class="sy0">-</span><span class="kw1">list</span> <span class="br0">(</span><span class="kw1">cdr</span> ls<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+            <span class="br0">(</span>else <span class="br0">(</span><span class="kw1">cons</span> #f <span class="br0">(</span>proc<span class="sy0">-</span><span class="kw1">list</span> <span class="br0">(</span><span class="kw1">cdr</span> ls<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+The part to which I want to direct your attention is that else-let-cond component. I really want it to be all part of one cond block, but I have to add an else, introduce a let-binding, then start a new cond under a new indentation. Yuk. Enter <code>condre</code> (for Andre's <code>cond</code>).
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>condre
+    <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>a <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="br0">(</span>number? a<span class="br0">)</span> #t<span class="br0">)</span>
+      <span class="br0">(</span>else #f<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>define proc<span class="sy0">-</span><span class="kw1">list</span>
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>ls<span class="br0">)</span>
+      <span class="br0">(</span>condre
+        <span class="br0">(</span><span class="br0">(</span><span class="kw1">null</span>? ls<span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>a <span class="br0">(</span><span class="kw1">car</span> ls<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+          <span class="br0">(</span><span class="br0">(</span>number? a<span class="br0">)</span> <span class="br0">(</span><span class="kw1">cons</span> <span class="br0">(</span>even? a<span class="br0">)</span> <span class="br0">(</span>proc<span class="sy0">-</span><span class="kw1">list</span> <span class="br0">(</span><span class="kw1">cdr</span> ls<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+          <span class="br0">(</span><span class="br0">(</span>boolean? a<span class="br0">)</span> <span class="br0">(</span><span class="kw1">cons</span> a <span class="br0">(</span>proc<span class="sy0">-</span><span class="kw1">list</span> <span class="br0">(</span><span class="kw1">cdr</span> ls<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+          <span class="br0">(</span>else <span class="br0">(</span><span class="kw1">cons</span> #f <span class="br0">(</span>proc<span class="sy0">-</span><span class="kw1">list</span> <span class="br0">(</span><span class="kw1">cdr</span> ls<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>proc<span class="sy0">-</span><span class="kw1">list</span> '<span class="br0">(</span>#t <span class="nu0">2</span> <span class="nu0">3</span> #f 'dog<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>#t #t #f #f #f<span class="br0">)</span></pre>
+<p>
+Andre, being Andre, added support for <code>let*</code>, <code>letrec</code>, <code>letrec*</code>, <code>⇒</code>, 1 or more bodies, and more than one body on the right-hand side of an arrow. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>condre 
+    <span class="br0">(</span>#f<span class="br0">)</span> 
+    <span class="br0">(</span>letrec <span class="br0">(</span><span class="br0">(</span>ls? <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>ls<span class="br0">)</span>
+                    <span class="br0">(</span>condre
+                      <span class="br0">[</span><span class="br0">(</span><span class="kw1">null</span>? ls<span class="br0">)</span> #t<span class="br0">]</span>
+                      <span class="br0">[</span><span class="br0">(</span>pair? ls<span class="br0">)</span> <span class="br0">(</span>ls? <span class="br0">(</span><span class="kw1">cdr</span> ls<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+                      <span class="br0">[</span>else #f<span class="br0">]</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="br0">(</span>ls? '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> . <span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span> #f<span class="br0">)</span>
+      <span class="br0">(</span><span class="br0">(</span>ls? '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span> <span class="sy0">=&gt;</span> <span class="br0">(</span>display 'Should<span class="sy0">-</span>be<span class="sy0">-</span>seven<span class="sy0">-&gt;</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>t<span class="br0">)</span> <span class="br0">(</span><span class="kw1">set</span><span class="sy0">!</span> t <span class="nu0">7</span><span class="br0">)</span> t<span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span>else #f<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+Should<span class="sy0">-</span>be<span class="sy0">-</span>seven<span class="sy0">-&gt;</span><span class="nu0">7</span></pre>
+<p>
+Obviously, this is just for fun, so you can include just as much of this as you feel compelled to do. But you don't wanna be walking around with an off-brand <code>condre</code>, do you?
+</p>
+
+</div>
+
+<h2><a name="extra-bonus-dessert" id="extra-bonus-dessert">Extra bonus dessert</a></h2>
+<div class="level2">
+
+<p>
+
+With or without peeking implement the interpreter as a <code>syntax-rules</code> macro. That is, by the time macro expansion is finished, you'll have completed the evaluation of the program. You already have a document that shows how to do this, but it's more fun if you can do it with a minimum of peeking.
+</p>
+
+<p>
+
+<!----
+**3.** Parens-0s
+
+Write a macro &#039;&#039;parens-0s&#039;&#039; that takes as an argument a list containing an arbitrarily-deep tree that may contain 0s interspersed throughout. You should return a list containing a 1 in place of each (, whereas the 0s remain in place and the )s are dropped. 
+
+&lt;code lisp&gt;
+&gt; (parens-0s (()))
+(1)
+&gt; (parens-0s (0))
+(0)
+&gt; (parens-0s ((())))
+(1 1)
+&gt; (parens-0s (((((0))))))
+(1 1 1 1 0)
+&gt; (parens-0s (((0((0))))))
+(1 1 0 1 1 0)
+&gt; (parens-0s ((((0)((0))))))
+(1 1 1 0 1 1 0)
+&gt; (parens-0s ((((0)((0 0))))))
+(1 1 1 0 1 1 0 0)
+&lt;/code&gt;
+-->
+</p>
+
+</div>
+
+    <!-- ......... wikipage stop  ......... -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+ 
+  <!--  footer -->  
+  <div class="stylefoot">
+
+        <div class="meta">
+      <div class="doc">
+		<p>sps.txt · Last modified: 2015/11/06 04:45 by jhemann</p>
+      </div>
+   </div>
+
+    <div>
+       <!--  breadcrumbs and search -->
+	  	
+	  
+
+       
+      <div class="clearer"></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="no"><img src="./C311_B521_A596 Programming Languages [Bonus Assignment_ Store-Passing Style]_files/indexer.php" width="1" height="1" alt=""></div>
+
+
+</body></html>

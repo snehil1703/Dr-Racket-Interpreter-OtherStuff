@@ -1,0 +1,581 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0052)https://cgi.soic.indiana.edu/~c311/doku.php?id=lp-a3 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="google-site-verification" content="CHpL8-yKEGFx7Gy37uNcU2lz9oRZydQdifkiJNj6-P4">
+  
+  <title>
+    C311/B521/A596 Programming Languages    [Assignment 13: Further Logic Programming]
+  </title>
+
+  <meta name="generator" content="DokuWiki Release 2009-02-14b">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2015-12-03T19:17:41-0500">
+<meta name="keywords" content="lp-a3">
+<link rel="search" type="application/opensearchdescription+xml" href="https://cgi.soic.indiana.edu/~c311/lib/exe/opensearch.php" title="C311/B521/A596 Programming Languages">
+<link rel="start" href="https://cgi.soic.indiana.edu/~c311/">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cgi.soic.indiana.edu/~c311/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="https://cgi.soic.indiana.edu/~c311/feed.php?mode=list&amp;ns=">
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cgi.soic.indiana.edu/~c311/doku.php?do=export_xhtml&amp;id=lp-a3">
+<link rel="stylesheet" media="all" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 13_ Further Logic Programming]_files/css.php">
+<link rel="stylesheet" media="screen" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 13_ Further Logic Programming]_files/css(1).php">
+<link rel="stylesheet" media="print" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 13_ Further Logic Programming]_files/css(2).php">
+<script type="text/javascript" charset="utf-8" src="./C311_B521_A596 Programming Languages [Assignment 13_ Further Logic Programming]_files/js.php"></script>
+
+  <link rel="shortcut icon" href="https://cgi.soic.indiana.edu/~c311/lib/tpl/doogiestpl/images/favicon.ico">
+
+  </head>
+
+
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+      <div class="header_left"></div>
+      <div class="logo">
+        <a href="https://cgi.soic.indiana.edu/~c311/doku.php" name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]">C311/B521/A596 Programming Languages</a>      </div>
+
+      <div id="tabnavi" class="tabnavi">
+	    <ul>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=home">Home</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=course-policies">Policies</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=instructors">Instructors</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=resources">Resources</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=schedule">Schedule</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignments">Assignments</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=b621">B621</a></li>
+</ul>
+	  </div>
+	  
+	  <div class="clearer"></div>
+      	</div>  
+  </div>
+    
+  
+   <div style="float: right;">
+            <form class="button btn_login" method="get" action="https://cgi.soic.indiana.edu/~c311/doku.php"><div class="no"><input type="hidden" name="do" value="login"><input type="hidden" name="sectok" value="bb41d96766a4f618105208cecf4ca075"><input type="hidden" name="id" value="lp-a3"><input type="submit" value="Login" class="button" title="Login"></div></form>       &nbsp;  &nbsp;  &nbsp;
+   </div>
+  <div class="clearer">&nbsp;</div>
+
+
+  <div class="page">
+    <!-- ......... wikipage start ......... -->
+    
+
+
+<h1><a name="assignment-13further-logic-programming" id="assignment-13further-logic-programming">Assignment 13: Further Logic Programming</a></h1>
+<div class="level1">
+
+<blockquote cite="./C311_B521_A596 Programming Languages [Assignment 13_ Further Logic Programming]_files/Carl Friedrich Gauss" class="blockquote-plugin">
+<p>
+Mathematics is concerned only with the enumeration and comparison of relations.
+
+</p>
+
+</blockquote>
+
+</div>
+
+<h2><a name="preliminaries" id="preliminaries">Preliminaries</a></h2>
+<div class="level2">
+
+<p>
+
+This week's assignment is a continuation of our work with miniKanren. So you should need to <code>(require “mk.rkt”)</code> and <code>(require “numbers.rkt”)</code>, as these files contain miniKanren and the relational arithmetic system. You should be able to test your solutions with the attached <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=a13-student-tests.rkt" class="media mediafile mf_rkt" title="a13-student-tests.rkt">a13-student-tests.rkt</a>
+</p>
+
+<p>
+<strong>Submit your results to OnCourse in a file named <code>a13.rkt</code>.</strong>
+</p>
+
+<p>
+Make sure they pass the included tests, but as usual you should also write your own.
+</p>
+
+<p>
+<strong> NOTE: Remember that, in general, the order of answers in a miniKanren program is irrelevant. Its not mandatory that your answers appear in the same order as below, but do try and check that your relations don't produce incorrect answers when run with fresh logic variables. </strong> 
+</p>
+
+<p>
+<strong> NOTE: Also recall that, while generally you want your recursions last, if some of your calls are serious, non-tail calls you might have to change the ordering. </strong>
+</p>
+
+</div>
+
+<h2><a name="assignment" id="assignment">Assignment</a></h2>
+<div class="level2">
+
+<p>
+
+<strong>1.</strong> <code>listo</code>
+</p>
+
+<p>
+As a warm-up, first, write the <code>listo</code> miniKanren relation. This is intended to operate similarly to Racket's <code>list?</code>
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">1</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>listo '<span class="br0">(</span>a b c d e<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>_.0<span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">1</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>listo '<span class="br0">(</span>a b c d . e<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">4</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>listo q<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="br0">)</span> <span class="br0">(</span>_.0<span class="br0">)</span> <span class="br0">(</span>_.0 _.1<span class="br0">)</span> <span class="br0">(</span>_.0 _.1 _.2<span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">4</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>listo `<span class="br0">(</span>a b ,q<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>_.0<span class="br0">)</span></pre>
+<p>
+For the next two questions, we get a chance to play with the miniKanren relational arithmetic system. 
+</p>
+
+<p>
+<strong>2.</strong> <code>facto</code> Build a relation that holds between two backward-binary numbers whenever the second is the factorial of the first. Use the backwards-binary arithmetic primitives found in <code>numbers.rkt</code>, and described in chapters 7 &amp; 8 of <em>The</em> <em>Reasoned</em> <em>Schemer</em>.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">1</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>facto  q '<span class="br0">(</span>0 0 0 <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> 0 <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">1</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>facto <span class="br0">(</span>build<span class="sy0">-</span>num <span class="nu0">5</span><span class="br0">)</span> q<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span>0 0 0 <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">6</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>fresh <span class="br0">(</span>n1 n2<span class="br0">)</span> <span class="br0">(</span>facto n1 n2<span class="br0">)</span> <span class="br0">(</span><span class="sy0">==</span> `<span class="br0">(</span>,n1 ,n2<span class="br0">)</span> q<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">)</span> <span class="br0">(</span><span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span> 
+ <span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span><span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span> 
+ <span class="br0">(</span><span class="br0">(</span>0 <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>0 <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span> 
+ <span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>0 <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="br0">(</span>0 0 <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>0 0 0 <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span> 
+ <span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> 0 <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>0 0 0 <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+<strong>3.</strong> <code>fibs</code> Plain old fibonacci has had its day. Let's do something more fun. And in the process, learn a technique sometimes of use when building miniKanren relations. Here, we're going to take a function <code>fibs</code> which takes one input and returns two values, and make a three-place relation <code>fibso</code>. Check out the definition of <code>fibs</code>:
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define fibs
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">cond</span>
+        <span class="br0">(</span><span class="br0">(</span>eqv? n 0<span class="br0">)</span> <span class="br0">(</span>values <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+        <span class="br0">(</span>else
+         <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>n<span class="sy0">-</span> <span class="br0">(</span><span class="sy0">-</span> n <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+           <span class="br0">(</span>let<span class="sy0">-</span>values <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>u v<span class="br0">)</span> <span class="br0">(</span>fibs n<span class="sy0">-</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+             <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>u<span class="sy0">+</span>v <span class="br0">(</span><span class="sy0">+</span> u v<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+               <span class="br0">(</span>values v u<span class="sy0">+</span>v<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>fibs 0<span class="br0">)</span>
+<span class="nu0">1</span>
+<span class="nu0">1</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>fibs <span class="nu0">1</span><span class="br0">)</span>
+<span class="nu0">1</span>
+<span class="nu0">2</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>fibs <span class="nu0">2</span><span class="br0">)</span>
+<span class="nu0">2</span>
+<span class="nu0">3</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>fibs <span class="nu0">3</span><span class="br0">)</span>
+<span class="nu0">3</span>
+<span class="nu0">5</span></pre>
+<p>
+We use <code>values</code>, which allows a Racket function to return multiple output values. This function returns the nth and n+1th fibonacci number. Since <code>fibs</code> returns two values, we need to use <code>let-values</code> when let binding the recursive call. Here, the first answer is bound to <code>u</code> and the second is bound to <code>v</code>. When writing <code>fibso</code> you will need to use two “output variables” in your relation, rather than just one like we usually do. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">4</span> <span class="br0">(</span>q<span class="br0">)</span> 
+    <span class="br0">(</span>fresh <span class="br0">(</span>n o1 o2<span class="br0">)</span> 
+      <span class="br0">(</span><span class="sy0">==</span> q `<span class="br0">(</span>,n ,o1 ,o2<span class="br0">)</span><span class="br0">)</span> 
+      <span class="br0">(</span>fibso n o1 o2<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">)</span> <span class="br0">(</span><span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span><span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span><span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>0 <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="br0">(</span>0 <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>0 <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span><span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span><span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span><span class="nu0">1</span> 0 <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">1</span> <span class="br0">(</span>q<span class="br0">)</span> 
+    <span class="br0">(</span>fresh <span class="br0">(</span>n o1<span class="br0">)</span> 
+      <span class="br0">(</span><span class="sy0">==</span> q `<span class="br0">(</span>,n ,o1<span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span>fibso n o1 <span class="br0">(</span>build<span class="sy0">-</span>num <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span><span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">1</span> <span class="br0">(</span>q<span class="br0">)</span> 
+    <span class="br0">(</span>fresh <span class="br0">(</span>n o2<span class="br0">)</span> 
+      <span class="br0">(</span><span class="sy0">==</span> q `<span class="br0">(</span>,n ,o2<span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span>fibso n <span class="br0">(</span>build<span class="sy0">-</span>num <span class="nu0">5</span><span class="br0">)</span> o2<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>0 0 <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>0 0 0 <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+<strong>4.</strong> fo-lavo 
+</p>
+
+<p>
+In class, Dan demonstrated a relational interpreter written in miniKanren which generates quines. What we have here is a whole different way of making it “run backwards”. You might have seen the interpreter <code>fo-lav</code> on Assignment 3. Drop <code>1bus</code>, <code>?orez</code>, <code>fi</code>, and <code>*</code>, and instead add <code>etouq</code> and <code>tsil</code>. Your job is to write a relation <code>fo-lavo</code>, which is the transformation of this provided interpreter into miniKanren. You should be able to use your Racket implementation of <code>fo-lav</code> and the <code>val-ofo</code> from class to guide you a good deal of the way. Your relation should be able to produce <code>fo-lav</code> quines. 
+</p>
+<pre class="code lisp"><span class="co1">;; testing etouq</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">1</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>fo<span class="sy0">-</span>lavo '<span class="br0">(</span>etouq etouq<span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> q<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>etouq<span class="br0">)</span>
+<span class="co1">;; testing tsil</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">1</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>fo<span class="sy0">-</span>lavo '<span class="br0">(</span><span class="br0">(</span>cat etouq<span class="br0">)</span> tsil<span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> q<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span>cat<span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">1</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>fo<span class="sy0">-</span>lavo '<span class="br0">(</span><span class="br0">(</span>cat etouq<span class="br0">)</span> . tsil<span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> q<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">1</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>fo<span class="sy0">-</span>lavo '<span class="br0">(</span><span class="br0">(</span>dog etouq<span class="br0">)</span> <span class="br0">(</span>cat etouq<span class="br0">)</span> tsil<span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> q<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span>dog cat<span class="br0">)</span><span class="br0">)</span>
+<span class="co1">;; fo-lav quines</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">1</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>fo<span class="sy0">-</span>lavo q '<span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> q<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>_.0 <span class="br0">(</span>etouq etouq<span class="br0">)</span> tsil<span class="br0">)</span> _.0 tsil<span class="br0">)</span> <span class="br0">(</span>_.0<span class="br0">)</span> adbmal<span class="br0">)</span>
+     etouq<span class="br0">)</span>
+    <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>_.0 <span class="br0">(</span>etouq etouq<span class="br0">)</span> tsil<span class="br0">)</span> _.0 tsil<span class="br0">)</span> <span class="br0">(</span>_.0<span class="br0">)</span> adbmal<span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span><span class="sy0">=/=</span> <span class="br0">(</span><span class="br0">(</span>_.0 closure<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>_.0 etouq<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>_.0 tsil<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>sym _.0<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Cool side note. When used in combination with the <code>val-ofo</code> code from class, you should be able to build programs in one language which, on given input, generate programs in the other language.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">3</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>fresh <span class="br0">(</span>a c d<span class="br0">)</span>
+	       <span class="br0">(</span>val<span class="sy0">-</span>ofo `<span class="br0">(</span>,a ,d<span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> c<span class="br0">)</span>
+	       <span class="br0">(</span>fo<span class="sy0">-</span>lavo `<span class="br0">(</span>,c ,d<span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> a<span class="br0">)</span>
+	       <span class="br0">(</span><span class="sy0">==</span> `<span class="br0">(</span>,a ,c ,d<span class="br0">)</span> q<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="kw1">quote</span> <span class="br0">(</span>'etouq <span class="br0">(</span>_.0<span class="br0">)</span> adbmal<span class="br0">)</span> <span class="br0">(</span>'etouq <span class="br0">(</span>_.0<span class="br0">)</span> adbmal<span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span><span class="sy0">=/=</span> <span class="br0">(</span><span class="br0">(</span>_.0 closure<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>_.0 etouq<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>sym _.0<span class="br0">)</span><span class="br0">)</span>
+  <span class="br0">(</span><span class="br0">(</span><span class="kw1">quote</span>
+     <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>_.0 etouq<span class="br0">)</span> <span class="br0">(</span>'etouq <span class="br0">(</span>_.1<span class="br0">)</span> adbmal<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>_.2<span class="br0">)</span> adbmal<span class="br0">)</span>
+     <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>_.0 etouq<span class="br0">)</span> <span class="br0">(</span>'etouq <span class="br0">(</span>_.1<span class="br0">)</span> adbmal<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>_.2<span class="br0">)</span> adbmal<span class="br0">)</span><span class="br0">)</span>
+    <span class="br0">(</span><span class="sy0">=/=</span> <span class="br0">(</span><span class="br0">(</span>_.1 closure<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>_.1 etouq<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>_.2 adbmal<span class="br0">)</span><span class="br0">)</span>
+         <span class="br0">(</span><span class="br0">(</span>_.2 closure<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>_.2 etouq<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+    <span class="br0">(</span>sym _.1 _.2<span class="br0">)</span>
+    <span class="br0">(</span>absento <span class="br0">(</span>closure _.0<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+  <span class="br0">(</span><span class="br0">(</span><span class="kw1">quote</span>
+     <span class="br0">(</span><span class="br0">(</span>_.0 etouq<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>'etouq <span class="br0">(</span>_.1<span class="br0">)</span> adbmal<span class="br0">)</span> <span class="br0">(</span>_.2<span class="br0">)</span> adbmal<span class="br0">)</span><span class="br0">)</span>
+     <span class="br0">(</span><span class="br0">(</span>_.0 etouq<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>'etouq <span class="br0">(</span>_.1<span class="br0">)</span> adbmal<span class="br0">)</span> <span class="br0">(</span>_.2<span class="br0">)</span> adbmal<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+    <span class="br0">(</span><span class="sy0">=/=</span> <span class="br0">(</span><span class="br0">(</span>_.1 closure<span class="br0">)</span><span class="br0">)</span>
+         <span class="br0">(</span><span class="br0">(</span>_.1 etouq<span class="br0">)</span><span class="br0">)</span>
+         <span class="br0">(</span><span class="br0">(</span>_.2 adbmal<span class="br0">)</span><span class="br0">)</span>
+         <span class="br0">(</span><span class="br0">(</span>_.2 closure<span class="br0">)</span><span class="br0">)</span>
+	 <span class="br0">(</span><span class="br0">(</span>_.2 etouq<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+    <span class="br0">(</span>sym _.1 _.2<span class="br0">)</span>
+    <span class="br0">(</span>absento <span class="br0">(</span>closure _.0<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+And actually, you can also generate a handful of expressions valid in both languages.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">2</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>fresh <span class="br0">(</span>a b<span class="br0">)</span> <span class="br0">(</span>val<span class="sy0">-</span>ofo q '<span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> a<span class="br0">)</span> <span class="br0">(</span>fo<span class="sy0">-</span>lavo q '<span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> b<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>'etouq <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>_.0<span class="br0">)</span> adbmal<span class="br0">)</span> <span class="br0">(</span>sym _.0<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="co1">;; Note, this one takes a while</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>run <span class="nu0">3</span> <span class="br0">(</span>q<span class="br0">)</span> <span class="br0">(</span>fresh <span class="br0">(</span>a b<span class="br0">)</span> <span class="br0">(</span>val<span class="sy0">-</span>ofo q '<span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> a<span class="br0">)</span> <span class="br0">(</span>fo<span class="sy0">-</span>lavo q '<span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span> b<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>'etouq
+  <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>_.0<span class="br0">)</span> adbmal<span class="br0">)</span> <span class="br0">(</span>sym _.0<span class="br0">)</span><span class="br0">)</span>
+  <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>adbmal<span class="br0">)</span> adbmal<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">lambda</span><span class="br0">)</span> adbmal<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+<strong>5.</strong> Color Middle Earth
+</p>
+
+<p>
+If you take a look at a world map, it's colored in by countries. Notice, too that no two adjacent countries are given the same color. The <a href="http://en.wikipedia.org/wiki/Four_color_theorem" class="urlextern" title="http://en.wikipedia.org/wiki/Four_color_theorem" rel="nofollow">four-color theorem</a>, that four distinct colors suffice to color any planar graph, was first conjectured in 1852. It stood as an open problem for more than 100 years, until it was proven with the aid of a computer in 1976. The initial proof, by contradiction and by cases for 1,936 cases, raised philosophical questions into what it means to be a proof. 
+</p>
+
+<p>
+Here, we're not asking you to prove the theorem. We're simply asking you to color a particular graph. Consider the following map of Tolkien's Middle Earth.
+</p>
+
+<p>
+<a href="https://cgi.soic.indiana.edu/~c311/lib/exe/detail.php?id=lp-a3&amp;media=middle-earth.jpg" class="media" title="middle-earth.jpg"><img src="./C311_B521_A596 Programming Languages [Assignment 13_ Further Logic Programming]_files/fetch.php" class="media" alt=""></a>
+</p>
+
+<p>
+As the map is somewhat ambiguous, consider the simplified list representation below, which makes clear which realms (nodes) are adjacent (connected via an edge) to which. For each list, the car of the list is considered to be adjacent to all the realms in the cdr. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define middle<span class="sy0">-</span>earth
+    '<span class="br0">(</span><span class="br0">(</span>lindon eriador forodwaith<span class="br0">)</span>
+      <span class="br0">(</span>forodwaith lindon rhovanion eriador<span class="br0">)</span>
+      <span class="br0">(</span>eriador lindon forodwaith rhovanion enedwaith<span class="br0">)</span>
+      <span class="br0">(</span>rhovanion forodwaith eriador enedwaith rohan rhun<span class="br0">)</span>
+      <span class="br0">(</span>enedwaith eriador rhovanion rohan gondor<span class="br0">)</span>
+      <span class="br0">(</span>rohan enedwaith rhovanion rhun gondor mordor<span class="br0">)</span>
+      <span class="br0">(</span>gondor enedwaith rohan mordor<span class="br0">)</span>
+      <span class="br0">(</span>rhun rohan rhovanion khand mordor<span class="br0">)</span>
+      <span class="br0">(</span>mordor gondor rohan rhun khand harad<span class="br0">)</span>
+      <span class="br0">(</span>khand mordor rhun harad<span class="br0">)</span>
+      <span class="br0">(</span>harad mordor khand<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+You may find you don't need this list <code>middle-earth</code> per se, just the information it contains. Write a program <code>color-middle-earth</code>, that takes a list of colors, and uses that as a part of a miniKanren relation to associate a list of colors with an alist containing pairs (node . color). Notice that we aren't asking you to solve the general case, merely this particular graph. Also notice we only ask for one answer. Also, its not necessary to generate this exact coloring: any valid coloring will suffice. Moreover, your solution isn't required to “run backwards”. The trick to this problem is to just tell miniKanren what needs to be the case. Declare what you want, and miniKanren will color your graph. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>color<span class="sy0">-</span>middle<span class="sy0">-</span>earth '<span class="br0">(</span>red orange purple black<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>lindon . red<span class="br0">)</span> <span class="br0">(</span>forodwaith . orange<span class="br0">)</span> <span class="br0">(</span>eriador . purple<span class="br0">)</span> <span class="br0">(</span>rhovanion . red<span class="br0">)</span>
+   <span class="br0">(</span>enedwaith . orange<span class="br0">)</span> <span class="br0">(</span>rohan . purple<span class="br0">)</span> <span class="br0">(</span>gondor . red<span class="br0">)</span>
+   <span class="br0">(</span>rhun . orange<span class="br0">)</span> <span class="br0">(</span>mordor . black<span class="br0">)</span> <span class="br0">(</span>khand . red<span class="br0">)</span>
+   <span class="br0">(</span>harad . orange<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Two hints.
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Don't forget about <code>absento</code> and the recursive relation <code>membero</code>. These are useful.</div>
+</li>
+<li class="level1"><div class="li"> Consider the following quote:</div>
+</li>
+</ol>
+
+<blockquote cite="./C311_B521_A596 Programming Languages [Assignment 13_ Further Logic Programming]_files/wiki" class="blockquote-plugin">
+<p>
+I used Prolog in a comparative languages course. The biggest program we did was a map-coloring one (color a map with only four colors so that no bordering items have the same color, given a mapping of things that border each other). I say biggest because we were given the most time with it. I started out like most people in my class trying to hack the language into letting me code a stinking algorithm to color a stinking map. Then I wrote a test function to check if the map was colored and, in a flash of prolog, realized that that was really all I needed to code.
+
+</p>
+
+</blockquote>
+
+</div>
+
+<h3><a name="brainteaser" id="brainteaser">Brainteaser</a></h3>
+<div class="level3">
+
+<p>
+
+<em>Omitted</em>.
+</p>
+
+</div>
+
+<h3><a name="just-dessert" id="just-dessert">Just Dessert</a></h3>
+<div class="level3">
+
+<p>
+
+In my implementation of <code>color-middle-earth</code>, we've hard-coded it to color a particular graph. That's somewhat unfortunate. We could write a relation <code>color-middle-eartho</code> that holds between a list of colors, a list of <code>(node . neighbors)</code> pairs, where <code>neighbors</code> is a list of neighbors, and an association list of <code>(node . color)</code>, that represents the graph coloring. Which is a cool thing to do!
+</p>
+
+<p>
+But instead, let's do something else. Write a <strong>macro</strong>
+<code>color-graph</code> that takes a name and a list of pairs <code>(node . neighbors)</code> and have it expand into the definition of a function
+that will take a list of colors and generate their coloring. Another
+way of saying it is that your macro should expand into the definition
+that is your solution to the <code>color-middle-earth</code> problem. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>color<span class="sy0">-</span>grapho another<span class="sy0">-</span>color<span class="sy0">-</span>middle<span class="sy0">-</span>earth
+		<span class="br0">(</span><span class="br0">(</span>lindon eriador forodwaith<span class="br0">)</span>
+		 <span class="br0">(</span>forodwaith lindon rhovanion eriador<span class="br0">)</span>
+		 <span class="br0">(</span>eriador lindon forodwaith rhovanion enedwaith<span class="br0">)</span>
+		 <span class="br0">(</span>rhovanion forodwaith eriador enedwaith rohan rhun<span class="br0">)</span>
+		 <span class="br0">(</span>enedwaith eriador rhovanion rohan gondor<span class="br0">)</span>
+		 <span class="br0">(</span>rohan enedwaith rhovanion rhun gondor mordor<span class="br0">)</span>
+		 <span class="br0">(</span>gondor enedwaith rohan mordor<span class="br0">)</span>
+		 <span class="br0">(</span>rhun rohan rhovanion khand mordor<span class="br0">)</span>
+		 <span class="br0">(</span>mordor gondor rohan rhun khand harad<span class="br0">)</span>
+		 <span class="br0">(</span>khand mordor rhun harad<span class="br0">)</span>
+		 <span class="br0">(</span>harad mordor khand<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>another<span class="sy0">-</span>color<span class="sy0">-</span>middle<span class="sy0">-</span>earth '<span class="br0">(</span>red orange purple black<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>harad . orange<span class="br0">)</span> <span class="br0">(</span>khand . red<span class="br0">)</span> <span class="br0">(</span>mordor . purple<span class="br0">)</span> <span class="br0">(</span>rhun . orange<span class="br0">)</span>
+   <span class="br0">(</span>gondor . red<span class="br0">)</span> <span class="br0">(</span>rohan . black<span class="br0">)</span> <span class="br0">(</span>enedwaith . orange<span class="br0">)</span>
+   <span class="br0">(</span>rhovanion . red<span class="br0">)</span> <span class="br0">(</span>eriador . purple<span class="br0">)</span> <span class="br0">(</span>forodwaith . orange<span class="br0">)</span>
+   <span class="br0">(</span>lindon . red<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+</div>
+
+<h3><a name="just-dessert2" id="just-dessert2">Just Dessert2</a></h3>
+<div class="level3">
+
+<p>
+
+In our opinion, we've gotten to do some pretty cool stuff this semester, and we've been able to introduce a whole host of neat ideas and things to play with. The intrepid student this semester has probably been messing around with a couple of these ideas on his or her own. Did something neat with streams? Did you write your own monad transformers? Finally finish that automatic CPSer? Or perhaps treat lambda calculus as an equational theory viz. miniKanren? Or something else cool? 
+</p>
+
+<p>
+The point is, if you've done something neat you wanted to show off, now's the time. Toss it in, and explain it to us in a comment. Just be sure it doesn't mess up your autograder submission when you do — if you're messing with modules or additional imports, you might want to comment all that jazz out and then just tell us about it. 
+</p>
+
+<p>
+But now's the time to strut your stuff!
+</p>
+
+<p>
+<!---
+For even more fun, write a relation &#039;&#039;color-graph&#039;&#039; between a set (unique list) of colors, an adjacency list representation of a graph, and an association list containing pairs (node . color), that holds whenever the association list represents a valid coloring of the graph by those colors. 
+
+And more fun than that, it seems like this relation ought to &quot;run backwards&quot;. We haven&#039;t (yet) gotten this working, so let us know if you do!
+
+
+=== Four fours ===
+
+Logic programming can be used to solve the //four fours problem//: starting with 4 4 4 4, add arithmetic operations and parentheses to build an expression whose value is a desired target number.  For example, 4-4+4-4=0, (4+4)/(4+4)=1, 4/4+4/4=2.  The following miniKanren code solves a basic version of this problem.
+
+&lt;code lisp&gt;
+(define arithmetic
+  (lambda (p r parse result)
+    (fresh (q result1)
+      (base p q result1)
+      (modify result1 result1 q r parse result))))
+
+(define base
+  (lambda (p r result)
+    (== p `(,result . ,r))))
+
+(define modify
+  (lambda (parse1 result1 p r parse result)
+    (conde [(== p r)
+            (== parse1 parse)
+            (== result1 result)]
+           [(fresh (q parse2 result2 parse0 result0)
+              (arithmetic p q parse2 result2)
+              (conde [(== parse0 `(+ ,parse1 ,parse2))
+                      (pluso result1 result2 result0)]
+                     [(== parse0 `(- ,parse1 ,parse2))
+                      (pluso result2 result0 result1)]
+                     [(== parse0 `(* ,parse1 ,parse2))
+                      (*o result1 result2 result0)]
+                     [(== parse0 `(/ ,parse1 ,parse2))
+                      (poso result2)
+                      (*o result2 result0 result1)])
+              (modify parse0 result0 q r parse result))])))
+
+(define four-fours
+  (let ((p (map build-num &#039;(4 4 4 4))))
+    (lambda (n)
+      (run 1 (parse)
+        (arithmetic p &#039;() parse (build-num n))))))
+&lt;/code&gt;
+
+This works for targets between 0 and 9, but there&#039;s no solution for 10 or 11.
+&lt;code&gt;
+&gt; (map four-fours (iota 12))
+(((- (+ (- (0 0 1) (0 0 1)) (0 0 1)) (0 0 1)))
+ ((/ (+ (- (0 0 1) (0 0 1)) (0 0 1)) (0 0 1)))
+ ((+ (/ (0 0 1) (0 0 1)) (/ (0 0 1) (0 0 1))))
+ ((/ (+ (+ (0 0 1) (0 0 1)) (0 0 1)) (0 0 1)))
+ ((+ (* (- (0 0 1) (0 0 1)) (0 0 1)) (0 0 1)))
+ ((/ (+ (* (0 0 1) (0 0 1)) (0 0 1)) (0 0 1)))
+ ((+ (/ (+ (0 0 1) (0 0 1)) (0 0 1)) (0 0 1)))
+ ((- (+ (0 0 1) (0 0 1)) (/ (0 0 1) (0 0 1))))
+ ((+ (+ (- (0 0 1) (0 0 1)) (0 0 1)) (0 0 1)))
+ ((+ (+ (/ (0 0 1) (0 0 1)) (0 0 1)) (0 0 1)))
+ ()
+ ())
+&lt;/code&gt;
+
+To enable a solution for 10, either extend the code above to allow consecutive digits such as 44 (whose value is forty-four), or extend the code above to allow the square root of 4 (which is two).
+
+To go all the way up to 18, extend the code in both of these ways.
+
+
+=== Part 2 Macros ===
+
+Let&#039;s implement some macros. For the following questions, make sure to use only &#039;&#039;syntax-rules&#039;&#039; macros, as we wrote in class. For the &#039;&#039;and*&#039;&#039; and &#039;&#039;cons*&#039;&#039; problems, it is //not// acceptable to use the &#039;&#039;and&#039;&#039; and &#039;&#039;cons*&#039;&#039; built into Scheme in your implementations. Also, don&#039;t use &#039;&#039;pmatch&#039;&#039; or &#039;&#039;dmatch&#039;&#039; in your solutions.
+
+Note: As you work on the following problems, remember you can use &#039;&#039;expand&#039;&#039; to see what a macro expands to.
+
+&lt;code lisp&gt;
+&gt; (expand &#039;(cond (#t #f) (else 7)))
+(if #t #f 7)
+&lt;/code&gt;
+
+**1.** &#039;&#039;and*&#039;&#039; This should work similarly to Scheme&#039;s &#039;&#039;and&#039;&#039;. 
+
+&lt;code lisp&gt;
+&gt; (and* 1 2 3)
+3
+&gt; (and* #f)
+#f
+&gt; (and*)
+#t
+&gt; (and* &#039;a)
+a
+&lt;/code&gt;
+
+**2.** &#039;&#039;cons*&#039;&#039;
+
+&#039;&#039;cons*&#039;&#039; cons-es together its arguments. If the final argument is not a list, &#039;&#039;cons*&#039;&#039; should return an improper list. If a single argument is passed, it should simply return that argument. When called with no arguments, your macro should report an error by calling: (syntax-error &quot;Incorrect argument-count to cons*&quot;). Your answer should operate similarly to Scheme&#039;s &#039;&#039;cons*&#039;&#039;.
+
+&lt;code lisp&gt;
+&gt; (cons* &#039;a &#039;b &#039;c &#039;d)
+(a b c . d)
+&gt; (cons* &#039;a)
+a
+&lt;/code&gt;
+
+**3.** Parens-0s
+
+Write a macro &#039;&#039;parens-0s&#039;&#039; that takes as an argument a list containing an arbitrarily-deep tree that may contain 0s interspersed throughout. You should return a list containing a 1 in place of each (, whereas the 0s remain in place and the )s are dropped. 
+
+&lt;code lisp&gt;
+&gt; (parens-0s (()))
+(1)
+&gt; (parens-0s (0))
+(0)
+&gt; (parens-0s ((())))
+(1 1)
+&gt; (parens-0s (((((0))))))
+(1 1 1 1 0)
+&gt; (parens-0s (((0((0))))))
+(1 1 0 1 1 0)
+&gt; (parens-0s ((((0)((0))))))
+(1 1 1 0 1 1 0)
+&gt; (parens-0s ((((0)((0 0))))))
+(1 1 1 0 1 1 0 0)
+&lt;/code&gt;
+
+**4.** Macro-map.
+
+Notice that we cannot use &#039;&#039;map&#039;&#039; with a macro:
+
+&lt;code lisp&gt;
+&gt; (map (lambda (x) (list x x)) &#039;(a b c))
+((a a) (b b) (c c))
+&gt; (define-syntax copy-code
+    (syntax-rules ()
+      [(_ x) `(,x x)]))
+&gt; (copy-code (lambda (x) x))
+(#&lt;procedure&gt; (lambda (x) x))
+&gt; (copy-code &#039;a)
+(a &#039;a)
+&gt; (map copy-code &#039;(a b c))
+
+Exception: invalid syntax copy-code
+Type (debug) to enter the debugger.
+&lt;/code&gt; 
+
+It&#039;s for the same reason we couldn&#039;t use (lambda () loop), as Dan demonstrated in class. To get around this problem, let&#039;s define a macro &#039;&#039;macro-map&#039;&#039;, which //will// allow us to map a macro.
+
+&lt;code lisp&gt;
+&gt; (macro-map quote &#039;((trinidad and tobago) (saint vincent and the grenadines) (antigua and barbuda)))
+((trinidad and tobago)
+ (saint vincent and the grenadines)
+ (antigua and barbuda))
+&gt; (macro-map copy-code &#039;((lambda (x) x) (lambda (x) (+ 2 x)) (lambda (x) 7)))
+((#&lt;procedure&gt; (lambda (x) x))
+ (#&lt;procedure&gt; (lambda (x) (+ 2 x)))
+ (#&lt;procedure&gt; (lambda (x) 7)))
+&gt; (define-syntax quote-quote
+    (syntax-rules ()
+      [(_ e) (quote (quote e))]))
+&gt; (macro-map quote-quote &#039;((trinidad and tobago) (saint vincent and the grenadines) (antigua and barbuda)))
+(&#039;(trinidad and tobago)
+ &#039;(saint vincent and the grenadines)
+ &#039;(antigua and barbuda))
+&lt;/code&gt;
+--->
+
+</p>
+
+</div>
+
+    <!-- ......... wikipage stop  ......... -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+ 
+  <!--  footer -->  
+  <div class="stylefoot">
+
+        <div class="meta">
+      <div class="doc">
+		<p>lp-a3.txt · Last modified: 2015/12/03 19:17 by jhemann</p>
+      </div>
+   </div>
+
+    <div>
+       <!--  breadcrumbs and search -->
+	  	
+	  
+
+       
+      <div class="clearer"></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="no"><img src="./C311_B521_A596 Programming Languages [Assignment 13_ Further Logic Programming]_files/indexer.php" width="1" height="1" alt=""></div>
+
+
+</body></html>

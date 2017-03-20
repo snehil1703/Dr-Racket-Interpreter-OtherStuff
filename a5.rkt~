@@ -1,0 +1,148 @@
+#lang racket
+
+;PART 1
+
+(define empty-env
+  (lambda()
+    (lambda(y) (error 'empty-env "unbound variable ̃s" y))
+    ))
+
+(define apply-env
+  (lambda (env y)
+    (env y)
+    ))
+
+(define extend-env
+  (lambda(x a env)
+    (lambda(y) (if (eqv? x y) a (apply-env env y)))
+    ))
+
+(define apply-closure-fn
+  (lambda (cl a)
+    (cl a)
+    ))
+
+;CALL BY VALUE
+
+(define val-of-cbv
+  (lambda (exp env)
+    (match exp
+      [`,n #:when (number? n) n]
+      [`,y #:when (symbol? y) (unbox (apply-env env y))]
+      [`,b #:when (boolean? b) b]
+      [`(quote ,v) v]
+      [`(lambda (,x) ,body) (closure-cbv x body env)]
+      [`(if ,chk ,t ,f) (if (val-of-cbv chk env) (val-of-cbv t env) (val-of-cbv f env))]
+      [`(zero? ,x) (if (zero? (val-of-cbv x env)) #t #f)]
+      [`(* ,x ,y) (* (val-of-cbv x env) (val-of-cbv y env))]
+      [`(sub1 ,x) (sub1 (val-of-cbv x env))]
+      [`(cons^ ,n ,s) (box (lambda() (cons (val-of-cbv n env) (val-of-cbv s env))))]
+      [`(car^ ,ns) (car ((unbox (val-of-cbv ns env))))]
+      [`(cdr^ ,ns) (cdr ((unbox (val-of-cbv ns env))))]
+      [`(cons ,n ,s) (cons (val-of-cbv n env) (val-of-cbv s env))]
+      [`(car ,ns) (car (val-of-cbv ns env))]
+      [`(cdr ,ns) (cdr (val-of-cbv ns env))]
+      [`(add1 ,n) (add1 (val-of-cbv n env))]
+      [`(null? ,x) (if (null? x) #t #f)]
+      [`(let ([,id ,expr]) ,body) ((lambda(q) (val-of-cbv body (extend-env id q env))) (box (val-of-cbv expr env)))]
+      [`(+ ,nexp1 ,nexp2) (+ (val-of-cbv nexp1 env) (val-of-cbv nexp2 env))]
+      [`(begin2 ,n1 ,n2) (begin (val-of-cbv n1 env) (val-of-cbv n2 env))]
+      [`(set! ,id ,expr) (let ([val-expr (val-of-cbv expr env)]) (set-box! (apply-env env id) val-expr))]
+      [`(random ,s) (random (val-of-cbv s env))]
+      [`(,rator ,y) #:when (symbol? y) (apply-closure-fn (val-of-cbv rator env) (box (unbox (apply-env env y))))]
+      [`(,rator ,rand) (apply-closure-fn (val-of-cbv rator env) (box (val-of-cbv rand env)))]
+      )))
+
+(define closure-cbv
+  (lambda (x body env)
+    (lambda(a) (val-of-cbv body (extend-env x a env)))))
+
+;CALL BY REFERENCE
+
+(define val-of-cbr
+  (lambda (exp env)
+    (match exp
+      [`,n #:when (number? n) n]
+      [`,y #:when (symbol? y) (unbox (apply-env env y))]
+      [`,b #:when (boolean? b) b]
+      [`(lambda (,x) ,body) (closure-cbr x body env)]
+      [`(if ,chk ,t ,f) (if (val-of-cbr chk env) (val-of-cbr t env) (val-of-cbr f env))]
+      [`(zero? ,x) (if(zero? (val-of-cbr x env)) #t #f)]
+      [`(* ,x ,y) (* (val-of-cbr x env) (val-of-cbr y env))]
+      [`(sub1 ,x) (sub1 (val-of-cbr x env))]
+      [`(let ([,id ,expr]) ,body) ((lambda(q) (val-of-cbr body (extend-env id q env))) (val-of-cbr expr env))]
+      [`(+ ,nexp1 ,nexp2) (+ (val-of-cbr nexp1 env) (val-of-cbr nexp2 env))]
+      [`(begin2 ,n1 ,n2) (begin (val-of-cbr n1 env) (val-of-cbr n2 env))]
+      [`(set! ,id ,expr) (let ([val-expr (val-of-cbr expr env)]) (set-box! (apply-env env id) val-expr))]
+      [`(random ,s) (random (val-of-cbr s env))]
+      [`(,rator ,y) #:when (symbol? y) (apply-closure-fn (val-of-cbr rator env) (apply-env env y))]
+      [`(,rator ,rand) (apply-closure-fn (val-of-cbr rator env) (box (val-of-cbr rand env)))]
+      )))
+
+(define closure-cbr
+  (lambda (x body env)
+    (lambda(a) (val-of-cbr body (extend-env x a env)))))
+
+;CALL BY NAME
+
+(define val-of-cbname
+  (lambda (exp env)
+    (match exp
+      [`,n #:when (number? n) n]
+      [`,y #:when (symbol? y) ((unbox (apply-env env y)))]
+      [`,b #:when (boolean? b) b]
+      [`(lambda (,x) ,body) (closure-cbname x body env)]
+      [`(if ,chk ,t ,f) (if (val-of-cbname chk env) (val-of-cbname t env) (val-of-cbname f env))]
+      [`(zero? ,x) (if(zero? (val-of-cbname x env)) #t #f)]
+      [`(* ,x ,y) (* (val-of-cbname x env) (val-of-cbname y env))]
+      [`(sub1 ,x) (sub1 (val-of-cbname x env))]
+      [`(let ([,id ,expr]) ,body) ((lambda(q) (val-of-cbname body (extend-env id q env))) (val-of-cbname expr env))]
+      [`(+ ,nexp1 ,nexp2) (+ (val-of-cbname nexp1 env) (val-of-cbname nexp2 env))]
+      [`(random ,s) (random (val-of-cbname s env))]
+      [`(,rator ,y) #:when (symbol? y) (apply-closure-fn (val-of-cbname rator env) (apply-env env y))]
+      [`(,rator ,rand) (apply-closure-fn (val-of-cbname rator env) (box (lambda() (val-of-cbname rand env))))]
+      )))
+
+(define closure-cbname
+  (lambda (x body env)
+    (lambda(a) (val-of-cbname body (extend-env x a env)))))
+
+;CALL BY NEED
+
+(define val-of-cbneed
+  (lambda (exp env)
+    (match exp
+      [`,n #:when (number? n) n]
+      [`,y #:when (symbol? y) (let ([b (apply-env env y)])
+                                (let ([v ((unbox b))])
+                                  (begin
+                                  (set-box! b (lambda() v))
+                                    v)))]
+      [`,b #:when (boolean? b) b]
+      [`(lambda (,x) ,body) (closure-cbneed x body env)]
+      [`(if ,chk ,t ,f) (if (val-of-cbneed chk env) (val-of-cbneed t env) (val-of-cbneed f env))]
+      [`(zero? ,x) (if (zero? (val-of-cbneed x env)) #t #f)]
+      [`(* ,x ,y) (* (val-of-cbneed x env) (val-of-cbneed y env))]
+      [`(sub1 ,x) (sub1 (val-of-cbneed x env))]
+      [`(let ([,id ,expr]) ,body) ((lambda(q) (val-of-cbneed body (extend-env id q env))) (val-of-cbneed expr env))]
+      [`(+ ,nexp1 ,nexp2) (+ (val-of-cbneed nexp1 env) (val-of-cbneed nexp2 env))]
+      [`(random ,s) (random (val-of-cbneed s env))]
+      
+      [`(,rator ,y) #:when (symbol? y) (apply-closure-fn (val-of-cbneed rator env) (apply-env env y))]
+      [`(,rator ,rand) (apply-closure-fn (val-of-cbneed rator env) (box (lambda() (val-of-cbneed rand env))))]
+      )))
+
+(define closure-cbneed
+  (lambda (x body env)
+    (lambda(a) (val-of-cbneed body (extend-env x a env)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;BRAINTEASER
+
+; <cons^ , car^ , cdr^ , cons , car , cdr> added to "val-of-cbv" interpreter along with <add1, empty list, let, and null?>
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;(require "a5-student-tests.rkt")
+;(test-file #:file-name "a5.rkt")

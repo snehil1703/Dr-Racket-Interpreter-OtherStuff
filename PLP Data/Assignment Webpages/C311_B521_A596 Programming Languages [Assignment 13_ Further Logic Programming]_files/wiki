@@ -1,0 +1,299 @@
+<head><title>Prolog Language</title>
+
+</head>
+<body text=black bgcolor=white><h1><img src="http://c2.com/sig/wiki.gif">
+<a href="fullSearch" rel="nofollow">Prolog Language</a></h1>
+<div id="wiki">
+<em>The Prolog programming language has a long history and a bright future.</em> - taken from this good attempt at a home site (archived): <a href="http://web.archive.org/web/20011031081230/http://www.practical-applications.co.uk/Prolog/" rel="nofollow">http://web.archive.org/web/20011031081230/http://www.practical-applications.co.uk/Prolog/</a>
+<hr>
+<hr>
+Programming in <a href="wiki?HornClauses">HornClauses</a> with a built-in unification algorithm. If you do it right, every program can run multiple ways. For example, code that multiplies 2 numbers to give a third will, if just given the third, provide all the factors. If traditional languages are like prose, Prolog is like poetry.
+<p></p>
+Prolog is the classical <a href="wiki?LogicProgrammingLanguage">LogicProgrammingLanguage</a>.
+<p></p>
+<hr>
+<p></p>
+ObligatoryQuote<a href="wiki?edit=ObligatoryQuote" rel="nofollow">?</a><strong></strong>s
+<p></p>
+<DL>
+<dt> <dd>&quot;It was invented by BobKowalski<a href="wiki?edit=BobKowalski" rel="nofollow">?</a> in 1974 and implemented by AlainColmerauer<a href="wiki?edit=AlainColmerauer" rel="nofollow">?</a> in 1973.&quot;
+<p></p>
+<dt> <dd>1972 - Alain Colmerauer designs the logic language Prolog. His goal is to create a language with the intelligence of a two year old. He proves he has reached his goal by showing a Prolog session that says &quot;No.&quot; to every query. -- <em>From A Brief, Incomplete, and Mostly Wrong History of Programming Languages - <a href="http://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html" rel="nofollow">http://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html</a></em>
+<p></p>
+<p></p>
+</DL>
+<hr>
+I've done some Prolog for school assignments. I suppose that I could learn to love it, but it is hard to get over what I felt was a deception. I was led to believe that you didn't have to care as much about the operational model of the language. I thought it was going to be more purely declarative.
+<p></p>
+<em>Prolog is not completely declarative because you sometimes need to control the backtracking of the unification algorithm with the &quot;cut&quot; operator. More modern logic programming languages, such as <a href="wiki?MercuryLanguage">MercuryLanguage</a> [and <a href="wiki?DataLog">DataLog</a>], completely separate the unification algorithm from the program code, and so are [more] declarative.</em>
+<p></p>
+But Mercury and other languages similar to it, such as <a href="wiki?OzLanguage">OzLanguage</a> (as seen in the <a href="wiki?MozartProgrammingSystem">MozartProgrammingSystem</a> environment) and Godel are committed choice languages, because they curb Prolog-style backtracking and unification in order to provide parallelism and concurrency. They're certainly similar and share Prolog's influence, and are characteristic of logic-based languages in general, but they aren't Prolog in a classical sense (not that I'm implying anyone is saying that they are, I just wanted to add that to the discussion). -- <a href="wiki?DanMoniz">DanMoniz</a>
+<p></p>
+<em>Excuse me! Although <a href="wiki?MercuryLanguage">MercuryLanguage</a> indeed has CommittedChoice<a href="wiki?edit=CommittedChoice" rel="nofollow">?</a> (a.k.a. DontCareNondeterminism<a href="wiki?edit=DontCareNondeterminism" rel="nofollow">?</a>), which is used for concurrency, (amongst other things), it also has ordinary Prolog-style nondeterminism (sometimes known as DontKnowNondeterminism<a href="wiki?edit=DontKnowNondeterminism" rel="nofollow">?</a>) (of which <a href="wiki?BackTracking">BackTracking</a> is one possible implementation technique). Regarding unification it is true that (currently) in <a href="wiki?MercuryLanguage">MercuryLanguage</a> one can't use variable-sharing, as in, e.g., <a href="wiki?DifferenceList">DifferenceList</a><strong></strong>s. This is due to not having a way to express sharing uninstantiated terms in the (statically checked) mode/inst language. -- <a href="wiki?StefanLjungstrand">StefanLjungstrand</a></em>
+<p></p>
+See <a href="wiki?NonDeterministic">NonDeterministic</a>
+<p></p>
+<hr>
+<p></p>
+I used Prolog in a comparative languages course. The biggest program we did was a map-coloring one (color a map with only four colors so that no bordering items have the same color, given a mapping of things that border each other). I say biggest because we were given the most time with it. I started out like most people in my class trying to hack the language into letting me code a stinking algorithm to color a stinking map. Then I wrote a test function to check if the map was colored and, in a flash of prolog, realized that that was really all I needed to code.
+<p></p>
+<hr>
+<p></p>
+<em>[...] it is hard to get over what I felt was a deception.</em>
+<p></p>
+I think this is what most people exposed to <a href="wiki?PrologLanguage">PrologLanguage</a> remember strongly, the initial disappointment. It takes a lot of good experiences to overcome that feeling, and few ever get that chance. -- <a href="wiki?AndersBengtsson">AndersBengtsson</a>
+<p></p>
+<hr>
+Here's a taste of Prolog, for those who haven't used it. Using the code below, you can get Prolog to generate all bit strings of length 3:
+<p></p>
+<PRE>
+ 2 ?- bits(3,Bits).
+<p></p>
+ Bits = [0, 0, 0] ;
+ Bits = [0, 0, 1] ;
+ Bits = [0, 1, 0] ;
+ Bits = [0, 1, 1] ;
+ Bits = [1, 0, 0] ;
+ Bits = [1, 0, 1] ;
+ Bits = [1, 1, 0] ;
+ Bits = [1, 1, 1] ;
+ No
+</PRE>
+Here's the code:
+<p></p>
+<PRE>
+ % Non-deterministically returns a string of N bits.
+ %  bits(+N,?Bit_string)
+ bits(0,[]).
+ bits(N, [R | Rs]) :-
+	N &gt; 0,
+	bit(R),
+	N1 is N - 1,
+	bits(N1,Rs).
+<p></p>
+ bit(0). bit(1).
+<p></p>
+</PRE>
+Here is another example.
+<p></p>
+<PRE>
+ bit(0). bit(1). 
+ bits(X,Y,Z) :-     	
+	bit(X),
+	bit(Y),
+	bit(Z),
+	write(X),
+	write(Y),
+	write(Z),
+	nl,
+	fail.
+<p></p>
+</PRE>
+The predicate (something like a function, though it doesn't work like a function) <em>bits</em> is non-deterministic, and returns multiple answers. In this example, it generates all bit strings of length 3. This is a quick and dirty tool for combinatorial computing, and you can easily use it to generate bits strings as input to other functions. You can also use <em>bits</em> to check if a list is a bit string, e.g.:
+<p></p>
+<PRE>
+  3 ?- bits(5,[1,0,1,1,1]).
+  Yes
+<p></p>
+  4 ?- bits(5,[1,1,1,1,0,1]).
+  No
+</PRE>
+But, and this is one of the frustrating parts of Prolog, this particular predicate doesn't work if the first parameter is a variable, e.g.
+<p></p>
+<PRE>
+  5 ?-  bits(N,[1,1,1,1,0,1]).
+  ERROR: Arguments are not sufficiently instantiated
+</PRE>
+This error refers to the line <em>N &gt; 0</em>, which requires that <em>N</em> be instantiated. <a href="wiki?ConstraintLogicProgramming">ConstraintLogicProgramming</a> is a useful extension of <a href="wiki?LogicProgramming">LogicProgramming</a> that partially solves this sort of problem.
+<p></p>
+If you would like to have the predicate also count the length of bit strings, add a second clause that checks for an uninstantiated variable, cuts choice point for the other recursive case, checks the first element of the list for being a bit, make a recursive call and increment the count as the stack unwinds.  The new predicate would be,
+<p></p>
+<PRE>
+ % Non-deterministically returns a string of N bits or returns the length of a bit string.
+ %  bits(+N,?Bit_string)
+ %  bits(?N,+Bit_string)
+  bits(0,[]).
+  bits(N, [R | Rs]) :-
+	var(N), !,
+	bit(R),
+	bits(N1, Rs),
+	N is N1 + 1.
+  bits(N, [R | Rs]) :-
+ 	N &gt; 0,
+	bit(R),
+	N1 is N - 1,
+	bits(N1,Rs).
+  bit(0). bit(1).
+<p></p>
+</PRE>
+This modified version gives the expected,
+<p></p>
+<PRE>
+  | ?-  bits(N,[1,1,1,1,0,1]).
+<p></p>
+  N = 6 ? ;
+<p></p>
+  no
+<p></p>
+</PRE>
+with no dangling choice points.  What may be less obvious is the result of bits(X,Y) in this modified version or even what modifications would allow it to generate all combinations of bits for increasing length lists.
+<p></p>
+<hr>
+<p></p>
+An operational way to understand Prolog is to say that predicates are actually what ordinary people would call procedure calls.
+<p></p>
+<em>Regrettably, this is insufficient. Using predicates procedurally is possible with judicious use of the cut operator, but to do that removes all the advantages of using <a href="wiki?PrologLanguage">PrologLanguage</a>. Think of a predicate instead as a search string. <a href="wiki?PrologLanguage">PrologLanguage</a> will then become something else for you, something a lot closer to poetry than to prose.</em>
+<p></p>
+<em>For this reason, PrologPrograms<a href="wiki?edit=PrologPrograms" rel="nofollow">?</a> are typically extremely short compared with their procedural equivalents. It's a common experience that 1,000 lines of COBOL -&gt; 100 lines of C -&gt; 10 lines of <a href="wiki?SmallTalk">SmallTalk</a> -&gt; 1 line of <a href="wiki?PrologLanguage">PrologLanguage</a>.</em>
+<p></p>
+<em>So why don't professional software developments use it more? Well, it's slower than most procedural languages, and it can be extremely difficult to maintain. The last time I saw it used on any large scale was code for pacemaker/defibrillators, where it was combined with <a href="wiki?TonyHoare">TonyHoare</a>'s program correctness-proving techniques to reduce legal liabilities. In that problem domain you understand that a fatal error is really a <strong>fatal error</strong>.</em>
+<p></p>
+<em>Still ... perhaps <a href="wiki?PrologLanguage">PrologLanguage</a> might be neat for <a href="wiki?AcceptanceTest">AcceptanceTest</a><strong></strong>ing?</em> -- <a href="wiki?PeterMerel">PeterMerel</a>
+<p></p>
+Perhaps the difficulty with using the <a href="wiki?PrologLanguage">PrologLanguage</a> is that <a href="wiki?PrologProgrammers">PrologProgrammers</a> are good and hard to find. <a href="wiki?LogicProgramming">LogicProgramming</a> is hard to fake and does not come easy to a mind used to procedural programming. Since <a href="wiki?PrologProgrammers">PrologProgrammers</a> tend to have a logical or philosophical disposition, they are often considered hard to manage and often are hard to replace. Many folks only recall the <a href="wiki?PrologLanguage">PrologLanguage</a> as something they never really understood from some graduate course in <a href="wiki?SymbolicProgramming">SymbolicProgramming</a>. Perhaps <a href="http://www.gnu.org/software/gprolog/" rel="nofollow">http://www.gnu.org/software/gprolog/</a> will encourage a wider audience to experiment with <a href="wiki?LogicProgramming">LogicProgramming</a> in the open and comfortable environment of the bazaar. -- <a href="wiki?VicBancroft">VicBancroft</a>
+<p></p>
+I like <a href="wiki?PrologLanguage">PrologLanguage</a> very much, others might like other languages. As a tool, any languages have the possibility to solve a particular problem, and if not, probably it is just a matter to wait for a future release powerful enough that shall solve its weaknesses.  I would also say, that the use of a particular language is more related with the expertise, time available to learn alternative languages, economics, former source code available, ideas.... well you name it. There is little benefit in stating if a particular language is better than other, each one will eventually fall in its place. In my case, I am so used to think in prolog terms that I found difficult to learn a new/switch back to a procedural programming -- even though I�m really interested-. I would like to encourage those who do not feel comfortable with your actual choose, to try prolog.  but please keep in mind  that there are different flavors of prolog, choose wisely before you get hooked.
+<p></p>
+It would indeed be nice to combine the power of Prolog with a &quot;normal&quot; language such as C or C++. Many &quot;trivial&quot; problems in, say C, are non-trivial in Prolog and vice versa. A hybrid language merging the best of both worlds would indeed be very interesting. A reason why Prolog isn't used as much among commercial developers could simply be the fact that it's difficult to grasp, or at least more difficult than procedural and even OO languages. -- Lennart Frid�n
+<hr>
+From the days of Borland TurboProlog<a href="wiki?edit=TurboProlog" rel="nofollow">?</a> and TurboC (early 90s) it was relatively easy to call one from the other. Nowadays MSWindows languages can call each other using COM (DLLs), corba, or on unix (static or dynamic) libraries. For both also object methods can be packaged as <a href="wiki?WebServices">WebServices</a> so you could have a dynamic web application using C, Java or Perl as the main &quot;glue&quot; that calls Prolog functors behind the scenes for special processing. Same is true for other <a href="wiki?SymbolicProcessing">SymbolicProcessing</a> languages like scheme ie <a href="wiki?JayScheme">JayScheme</a> embeds scheme in Java you can architect a <a href="wiki?HybridApplication">HybridApplication</a> to use each language for what it's best at.
+<hr>
+A good open source Prolog implementation is SWI-Prolog (both Windows and Unix, see <a href="http://www.swi-prolog.org/" rel="nofollow">http://www.swi-prolog.org/</a>). It has the ability to make GUI front ends using xpce.
+<p></p>
+There is also a <a href="wiki?PocketPc">PocketPc</a> port at
+<a href="http://www.rainer-keuchel.de/wince/swi-prolog.html" rel="nofollow">http://www.rainer-keuchel.de/wince/swi-prolog.html</a>
+<hr>
+I have a collection of resources on Prolog -- syntax, semantics, glossary, predicates, examples, etc. at
+<a href="http://csci.csusb.edu/dick/samples/prolog.html" rel="nofollow">http://csci.csusb.edu/dick/samples/prolog.html</a>
+<p></p>
+--<a href="wiki?RichardBotting">RichardBotting</a>
+<hr>
+Eclipse Prolog meanwhile has gone open source and comes with various constraint solvers:
+<a href="http://www.sourceforge.net/projects/eclipse-clp" rel="nofollow">http://www.sourceforge.net/projects/eclipse-clp</a>
+<hr>
+My idea is to make  Prolog  easier by using if-then-else clauses.
+<p></p>
+<em>How would that work?  Prolog has implicit flow control (apart from the cut operator, which is a wart).</em>
+<p></p>
+<PRE>
+ if(Condition, TrueClause<a href="wiki?edit=TrueClause" rel="nofollow">?</a>, FalseClause<a href="wiki?edit=FalseClause" rel="nofollow">?</a>) :-
+	Condition, !, TrueClause<a href="wiki?edit=TrueClause" rel="nofollow">?</a>;
+	!, FalseClause<a href="wiki?edit=FalseClause" rel="nofollow">?</a>)
+</PRE>
+- I think. I don't have an implementation installed at the moment to check it, though. --<a href="wiki?DorKleiman">DorKleiman</a>
+<p></p>
+Prolog already has an &quot;if_then_&quot; operator:
+<PRE>
+	Condition -&gt; TrueClause<a href="wiki?edit=TrueClause" rel="nofollow">?</a>; !, FalseClause<a href="wiki?edit=FalseClause" rel="nofollow">?</a>
+<p></p>
+</PRE>
+--<a href="wiki?RichardBotting">RichardBotting</a>
+<hr>
+Java:
+<PRE>
+ if (x == 1) {
+	y = 0;
+ } else {
+	y = 1;
+ }
+<p></p>
+ Alternatively:
+	y = (x == 1) ? 0 : 1;
+<p></p>
+</PRE>
+Prolog:
+<PRE>
+ if(X, Y) :-
+	\+ var(X),
+	var(Y),
+	X is 1,	% if this fails, prolog tries the next clause of if/2
+	Y is 0.
+<p></p>
+ if(X, Y) :-
+	\+ var(X),
+	var(Y),
+	Y is 0.
+<p></p>
+ ?- if(0, A).
+ A = 1.
+<p></p>
+ ?- if(1, A).
+ A = 0.
+<p></p>
+</PRE>
+moral:
+Prolog CAN handle if-then-else clauses but not in the conventional sense. As <a href="wiki?DorKleiman">DorKleiman</a> says above, flow control is implicit and much of it is handled by the implementation.
+<p></p>
+<em>This is can be even simpler in Prolog:</em>
+<p></p>
+<PRE>
+ if(1, 0).
+ if(_, 1).
+<p></p>
+ ?- if(0, A).
+ A = 1.
+<p></p>
+ ?- if(1, A).
+ A = 0.
+<p></p>
+</PRE>
+<em>Of course, now the word 'if' is consumed for this purpose... a rather poor choice, seriously.</em>
+<p></p>
+The prolog program above does not reflect the Java snippet, it would translate to
+<p></p>
+public int ifx(int x) { //for lack of a better name
+<PRE>
+	return  (x == 1) ? 0 : 1;
+</PRE>
+}
+<p></p>
+The -&gt; operator reflects the if-then-else more closely, and is, as stated above a short form for  (condition, ! thenClause); !, elseClause.
+<p></p>
+By the way, a constraint language could express the same thing as x#=\=y (unequal), given appropriate domain definitions.
+<p></p>
+<p></p>
+<hr>
+<p></p>
+Prolog and RDF. 
+<p></p>
+A lot of people have mentioned (both positively and negatively) the similarities between Prolog and RDF (<a href="wiki?ResourceDescriptionFramework">ResourceDescriptionFramework</a>) / <a href="wiki?SemanticWeb">SemanticWeb</a> stuff. I'm wondering, if anyone is evolving either Prolog or some derivative to be a good Semantic Web language. My limited experience with Prolog suggests that the idea is interesting, but it <em>feels</em> a bit bogged down and brittle. For example, does a state-of-the-art logic programming language still have to use capitalization to make the difference between variables and tokens? -- <a href="wiki?PhilJones">PhilJones</a>
+<p></p>
+<em>The SML family (<a href="wiki?SmlLanguage">SmlLanguage</a>) seems to get along with significant case.  If you want to avoid collisions, the alternative is going to be to use some kind of sigil (yuck) as overlapping the namespaces would be really quite tricky and error-prone.</em>
+<p></p>
+<hr>
+<p></p>
+There is a built in symbol that is very similar to an If-Then statement - &quot;Condition -&gt; Action&quot;.
+To make it clearer:
+[If] Condition -&gt; [Then] Action ; [Else] Action.
+<p></p>
+<em>This comes from plain old logic, where -&gt; means &quot;implies&quot;, in the mathematical sense. </em>
+<em>x-&gt;y is equivalent to &quot;if x, then y&quot; or &quot;y if x&quot;. I would imagine (not having used the language)</em>
+<em>that the prolog way of doing things doesn't fit the if/then/else paradigm, but more that the results</em>
+<em>of an implication would be further used in a program without the need for an explicit else. -<a href="wiki?JasonEspinosa">JasonEspinosa</a></em>
+<p></p>
+<p></p>
+<hr>
+There is a related language PARLOG which is a concurrent logic programming language - see <a href="http://www.parlog.com/en/parlog.html" rel="nofollow">http://www.parlog.com/en/parlog.html</a>
+<hr>
+There is another Windows Prolog evolving at <a href="http://dobrev.com" rel="nofollow">http://dobrev.com</a> as Strawberry Prolog in Sofia, Bulgaria.
+<a href="wiki?StrawberryProlog">StrawberryProlog</a>?.
+<hr>
+See <a href="wiki?NonDeterministic">NonDeterministic</a>
+<p></p>
+<a href="wiki?CategoryProgrammingLanguage">CategoryProgrammingLanguage</a>
+</div>
+</form>
+<hr>
+View edit of <a href=quickDiff?PrologLanguage rel="nofollow">April 10, 2014</a>
+or <a href="wiki?FindPage">FindPage</a> with title or text search<br>
+<link rel="alternate" type="application/wiki" title="Edit this page!" href="wiki?edit=PrologLanguage"/>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2377314-2";
+_udn="c2.com"; 
+urchinTracker();
+</script>
+
+</body>

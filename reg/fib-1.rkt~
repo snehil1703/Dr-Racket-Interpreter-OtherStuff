@@ -1,0 +1,11 @@
+#lang racket
+
+(define fib
+  (λ (n)
+    (cond
+      ((< n 2) n)
+      (else
+       (+ (fib (sub1 n))
+          (fib (- n 2)))))))
+
+(fib 5)

@@ -1,0 +1,172 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 ;((lambda(a) (value-of (value-of bdy env) (lambda(y) (if (eqv? id y) a (env y))))) (value-of expr env))\
+;((lambda(a) (value-of body (lambda(y) (if (eqv? x y) a (env y))))) 3)\
+;((lambda(a) (value-of (value-of bdy env) (lambda(y) (if (eqv? x y) a (env y))))) (value-of expr env))\
+;            (lambda(id) bdy) expr\
+\
+(value-of '((lambda(x) x) 3) (lambda(var) (error 'empty-env "unbound variable \uc0\u32 \u771 s" var)))\
+\
+(value-of\
+ '((lambda (x) (if (zero? x) #t #f)) 0)\
+ (lambda (y) (error 'value-of "unbound variable ~s" y))\
+ )\
+\
+(value-of \
+   '((lambda (x) (if (zero? x) \
+                     12 \
+                     47)) \
+     0) \
+   (lambda (y) (error 'value-of "unbound variable ~s" y)))\
+\
+(value-of\
+   '(let ([y (* 3 4)])\
+      ((lambda (x) (* x y)) (sub1 6)))\
+   (lambda (y) (error 'value-of "unbound variable ~s" y)))\
+\
+(value-of\
+   '(let ([x (* 2 3)])\
+      (let ([y (sub1 x)])\
+        (* x y)))\
+   (lambda (y) (error 'value-of "unbound variable ~s" y)))\
+\
+(value-of\
+   '(let ([x (* 2 3)])\
+      (let ([x (sub1 x)])\
+        (* x x)))\
+   (lambda (y) (error 'value-of "unbound variable ~s" y)))\
+\
+(value-of \
+   '(let ((! (lambda (x) (* x x))))\
+      (let ((! (lambda (n)\
+                 (if (zero? n) 1 (* n (! (sub1 n)))))))\
+        (! 5)))\
+   (lambda (y) (error 'value-of "unbound variable ~s" y)))\
+\
+(value-of\
+   '(((lambda (f)\
+        (lambda (n) (if (zero? n) 1 (* n ((f f) (sub1 n))))))\
+      (lambda (f)\
+        (lambda (n) (if (zero? n) 1 (* n ((f f) (sub1 n)))))))\
+     5)\
+   (lambda (y) (error 'value-of "unbound variable ~s" y)))\
+\
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\
+\
+(value-of-fn\
+   '((lambda (x) (if (zero? x)\
+                     #t\
+                     #f))\
+     0)\
+   (empty-env-fn))\
+\
+(value-of-fn \
+   '((lambda (x) (if (zero? x) \
+                     12 \
+                     47)) \
+     0) \
+   (empty-env-fn))\
+\
+(value-of-fn\
+   '(let ([y (* 3 4)])\
+      ((lambda (x) (* x y)) (sub1 6)))\
+   (empty-env-fn))\
+\
+(value-of-fn\
+   '(let ([x (* 2 3)])\
+      (let ([y (sub1 x)])\
+        (* x y)))\
+   (empty-env-fn))\
+\
+(value-of-fn\
+   '(let ([x (* 2 3)])\
+      (let ([x (sub1 x)])\
+        (* x x)))\
+   (empty-env-fn))\
+\
+(value-of-fn\
+   '(let ((! (lambda (x) (* x x))))\
+      (let ((! (lambda (n)\
+                 (if (zero? n) 1 (* n (! (sub1 n)))))))\
+        (! 5)))\
+   (empty-env-fn))\
+\
+(value-of-fn\
+   '(((lambda (f)\
+        (lambda (n) (if (zero? n) 1 (* n ((f f) (sub1 n))))))\
+      (lambda (f)\
+        (lambda (n) (if (zero? n) 1 (* n ((f f) (sub1 n)))))))\
+     5)\
+   (empty-env-fn))\
+\
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\
+\
+(value-of-ds\
+   '((lambda (x) (if (zero? x)\
+                     #t\
+                     #f))\
+     0)\
+   (empty-env-ds))\
+                \
+(value-of-ds\
+   '((lambda (x) (if (zero? x) \
+                     12 \
+                     47)) \
+     0) \
+   (empty-env-ds))\
+    \
+(value-of-ds\
+   '(let ([y (* 3 4)])\
+      ((lambda (x) (* x y)) (sub1 6)))\
+   (empty-env-ds))\
+\
+(value-of-ds\
+   '(let ([x (* 2 3)])\
+      (let ([y (sub1 x)])\
+        (* x y)))\
+   (empty-env-ds))\
+\
+(value-of-ds\
+   '(let ([x (* 2 3)])\
+      (let ([x (sub1 x)])\
+        (* x x)))\
+   (empty-env-ds))\
+\
+(value-of-ds\
+   '(let ((! (lambda (x) (* x x))))\
+      (let ((! (lambda (n)\
+                 (if (zero? n) 1 (* n (! (sub1 n)))))))\
+        (! 5)))\
+   (empty-env-ds))\
+\
+(value-of-ds\
+   '(((lambda (f)\
+        (lambda (n) (if (zero? n) 1 (* n ((f f) (sub1 n))))))\
+      (lambda (f)\
+        (lambda (n) (if (zero? n) 1 (* n ((f f) (sub1 n)))))))\
+     5)\
+   (empty-env-ds))\
+\
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\
+\
+(fo-eulav '(5 (x (x) adbmal)) (lambda (y) (error 'fo-eulav "unbound variable ~s" y)))\
+\
+(fo-eulav '(((x 1bus) (x) adbmal) ((5 f) (f) adbmal)) (lambda (y) (error 'fo-eulav "unbound variable ~s" y)))\
+\
+(fo-eulav   '(5\
+ (((((((n 1bus) (f f)) n *) 1 (n ?orez) fi)\
+                                   (n) adbmal)\
+                                     (f) adbmal)\
+  ((((((n 1bus) (f f)) n *) 1 (n ?orez) fi)\
+                                  (n) adbmal)\
+                                    (f) adbmal))) \
+ (lambda (y) (error 'fo-eulav "unbound variable ~s" y)))\
+\
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\
+\
+\
+}

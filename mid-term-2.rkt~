@@ -1,0 +1,10 @@
+#lang racket
+
+(define takef
+  (lambda (f)
+    (lambda (ls k)
+      (cond
+        [( null? ls) (k '())]
+        [(f (car ls)) (cons (car ls) (( takef f) (cdr ls)))]
+        [else (k '())]
+        ))))

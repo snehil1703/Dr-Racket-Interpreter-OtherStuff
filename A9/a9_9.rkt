@@ -1,0 +1,219 @@
+#lang racket
+(require "parenthec.rkt")
+
+(define-registers exp env k y k^ cl a v)
+(define-program-counter pc)
+
+(define-union expr
+  (const cexp)
+  (var n)
+  (if test conseq alt)
+  (mult nexp1 nexp2)
+  (sub1 nexp)
+  (zero nexp)
+  (capture body)
+  (return kexp vexp)
+  (let exp body)              
+  (lambda body)
+  (app rator rand))
+
+(define-union clos
+  (closure body env))
+
+(define-union envr
+  (empty-env)
+  (extend-env a^ env^))
+
+(define-union kt
+  (*-inner-k k^ k^^)
+  (*-outer-k x1^ env^ k^)
+  (sub1-k k^)
+  (zero-k k^)
+  (if-k conseq^ alt^ env^ k^)
+  (return-k v-exp^ env^)
+  (let-k body^ env^ sk^)
+  (app-inner-k v^ k^)
+  (app-outer-k rand^ env^ k^)
+  (empty-k jumpout))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Convert all label invocations into assignments to the program counter, and then add calls to mount-trampoline and dismount-trampoline. Not this will require modifying empty-k in your kt union, and the empty-k clause in the union-case inside apply-k. On the last line of main, print the register containing the final value of the program, e.g. (printf “Fact 5: ~s\n” v) See the parentheC document for notes on these steps.
+#|
+(define *-inner-k
+  (lambda (k^ k^^)
+    `(*-inner-k ,k^ ,k^^)))
+
+(define *-outer-k
+  (lambda (x1^ env^ k^)
+    `(*-outer-k ,x1^ ,env^ ,k^)))
+
+(define sub1-k
+  (lambda (k^)
+    `(sub1-k ,k^)))
+
+(define zero-k
+  (lambda (k^)
+    `(zero-k ,k^)))
+
+(define if-k
+  (lambda (conseq^ alt^ env^ k^)
+    `(if-k ,conseq^ ,alt^ ,env^ ,k^)))
+
+(define return-k
+  (lambda (v-exp^ env^)
+    `(return-k ,v-exp^ ,env^)
+    ))
+
+(define let-k
+  (lambda (body^ env^ k^)
+    `(let-k ,body^ ,env^ ,k^)))
+
+(define app-inner-k
+  
+  (lambda (v^ k^)
+    `(app-inner-k ,v^ ,k^)))
+
+(define app-outer-k
+  (lambda (rand^ env^ k^)
+    `(app-outer-k ,rand^ ,env^ ,k^)))
+|#
+(define-label value-of-cps
+    (union-case exp expr
+      [(const cexp^) (begin (set! v cexp^)
+                           (set! pc apply-k))]
+      [(mult nexp1^ nexp2^) (begin (set! exp nexp2^)
+                                 (set! k (kt_*-outer-k nexp1^ env k))
+                                 (set! pc value-of-cps))]
+      [(sub1 nexp^) (begin (set! exp nexp^)
+                          (set! k (kt_sub1-k k))
+                          (set! pc value-of-cps))]
+      [(zero nexp^) (begin (set! exp nexp^)
+                          (set! k (kt_zero-k k))
+                          (set! pc value-of-cps))]
+      [(if test^ conseq^ alt^) (begin (set! exp test^)
+                                   (set! k (kt_if-k conseq^ alt^ env k))
+                                   (set! pc value-of-cps))]
+      [(capture body^) (begin (set! exp body^)
+                             (set! env (envr_extend-env k env))
+                             (set! pc value-of-cps))]
+      [(return kexp vexp) (begin (set! exp kexp)
+                                 (set! k (kt_return-k vexp env))
+                                 (set! pc value-of-cps))]
+      [(let exp^ body^) (begin
+                         (set! exp exp^)
+                         (set! k (kt_let-k body^ env k))
+                             (set! pc value-of-cps))]
+      [(var n^) (begin (set! k^ k)
+                      (set! y n^)
+                      (set! pc apply-env))]
+      [(lambda body^) (begin (set! v (clos_closure body^ env))
+                            (set! pc apply-k))]
+      [(app rator^ rand^) (begin (set! exp rator^)
+                               (set! k (kt_app-outer-k rand^ env k))
+                               (set! pc value-of-cps))]
+      ))
+#|
+(define extend-env
+  (lambda (a^ env^)
+    `(extend-env ,a^ ,env^)
+    ))
+
+(define empty-env
+  (lambda ()
+    `(empty-env)))
+|#
+(define-label apply-env
+    (union-case env envr
+      [(extend-env a^ env^) (if (zero? y)
+                                (begin (set! k k^)
+                                       (set! v a^)
+                                       (set! pc apply-k))
+                                (begin (set! env env^)
+                                       (set! y (sub1 y))
+                                       (set! pc apply-env)))]
+      [(empty-env) (error 'value-of "unbound identifier")]
+      ))
+#|
+(define closure
+  (lambda (body env)
+    `(closure ,body ,env)))
+|#
+(define-label apply-closure
+    (union-case cl clos
+      [(closure body^ env^) (begin (set! exp body^)
+                                 (set! env (envr_extend-env a env^))
+                                 (set! k k^)
+                                 (set! pc value-of-cps))]
+      ))
+#|
+(define empty-k
+  (lambda ()
+    `(empty-k)))
+|#
+(define-label apply-k
+    (union-case k kt
+      [(*-inner-k k^ k^^) (begin (set! k k^^)
+                                 (set! v (* k^ v))
+                                 (set! pc apply-k))]
+      [(*-outer-k x1^ env^ k^) (begin (set! exp x1^)
+                                      (set! env env^)
+                                      (set! k (kt_*-inner-k v k^))
+                                      (set! pc value-of-cps))]
+      [(sub1-k k^) (begin (set! k k^)
+                          (set! v (sub1 v))
+                          (set! pc apply-k))]
+      [(zero-k k^) (begin (set! k k^)
+                          (set! v (zero? v))
+                          (set! pc apply-k))]
+      [(if-k conseq^ alt^ env^ k^) (if v
+                                       (begin (set! exp conseq^)
+                                              (set! env env^)
+                                              (set! k k^)
+                                              (set! pc value-of-cps))
+                                       (begin (set! exp alt^)
+                                              (set! env env^)
+                                              (set! k k^)
+                                              (set! pc value-of-cps)))]
+      [(return-k v-exp^ env^) (begin (set! exp v-exp^)
+                                     (set! env env^)
+                                     (set! k v)
+                                     (set! pc value-of-cps))]
+      [(let-k body^ env^ k^) (begin (set! exp body^)
+                                     (set! env (envr_extend-env v env^))
+                                     (set! k k^)
+                                     (set! pc value-of-cps))]
+      [(app-inner-k v^ k^^) (begin (set! cl v^)
+                                  (set! a v)
+                                  (set! k^ k^^)
+                                  (set! pc apply-closure))]
+      [(app-outer-k rand^ env^ k^) (begin (set! exp rand^)
+                                          (set! env env^)
+                                          (set! k (kt_app-inner-k v k^))
+                                          (set! pc value-of-cps))]
+      [(empty-k jumpout) (dismount-trampoline jumpout)]
+      ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-label main 
+    (begin (set! exp (expr_let
+                 (expr_lambda
+                  (expr_lambda
+                   (expr_if
+                    (expr_zero (expr_var 0))
+                    (expr_const 1)
+                    (expr_mult (expr_var 0) (expr_app (expr_app (expr_var 1) (expr_var 1)) (expr_sub1 (expr_var 0)))))))
+                 (expr_mult
+                  (expr_capture
+                   (expr_app
+                    (expr_app (expr_var 1) (expr_var 1))
+                    (expr_return (expr_var 0) (expr_app (expr_app (expr_var 1) (expr_var 1)) (expr_const 4)))))
+                  (expr_const 5))))
+           (set! env (envr_empty-env))
+           (set! pc value-of-cps)
+           (mount-trampoline kt_empty-k k pc)
+           (printf "Fact 5: ~s\n" v))
+    )
+
+

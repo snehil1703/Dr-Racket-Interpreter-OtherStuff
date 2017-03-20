@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0059)https://cgi.soic.indiana.edu/~c311/doku.php?id=assignment-9 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="google-site-verification" content="CHpL8-yKEGFx7Gy37uNcU2lz9oRZydQdifkiJNj6-P4">
+  
+  <title>
+    C311/B521/A596 Programming Languages    [Assignment 9: ParentheC Interpreter]
+  </title>
+
+  <meta name="generator" content="DokuWiki Release 2009-02-14b">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2015-10-24T17:05:00-0400">
+<meta name="keywords" content="assignment-9">
+<link rel="search" type="application/opensearchdescription+xml" href="https://cgi.soic.indiana.edu/~c311/lib/exe/opensearch.php" title="C311/B521/A596 Programming Languages">
+<link rel="start" href="https://cgi.soic.indiana.edu/~c311/">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cgi.soic.indiana.edu/~c311/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="https://cgi.soic.indiana.edu/~c311/feed.php?mode=list&amp;ns=">
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cgi.soic.indiana.edu/~c311/doku.php?do=export_xhtml&amp;id=assignment-9">
+<link rel="stylesheet" media="all" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 9_ ParentheC Interpreter]_files/css.php">
+<link rel="stylesheet" media="screen" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 9_ ParentheC Interpreter]_files/css(1).php">
+<link rel="stylesheet" media="print" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 9_ ParentheC Interpreter]_files/css(2).php">
+<script type="text/javascript" charset="utf-8" src="./C311_B521_A596 Programming Languages [Assignment 9_ ParentheC Interpreter]_files/js.php"></script>
+
+  <link rel="shortcut icon" href="https://cgi.soic.indiana.edu/~c311/lib/tpl/doogiestpl/images/favicon.ico">
+
+  </head>
+
+
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+      <div class="header_left"></div>
+      <div class="logo">
+        <a href="https://cgi.soic.indiana.edu/~c311/doku.php" name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]">C311/B521/A596 Programming Languages</a>      </div>
+
+      <div id="tabnavi" class="tabnavi">
+	    <ul>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=home">Home</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=course-policies">Policies</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=instructors">Instructors</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=resources">Resources</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=schedule">Schedule</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignments">Assignments</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=b621">B621</a></li>
+</ul>
+	  </div>
+	  
+	  <div class="clearer"></div>
+      	</div>  
+  </div>
+    
+  
+   <div style="float: right;">
+            <form class="button btn_login" method="get" action="https://cgi.soic.indiana.edu/~c311/doku.php"><div class="no"><input type="hidden" name="do" value="login"><input type="hidden" name="sectok" value="bb41d96766a4f618105208cecf4ca075"><input type="hidden" name="id" value="assignment-9"><input type="submit" value="Login" class="button" title="Login"></div></form>       &nbsp;  &nbsp;  &nbsp;
+   </div>
+  <div class="clearer">&nbsp;</div>
+
+
+  <div class="page">
+    <!-- ......... wikipage start ......... -->
+    
+
+
+<h1><a name="assignment-9parenthec-interpreter" id="assignment-9parenthec-interpreter">Assignment 9: ParentheC Interpreter</a></h1>
+<div class="level1">
+
+<blockquote cite="./C311_B521_A596 Programming Languages [Assignment 9_ ParentheC Interpreter]_files/Richard Pattis" class="blockquote-plugin">
+<p>
+“Code should run as fast as necessary, but no faster; something important is always traded away to increase speed.”
+
+</p>
+
+</blockquote>
+
+</div>
+
+<h2><a name="introduction" id="introduction">Introduction</a></h2>
+<div class="level2">
+
+</div>
+
+<h2><a name="preliminaries" id="preliminaries">Preliminaries</a></h2>
+<div class="level2">
+
+<p>
+
+<strong>This assignment relies on your successful completion of a7.</strong> If you haven't successfully completed a7 and maintained the versions of your code along the way, please complete this before starting this assignment. <strong>You cannot receive a grade for this course until you complete this assignment and demonstrate your understanding with one of the instructors. See the end of this page for more details.</strong>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> If you haven't done so, you might consider reading <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=parenthec.pdf" class="media mediafile mf_pdf" title="parenthec.pdf">the ParentheC paper</a>, <em>Using ParentheC to Transform Scheme Programs to C or How to Write Interesting Recursive Programs in a Spartan Host </em>. It is slightly out of date viz. registerization, but can still prove a useful resource.</div>
+</li>
+<li class="level1"><div class="li"> Download <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=pc2c.rkt" class="media mediafile mf_rkt" title="pc2c.rkt">pc2c.rkt</a>, and <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=parenthec.rkt" class="media mediafile mf_rkt" title="parenthec.rkt">parenthec.rkt</a>. </div>
+</li>
+<li class="level1"><div class="li"> You will also need to use the following <code>define-union</code> for expressions and <code>main</code> program:</div>
+</li>
+</ul>
+<pre class="code lisp"><span class="br0">(</span>define<span class="sy0">-</span>union expr
+  <span class="br0">(</span>const cexp<span class="br0">)</span>
+  <span class="br0">(</span>var n<span class="br0">)</span>
+  <span class="br0">(</span><span class="kw1">if</span> test conseq alt<span class="br0">)</span>
+  <span class="br0">(</span>mult nexp1 nexp2<span class="br0">)</span>
+  <span class="br0">(</span>sub1 nexp<span class="br0">)</span>
+  <span class="br0">(</span>zero nexp<span class="br0">)</span>
+  <span class="br0">(</span>capture body<span class="br0">)</span>
+  <span class="br0">(</span><span class="kw1">return</span> kexp vexp<span class="br0">)</span>
+  <span class="br0">(</span><span class="kw1">let</span> <span class="kw1">exp</span> body<span class="br0">)</span>              
+  <span class="br0">(</span><span class="kw1">lambda</span> body<span class="br0">)</span>
+  <span class="br0">(</span>app rator rand<span class="br0">)</span><span class="br0">)</span></pre><pre class="code lisp">&nbsp;
+<span class="co1">;; (let ((f (lambda (f)</span>
+<span class="co1">;;   	      (lambda (n)</span>
+<span class="co1">;; 	        (if (zero? n) </span>
+<span class="co1">;; 		    1</span>
+<span class="co1">;; 	            (* n ((f f) (sub1 n))))))))</span>
+<span class="co1">;;   (* (capture k ((f f) (return k ((f f) 4)))) 5))</span>
+&nbsp;
+<span class="br0">(</span>define main 
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="br0">)</span>
+    <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>cps 
+     <span class="br0">(</span>expr_let 
+      <span class="br0">(</span>expr_lambda
+       <span class="br0">(</span>expr_lambda 
+        <span class="br0">(</span>expr_if
+         <span class="br0">(</span>expr_zero <span class="br0">(</span>expr_var 0<span class="br0">)</span><span class="br0">)</span>
+         <span class="br0">(</span>expr_const <span class="nu0">1</span><span class="br0">)</span>
+         <span class="br0">(</span>expr_mult <span class="br0">(</span>expr_var 0<span class="br0">)</span> <span class="br0">(</span>expr_app <span class="br0">(</span>expr_app <span class="br0">(</span>expr_var <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>expr_var <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>expr_sub1 <span class="br0">(</span>expr_var 0<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span>expr_mult
+       <span class="br0">(</span>expr_capture
+        <span class="br0">(</span>expr_app
+         <span class="br0">(</span>expr_app <span class="br0">(</span>expr_var <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>expr_var <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+         <span class="br0">(</span>expr_return <span class="br0">(</span>expr_var 0<span class="br0">)</span> <span class="br0">(</span>expr_app <span class="br0">(</span>expr_app <span class="br0">(</span>expr_var <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>expr_var <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>expr_const <span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+       <span class="br0">(</span>expr_const <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+     <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span>
+     <span class="br0">(</span>empty<span class="sy0">-</span>k<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Notice that this test program is not quoted data. 
+</p>
+
+</div>
+
+<h2><a name="assignment" id="assignment">Assignment</a></h2>
+<div class="level2">
+
+<p>
+
+Your assignment is to complete the transformation of your interpreter from a7 to a version we can translate to C. When your interpreter is complete, turn it into C programs using <code>pc2c</code>, and run the test program provided. Here are the steps you will need to accomplish. Save a new copy of your interpreter after you finish every step. <strong>We will expect you to have all of these intermediate files available during your demonstration</strong>. Also, you will often need to go back to an older version of your interpreter and having copies of all of them will save a lot of time.
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Below <code>#lang racket</code>, add the line <code>(require “parenthec.rkt”)</code>. Next add the <code>expr</code> <code>define-union</code> to your file, change the <code>match</code> in <code>value-of-cps</code> to use <code>union-case</code>. Make sure to remove the backquotes and commas in the patterns of what was your <code>match</code> expression. Add <code>main</code> to the bottom of your file, and make sure it returns <code>120</code> when you invoke it.</div>
+</li>
+<li class="level1"><div class="li"> Transform your closure constructor to a <code>define-union</code>, change the <code>match</code> in <code>apply-closure</code> to instead use <code>union-case</code>, and ensure that your constructor invocations are preceeded with <code>clos_</code>, or something other than <code>clos</code> if you use a different name for your union. Make sure to remove the backquotes and commas in the patterns in what was your <code>match</code> expression.</div>
+</li>
+<li class="level1"><div class="li"> Transform your environment constructors to a <code>define-union</code>, change the <code>match</code> in <code>apply-env</code> to instead use <code>union-case</code>, and ensure all constructor invocations are preceeded with <code>envr_</code>, or something other than <code>envr</code> if you use a different name for your union. Make sure to remove the backquotes and commas in the patterns in what was your <code>match</code> expression.</div>
+</li>
+<li class="level1"><div class="li"> Transform your continuation constructors to a <code>define-union</code>, change the <code>match</code> in <code>apply-k</code> to instead use <code>union-case</code>, and ensure all constructor invocations are preceeded with <code>kt_</code>, or something other than <code>kt</code> if you use a different name for your union. Make sure to remove the backquotes and commas in the patterns in what was your <code>match</code> expression.</div>
+</li>
+<li class="level1"><div class="li"> Transform all your serious function calls to our A-normal form style, by adding <code>let*</code> above your serious calls, and ensuring that the names of the actual parameters to the serious calls are *exactly* the names of the formal parameters in the definition.</div>
+</li>
+<li class="level1"><div class="li"> Registerize the interpreter. Turn each <code>let*</code> expression to a <code>begin</code> block: the former <code>let*</code> bindings will become <code>set!</code> expressions, and the body becomes the invocation of a function of no arguments. Change all serious functions to be functions of no arguments. Define your global registers using <code>define-registers</code> at the top of the program. </div>
+</li>
+<li class="level1"><div class="li"> Change all of your <code>(define name (lambda () …))</code> statements to instead use <code>define-label</code>.</div>
+</li>
+<li class="level1"><div class="li"> Define your program counter at the top of the program.</div>
+</li>
+<li class="level1"><div class="li"> Convert all label invocations into assignments to the program counter, and then add calls to <code>mount-trampoline</code> and <code>dismount-trampoline</code>. Not this will require modifying <code>empty-k</code> in your <code>kt</code> union, and the <code>empty-k</code> clause in the <code>union-case</code> inside <code>apply-k</code>. On the last line of <code>main</code>, print the register containing the final value of the program, e.g. <code>(printf “Fact 5: ~s\n” v)</code> See the parentheC document for notes on these steps. </div>
+</li>
+<li class="level1"><div class="li"> Comment out the lines <code>#lang racket</code>, <code>(require “parentheC.rkt”)</code>, and your invocation of <code>main</code> if you added it to your file. And save a copy of this file named <code>interp.pc</code>.</div>
+</li>
+<li class="level1"><div class="li"> Open and run <code>pc2c.rkt</code>. This should load without errors. In the associated Racket REPL with <strong>no</strong> other files loaded, type <code>(pc2c “interp.pc” “a9.c” “a9.h”)</code>, which will generate C code from your interpreter. Compile the C program with the C compiler of your choice. The SOIC linux machines have <code>gcc</code> installed, and you can find <a href="http://gcc.gnu.org/install/binaries.html" class="urlextern" title="http://gcc.gnu.org/install/binaries.html" rel="nofollow">here</a> binaries for many different systems. Run the resulting executable, verifying that you see the correct output. </div>
+</li>
+</ol>
+
+<p>
+
+<!---
+  - In a **fresh** Scheme process with **no** other files loaded, load &#039;&#039;pc2j.ss&#039;&#039;, generate Java code for your interpreter, compile the Java program, and run the resulting executable, verifying that you see the correct output. For instructions on using &#039;&#039;pc2j&#039;&#039;, see the comments at the top of the file.
+--->
+</p>
+
+<p>
+Save a new copy of your interpreter after you finish each step. <strong>We will expect you to have all of these intermediate files available during your demonstration</strong>. Also, you will often need to go back to an older version of your interpreter and having copies of all of them will save a lot of time.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> You should turn in a file named <code>interp.pc</code> that contains the exact Scheme code you used to generate your C programs.</div>
+</li>
+<li class="level1"><div class="li"> This assignment is due on <strong>Wednesday, November 4th at 11:59 p.m.</strong> Once you've done the assignment, you must meet with one of the <a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=instructors" class="wikilink1" title="instructors">AIs</a> to demonstrate your knowledge of your code.  This meeting is a required part of the assignment and must take place on or before <strong>Friday, November 13th</strong>.</div>
+</li>
+<li class="level1"><div class="li"> You must book an appt in advance (at least 1 day in advance). <strong>Make sure you get an email confirming your appointment.</strong></div>
+</li>
+</ul>
+<p><span style="display:none"><a href="https://www.schedulething.com/">Online Scheduling System powered by ScheduleThing</a></span><a id="showSTWidget" onclick="document.getElementById(&#39;STIframeWrap&#39;).style.display=&#39;block&#39;; document.getElementById(&#39;SToverlay&#39;).style.display=&#39;block&#39;; return false;" href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignment-9#"><img src="./C311_B521_A596 Programming Languages [Assignment 9_ ParentheC Interpreter]_files/widgetButton.png" border="0"></a></p><script type="text/javascript" id="STScript">
+  var STTag = document.createElement("script");
+  var protocol = "https:" == document.location.protocol ? "https://" : "http://";
+  STTag.src = protocol + "a9.schedulething.com/index/widget?widgetLocation=" + document.location.href.replace(/\?/gi, '%3F').replace(/\&/gi, '%26');
+  var s = document.getElementById("STScript"); s.parentNode.appendChild(STTag);
+</script><script src="./C311_B521_A596 Programming Languages [Assignment 9_ ParentheC Interpreter]_files/widget"></script><ul>
+<li class="level1"><div class="li"> Remember: successful completion of this assignment and code review is required in order to receive a grade for this course. For assignments handed in after the due date, credit is reduced proportionally to lateness (1 assignment grade/week).</div>
+</li>
+</ul>
+
+</div>
+
+<h2><a name="just-dessert" id="just-dessert">Just Dessert</a></h2>
+<div class="level2">
+
+<p>
+
+Add a <code>callcc</code> form to your interpreter that behaves like Scheme's <code>call/cc</code>. Change the test program to one that uses <code>call/cc</code> and send this, along with any other required changes, in an email to your grader. 
+</p>
+
+</div>
+
+    <!-- ......... wikipage stop  ......... -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+ 
+  <!--  footer -->  
+  <div class="stylefoot">
+
+        <div class="meta">
+      <div class="doc">
+		<p>assignment-9.txt · Last modified: 2015/10/24 17:05 by jhemann</p>
+      </div>
+   </div>
+
+    <div>
+       <!--  breadcrumbs and search -->
+	  	
+	  
+
+       
+      <div class="clearer"></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="no"><img src="./C311_B521_A596 Programming Languages [Assignment 9_ ParentheC Interpreter]_files/indexer.php" width="1" height="1" alt=""></div>
+
+
+<div><div id="STIframeWrap" style="display:none;position:fixed;top:0;left:0;width:100%;z-index:10001;"><div id="STContainer" style="height:400px;width:480px;margin:20px auto 0 auto;position:relative;z-index:10002;border: 10px solid #999;"><a onclick="document.getElementById(&#39;STIframeWrap&#39;).style.display=&#39;none&#39;; document.getElementById(&#39;SToverlay&#39;).style.display=&#39;none&#39;;document.getElementById(&#39;STIframe&#39;).src=&#39;https://a9.schedulething.com?is-widget=true&amp;widgetLocation=https%3A%2F%2Fcgi.soic.indiana.edu%2F%7Ec311%2Fdoku.php%3Fid%3Dassignment-9&#39;; return false;" href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignment-9#" style="float:right;position:absolute;top:-20px;right:-20px;z-index:10003" id="hideSTWidget"><img src="./C311_B521_A596 Programming Languages [Assignment 9_ ParentheC Interpreter]_files/close-widget.png" style="border:0;" height="30" width="30"></a><iframe id="STIframe" src="./C311_B521_A596 Programming Languages [Assignment 9_ ParentheC Interpreter]_files/saved_resource.html" style="width:100%;height:400px;overflow-x: hidden;overflow-y:auto;border:none;" frameborder="0"></iframe></div></div></div><div><div id="SToverlay" style="display:none;background:#000;opacity:0.5;width:100%;height:100%; z-index:10000;position:fixed;top:0;left:0;filter:Alpha(Opacity=50)"></div></div></body></html>

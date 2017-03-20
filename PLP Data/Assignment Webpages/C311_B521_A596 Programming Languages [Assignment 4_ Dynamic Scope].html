@@ -1,0 +1,655 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0059)https://cgi.soic.indiana.edu/~c311/doku.php?id=assignment-4 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="google-site-verification" content="CHpL8-yKEGFx7Gy37uNcU2lz9oRZydQdifkiJNj6-P4">
+  
+  <title>
+    C311/B521/A596 Programming Languages    [Assignment 4: Dynamic Scope]
+  </title>
+
+  <meta name="generator" content="DokuWiki Release 2009-02-14b">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2015-09-19T13:24:17-0400">
+<meta name="keywords" content="assignment-4">
+<link rel="search" type="application/opensearchdescription+xml" href="https://cgi.soic.indiana.edu/~c311/lib/exe/opensearch.php" title="C311/B521/A596 Programming Languages">
+<link rel="start" href="https://cgi.soic.indiana.edu/~c311/">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cgi.soic.indiana.edu/~c311/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="https://cgi.soic.indiana.edu/~c311/feed.php?mode=list&amp;ns=">
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cgi.soic.indiana.edu/~c311/doku.php?do=export_xhtml&amp;id=assignment-4">
+<link rel="stylesheet" media="all" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 4_ Dynamic Scope]_files/css.php">
+<link rel="stylesheet" media="screen" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 4_ Dynamic Scope]_files/css(1).php">
+<link rel="stylesheet" media="print" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 4_ Dynamic Scope]_files/css(2).php">
+<script type="text/javascript" charset="utf-8" src="./C311_B521_A596 Programming Languages [Assignment 4_ Dynamic Scope]_files/js.php"></script>
+
+  <link rel="shortcut icon" href="https://cgi.soic.indiana.edu/~c311/lib/tpl/doogiestpl/images/favicon.ico">
+
+  </head>
+
+
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+      <div class="header_left"></div>
+      <div class="logo">
+        <a href="https://cgi.soic.indiana.edu/~c311/doku.php" name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]">C311/B521/A596 Programming Languages</a>      </div>
+
+      <div id="tabnavi" class="tabnavi">
+	    <ul>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=home">Home</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=course-policies">Policies</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=instructors">Instructors</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=resources">Resources</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=schedule">Schedule</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignments">Assignments</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=b621">B621</a></li>
+</ul>
+	  </div>
+	  
+	  <div class="clearer"></div>
+      	</div>  
+  </div>
+    
+  
+   <div style="float: right;">
+            <form class="button btn_login" method="get" action="https://cgi.soic.indiana.edu/~c311/doku.php"><div class="no"><input type="hidden" name="do" value="login"><input type="hidden" name="sectok" value="bb41d96766a4f618105208cecf4ca075"><input type="hidden" name="id" value="assignment-4"><input type="submit" value="Login" class="button" title="Login"></div></form>       &nbsp;  &nbsp;  &nbsp;
+   </div>
+  <div class="clearer">&nbsp;</div>
+
+
+  <div class="page">
+    <!-- ......... wikipage start ......... -->
+    
+
+
+<h1><a name="assignment-4dynamic-scope" id="assignment-4dynamic-scope">Assignment 4: Dynamic Scope</a></h1>
+<div class="level1">
+
+<blockquote cite="./C311_B521_A596 Programming Languages [Assignment 4_ Dynamic Scope]_files/Charles Babbage, 1864" class="blockquote-plugin">
+<p>
+On two occasions I have been asked [by members of Parliament],–“Pray, Mr. Babbage, if you put into the machine wrong figures, will the right answers come out?” […]
+
+</p>
+
+</blockquote>
+
+</div>
+
+<h2><a name="assignment" id="assignment">Assignment</a></h2>
+<div class="level2">
+
+<p>
+
+This assignment has three parts. In addition to an improved <code>lex</code>, we expect you to turn in <strong>three interpreters</strong>: <code>value-of-fn</code>, <code>value-of-ds</code>, and a third, <code>value-of-dynamic</code> with your implementation of dynamic scope. H311/B521 students will have a fourth interpreter. 
+</p>
+
+<p>
+You should be able to use the <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=a4-student-tests.rkt" class="media mediafile mf_rkt" title="a4-student-tests.rkt">a4-student-tests.rkt</a> file to test your solutions.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>require <span class="st0">"a4-student-tests.rkt"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>test<span class="sy0">-</span>file #:<span class="me1">file</span><span class="sy0">-</span><span class="kw1">name</span> <span class="st0">"a4.rkt"</span><span class="br0">)</span>
+...</pre>
+<p>
+
+and that should get you going. Of course, <strong>these tests are not exhaustive; you should add your own tests as well</strong>. 
+</p>
+
+</div>
+
+<h3><a name="part-i" id="part-i">Part I</a></h3>
+<div class="level3">
+
+<p>
+
+When we implemented <code>lex</code> before, it could handle variables, application, and <code>lambda</code>-abstraction forms. Extend your previous definition of <code>lex</code> so that it can handle not only those forms, but also numbers, <code>zero?</code>, <code>sub1</code>, <code>*</code>, <code>if</code>, and <code>let</code>. This should be a fairly straightforward extension, but it also serves as a chance to improve a misbehaving <code>lex</code> from Assignment 2. In order to better disambiguate numbers from lexical addresses, you should transform a number <code>n</code> into <code>(const n)</code>. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>lex '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span> <span class="nu0">5</span><span class="br0">)</span>  '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>var 0<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>const <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>lex '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="sy0">!</span><span class="br0">)</span>
+  	  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span>
+  	    <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="nu0">1</span> <span class="br0">(</span><span class="sy0">*</span> n <span class="br0">(</span><span class="sy0">!</span> <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+	'<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="kw1">lambda</span>
+  <span class="br0">(</span><span class="kw1">lambda</span>
+    <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? <span class="br0">(</span>var 0<span class="br0">)</span><span class="br0">)</span>
+  	<span class="br0">(</span>const <span class="nu0">1</span><span class="br0">)</span>
+  	<span class="br0">(</span><span class="sy0">*</span> <span class="br0">(</span>var 0<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>var <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>sub1 <span class="br0">(</span>var 0<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>lex '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span><span class="sy0">!</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="sy0">!</span><span class="br0">)</span>
+  		   <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span>
+  		     <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> <span class="nu0">1</span> <span class="br0">(</span><span class="sy0">*</span> n <span class="br0">(</span><span class="br0">(</span><span class="sy0">!</span> <span class="sy0">!</span><span class="br0">)</span> <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+          <span class="br0">(</span><span class="br0">(</span><span class="sy0">!</span> <span class="sy0">!</span><span class="br0">)</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+       '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="kw1">lambda</span>
+       <span class="br0">(</span><span class="kw1">lambda</span>
+  	 <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? <span class="br0">(</span>var 0<span class="br0">)</span><span class="br0">)</span>
+  	     <span class="br0">(</span>const <span class="nu0">1</span><span class="br0">)</span>
+  	     <span class="br0">(</span><span class="sy0">*</span> <span class="br0">(</span>var 0<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>var <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>sub1 <span class="br0">(</span>var 0<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+  <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>var 0<span class="br0">)</span> <span class="br0">(</span>var 0<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>const <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+</div>
+
+<h3><a name="part-ii" id="part-ii">Part II</a></h3>
+<div class="level3">
+
+<p>
+
+For this part of the assignment, use <strong>one</strong> of your interpreters from last week's assignment as a starting point. You may pick either <code>value-of</code>, <code>value-of-fn</code> or <code>value-of-ds</code>. But for Part II you should pick, and stick with, a *single* representation of environments. If you choose to start with <code>value-of</code>, leave your environments representation dependent using higher-order functions. If you chose to start with <code>value-of-fn</code> change either all three of <code>empty-env-fn</code>, <code>apply-env-fn</code>, and <code>extend-env-fn</code> to <code>empty-env</code>, <code>apply-env</code>, and <code>extend-env</code>. If you chose to start with <code>value-of-ds</code> change all three of <code>empty-env-ds</code>, <code>apply-env-ds</code>, and <code>extend-env-ds</code>, to <code>empty-env</code>, <code>apply-env</code>, and <code>extend-env</code>. In either of the latter two cases, use these new names for the environment helpers in your interpreter. Having done so, create two *new* interpreters that are representation independent with respect to closures: <code>value-of-fn</code> and <code>value-of-ds</code>, respectively. 
+
+</p>
+<pre class="code">1. ''value-of-fn'' should use a functional representation of closures.
+2. ''value-of-ds'' should use a data-structural representation of closures.</pre>
+
+<p>
+
+You should write two new closure helper functions for each of your interpreters. Write <code>apply-closure-fn</code> and <code>closure-fn</code> for <code>value-of-fn</code>, and write <code>apply-closure-ds</code>, and <code>closure-ds</code> for <code>value-of-ds</code>. 
+</p>
+
+<p>
+Your interpreters must work for at least these test cases. Of course, <strong>these tests are not exhaustive; you should use your own tests as well</strong>. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>fn 
+    '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? x<span class="br0">)</span> 
+                      <span class="nu0">12</span> 
+                      <span class="nu0">47</span><span class="br0">)</span><span class="br0">)</span> 
+       0<span class="br0">)</span> 
+    <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">12</span>    
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>fn
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>y <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">3</span> <span class="nu0">4</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="sy0">*</span> x y<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>sub1 <span class="nu0">6</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">60</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>fn
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>y <span class="br0">(</span>sub1 x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="sy0">*</span> x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">30</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>fn
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span>sub1 x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="sy0">*</span> x x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">25</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ds
+    '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? x<span class="br0">)</span> 
+                      <span class="nu0">12</span> 
+                      <span class="nu0">47</span><span class="br0">)</span><span class="br0">)</span> 
+       0<span class="br0">)</span> 
+    <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">12</span>    
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ds
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>y <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">3</span> <span class="nu0">4</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="sy0">*</span> x y<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>sub1 <span class="nu0">6</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">60</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ds
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>y <span class="br0">(</span>sub1 x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="sy0">*</span> x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">30</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ds
+   '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="br0">(</span>sub1 x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+        <span class="br0">(</span><span class="sy0">*</span> x x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+   <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">25</span></pre>
+</div>
+
+<h3><a name="part-iii" id="part-iii">Part III</a></h3>
+<div class="level3">
+
+<p>
+
+The second part of this week's assignment is to create an interpreter that uses <em>dynamic scope</em>.
+</p>
+
+</div>
+
+<h4><a name="explanation-of-dynamic-scope" id="explanation-of-dynamic-scope">Explanation of dynamic scope</a></h4>
+<div class="level4">
+
+<p>
+
+The interpreters we have been writing so far have been implemented in such a way that, if there are variables that occur free in an a procedure, they take their values from the environment in which the <code>lambda</code> expression is defined.  We accomplish this by creating a closure for each procedure we see, and we save the environment in the closure.  This technique is called <em>static binding of variables</em>, or <em>static scope</em>. Lexical scope is a kind of static scope.
+</p>
+
+<p>
+Alternatively, we could implement our interpreters such that any variables that occur free in the body of a procedure get their values from the environment from which the procedure is <em>called</em>, rather than from the environment in which the procedure is <em>defined</em>.
+</p>
+
+<p>
+For example, consider what would happen if we were to evaluate the following expression in an interpreter that used lexical scope:
+</p>
+<pre class="code lisp"><span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="nu0">2</span><span class="br0">]</span><span class="br0">)</span>
+  <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>f <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>e<span class="br0">)</span> x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="nu0">5</span><span class="br0">]</span><span class="br0">)</span>
+      <span class="br0">(</span>f 0<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Our lexical interpreter would add <code>x</code> to the environment with a value of <code>2</code>. For <code>f</code>, it would create a closure that contained the binding of <code>x</code> to <code>2</code>, and it would add <code>f</code> to the environment with that closure as its value.  Finally, the inner <code>let</code> would add <code>x</code> to the environment with a value of <code>5</code>. Then the call <code>(f 0)</code> would be evaluated, but since it would use the value of <code>x</code> that was saved in the closure (which was <code>2</code>) rather than the value of <code>x</code> that was current at the time <code>f</code> was called (which was <code>5</code>), the entire expression would evaluate to <code>2</code>.
+</p>
+
+<p>
+Under dynamic scope, we wouldn't save the value of <code>x</code> in the closure for <code>f</code>.  Instead, the application <code>(f 0)</code> would use the value of <code>x</code> that was current in the environment at the time it was called, so the entire expression would evaluate to <code>5</code>.
+</p>
+
+<p>
+As you can see, dynamic scope is a little strange, but it does have its uses.
+</p>
+
+<p>
+
+Define <code>value-of-dynamic</code>, an interpreter that implements dynamic scope. You can start with the dynamically-scoped interpreter we wrote in class that used <code>match-let</code>. You should be able to share your environment helpers from Parts I and II above, but you should not implement an abstraction for closures as well. Instead, the value of a <code>lambda</code> abstraction should be that same lambda abstraction. In the same way the value of a number is that same number. You'll find then, that when you go to evaluate an application, there's only one environment in which you <em>can</em> evaluate the body. This is a pretty simple change. To liven things up a little (and also to allow us a more interesting test case), this interpreter should also implement <code>let</code>, <code>if</code>, <code>*</code>, <code>sub1</code>, <code>null?</code>, <code>zero?</code>, <code>cons</code>, <code>car</code>, <code>cdr</code>, and <code>quote</code>. When evaluating the expression <code>(cons 1 (cons 2 '()))</code> <code>value-of-dynamic</code> should return <code>(1 2)</code>. Now <code>quote</code> is a bit of a tricky beast. So here's the <code>quote</code> line for the interpreter. 
+</p>
+<pre class="code lisp">   <span class="br0">[</span>`<span class="br0">(</span><span class="kw1">quote</span> ,v<span class="br0">)</span> v<span class="br0">]</span></pre>
+<p>
+<!---
+Consider this slightly modified version of the interpreter which uses a higher-order representation for closures. Notice that the &#039;&#039;lambda&#039;&#039; line now returns a procedure that takes two arguments, where the second argument is an environment. This change in the &#039;&#039;lambda&#039;&#039; line also requires a change in the application line: we now have to pass in the environment, since the &#039;&#039;rator&#039;&#039; is a two-argument function.
+
+This interpreter also should be completed to properly work with &#039;&#039;null?&#039;&#039;, &#039;&#039;cons&#039;&#039;, &#039;&#039;car&#039;&#039;, &#039;&#039;cdr&#039;&#039;, and &#039;&#039;quote&#039;&#039;. Note that we match on &#039;&#039;(quote ())&#039;&#039; for the empty list:
+
+&lt;code lisp&gt;
+(define value-of-dynamic
+  (lambda (exp env)
+    (match exp
+      [(? number?) exp]
+      [(? symbol?) (apply-env env exp)]
+      [`(quote ()) &#039;()]
+      [`(null? ,ls) _____]
+      [`(cons ,a ,d) _____]
+      [`(car ,ls) _____]
+      [`(cdr ,ls) _____]
+      [`(* ,nexp1 ,nexp2) (* (value-of-dynamic nexp1 env) (value-of-dynamic nexp2 env))]
+      [`(sub1 ,nexp) (sub1 (value-of-dynamic nexp env))]
+      [`(if ,t ,c ,a) (if (value-of-dynamic t env)
+                          (value-of-dynamic c env)
+                          (value-of-dynamic a env))]
+      [`(let ((,x ,e)) ,body) (let ((a (value-of-dynamic e env)))
+                                (value-of-dynamic body (extend-env x a env)))]
+      [`(lambda (,x) ,body) (lambda (a env^) (value-of-dynamic body (extend-env x a env)))]
+      [`(d-lambda (,x) ,body) ______]
+      [`(,rator ,rand) ((value-of-dynamic rator env) (value-of-dynamic rand env) env)])))
+&lt;/code&gt;
+
+=== Things to do for Part III ===
+3. First, copy either your &#039;&#039;value-of-fn&#039;&#039; or &#039;&#039;value-of-ds&#039;&#039; you defined for Part I, rename it to &#039;&#039;value-of-dynamic,&#039;&#039; and using the above interpreter as a guide, add &#039;&#039;d-lambda&#039;&#039; to &#039;&#039;value-of-dynamic.&#039;&#039; **Hint: You will need to add one line to your interpreter to handle &#039;&#039;d-lambda&#039;&#039; expressions, which have almost the same syntax as &#039;&#039;lambda&#039;&#039; expressions, but different semantics.**  We have added the  left side of the &#039;&#039;d-lambda&#039;&#039; line in the example interpreter above.
+
+We name this new interpreter &#039;&#039;value-of-dynamic&#039;&#039; because this new interpreter can handle both lexical (with lambda forms) and dynamic scope (with d-lambda forms). Copy your &#039;&#039;closure&#039;&#039; and &#039;&#039;apply-closure&#039;&#039; helpers for whichever interpreter you copied from above (&#039;&#039;value-of-fn&#039;&#039; or &#039;&#039;value-of-ds&#039;&#039;),  rename them &#039;&#039;closure-scopes&#039;&#039; and &#039;&#039;apply-closure-scopes&#039;&#039;, and modify them as necessary to handle the new &#039;&#039;d-lambda&#039;&#039; form. Modify the interpreter to use these helpers. 
+
+-->
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>dynamic '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="nu0">2</span><span class="br0">]</span><span class="br0">)</span>
+                       <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>f <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>e<span class="br0">)</span> x<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+                         <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>x <span class="nu0">5</span><span class="br0">]</span><span class="br0">)</span>
+                           <span class="br0">(</span>f 0<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+                    <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">5</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>dynamic
+    '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span><span class="sy0">!</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span>
+                <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span> 
+                    <span class="nu0">1</span>
+                    <span class="br0">(</span><span class="sy0">*</span> n <span class="br0">(</span><span class="sy0">!</span> <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+       <span class="br0">(</span><span class="sy0">!</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+    <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">120</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>dynamic
+    '<span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>f <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">cons</span> x <span class="kw1">l</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+       <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">[</span>cmap 
+	      <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+		<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">l</span><span class="br0">)</span>               
+		  <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span><span class="kw1">null</span>? <span class="kw1">l</span><span class="br0">)</span> 
+		      '<span class="br0">(</span><span class="br0">)</span>
+		      <span class="br0">(</span><span class="kw1">cons</span> <span class="br0">(</span>f <span class="br0">(</span><span class="kw1">car</span> <span class="kw1">l</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>cmap f<span class="br0">)</span> <span class="br0">(</span><span class="kw1">cdr</span> <span class="kw1">l</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span>
+	 <span class="br0">(</span><span class="br0">(</span>cmap f<span class="br0">)</span> <span class="br0">(</span><span class="kw1">cons</span> <span class="nu0">1</span> <span class="br0">(</span><span class="kw1">cons</span> <span class="nu0">2</span> <span class="br0">(</span><span class="kw1">cons</span> <span class="nu0">3</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> 
+    <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span> <span class="br0">(</span><span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span> <span class="br0">(</span><span class="nu0">3</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">)</span></pre>
+</div>
+
+<h2><a name="brainteasers" id="brainteasers">Brainteasers</a></h2>
+<div class="level2">
+
+<p>
+<!---
+==== Brainteaser 1 ====
+
+Dynamic scope is often viewed as a mistake in programming language implementation, and almost all modern languages use lexical scope instead. However, there are some situations where dynamic scope can be carefully applied to make solving a problem more straightforward.
+
+Describe such a problem, explaining why solving your example with a mix of dynamic and lexical scope is easier than with lexical scope alone. Your example need not be limited to Scheme programs.
+--->
+</p>
+
+<p>
+4. We've been talking a whole lot about representation independence. It would sure be nice to have a single interpreter where we could just pass in the various helper functions. That way we could write the interpreter once, pass in implementations of our environment and closure helpers, and then get an interpreter that will just take the expression we want to evaluate, that uses those helpers. From such a definition, it is obvious on first inspection of this single interpreter is indeed representation independent with respect to both environments and closures. 
+</p>
+
+<p>
+
+So let's do it. 
+</p>
+
+<p>
+
+Write a single function named <code>value-of-ri</code> that'll take <code>empty-env</code>, <code>extend-env</code>, <code>apply-env</code>, <code>closure</code>, and <code>apply-closure</code>, and return an interpreter expecting a single expression. You'll need to pass an additional parameter to your closure helper functions, so define them as <code>closure-fn-ri</code> and <code>apply-closure-fn-ri</code> <code>closure-ds-ri</code> and <code>apply-closure-ds-ri</code>, and make sure they take this additional parameter. Go ahead and include your regular <code>if</code>, <code>*</code>, <code>sub1</code>, <code>zero?</code>, <code>let</code>, forms, along with numbers and booleans, and <code>lambda</code>-calculus expressions. <strong>You should not pass your helper functions to recursive calls.</strong> Here's what the calls to initially kick off the interpreter should look like. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span><span class="br0">(</span><span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ri empty<span class="sy0">-</span>env<span class="sy0">-</span>fn extend<span class="sy0">-</span>env<span class="sy0">-</span>fn apply<span class="sy0">-</span>env<span class="sy0">-</span>fn closure<span class="sy0">-</span>fn<span class="sy0">-</span>ri apply<span class="sy0">-</span>closure<span class="sy0">-</span>fn<span class="sy0">-</span>ri<span class="br0">)</span> '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">5</span>
+<span class="sy0">&gt;</span><span class="br0">(</span><span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ri empty<span class="sy0">-</span>env<span class="sy0">-</span>ds extend<span class="sy0">-</span>env<span class="sy0">-</span>ds apply<span class="sy0">-</span>env<span class="sy0">-</span>ds closure<span class="sy0">-</span>ds<span class="sy0">-</span>ri apply<span class="sy0">-</span>closure<span class="sy0">-</span>ds<span class="sy0">-</span>ri<span class="br0">)</span> '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">5</span>
+<span class="sy0">&gt;</span><span class="br0">(</span><span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ri empty<span class="sy0">-</span>env<span class="sy0">-</span>fn extend<span class="sy0">-</span>env<span class="sy0">-</span>fn apply<span class="sy0">-</span>env<span class="sy0">-</span>fn closure<span class="sy0">-</span>ds<span class="sy0">-</span>ri apply<span class="sy0">-</span>closure<span class="sy0">-</span>ds<span class="sy0">-</span>ri<span class="br0">)</span> '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">5</span>
+<span class="sy0">&gt;</span><span class="br0">(</span><span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>ri empty<span class="sy0">-</span>env<span class="sy0">-</span>ds extend<span class="sy0">-</span>env<span class="sy0">-</span>ds apply<span class="sy0">-</span>env<span class="sy0">-</span>ds closure<span class="sy0">-</span>fn<span class="sy0">-</span>ri apply<span class="sy0">-</span>closure<span class="sy0">-</span>fn<span class="sy0">-</span>ri<span class="br0">)</span> '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">5</span></pre>
+<p>
+Your solution should involve a letrec.
+<!----
+==== Just Dessert ====
+
+5. When we apply &#039;&#039;value-of&#039;&#039; (or one of its variants) to an expression, such as the following, we get back a value, an error occurs, or it goes into an infinite loop. 
+
+&lt;code lisp&gt;
+(value-of &#039;((lambda (x) x) (lambda (y) y)) (empty-env))
+&lt;/code&gt;
+
+We don&#039;t usually get back something that looks like part of the original program. In our version of &#039;&#039;value-of&#039;&#039; this returns some representation of a procedure, depending on how we implement &#039;&#039;closure&#039;&#039; and &#039;&#039;apply-closure&#039;&#039;.
+
+If we think of the language interpreted by &#039;&#039;value-of&#039;&#039; as a set of symbolic terms, though, we don&#039;t concern ourselves representations of procedures or environments. Instead, we just rewrite one term to another term according to some rules. For example:
+
+&lt;code lisp&gt;
+((lambda (x) x) (lambda (y) y))
+-&gt; (lambda (y) y)
+&lt;/code&gt;
+
+Let&#039;s call this language &#039;&#039;lambda-n&#039;&#039;, and describe its syntax:
+
+&lt;code lisp&gt;
+expressions
+e ::= x (variables)
+    | n (natural numbers 0, 1, ...)
+    | b (booleans #t, #f)
+    | (if e e e)
+    | (zero? e)
+    | (sub1 e)
+    | (* e e)
+    | (lambda (x) e)
+    | (e e)
+
+values
+v ::= x
+    | n
+    | b
+    | (lambda (x) v)
+&lt;/code&gt;
+
+With this syntax, we can define our main rewriting rule, &#039;&#039;beta-n&#039;&#039;:
+
+&lt;code lisp&gt;
+((lambda (x) e1) e2) beta-n e1[e2/x]
+&lt;/code&gt;
+
+This relation tells us that when we have an expression of the form:
+&lt;code lisp&gt;((lambda (x) e1) e2)&lt;/code&gt;
+
+We can rewrite it to the expression &#039;&#039;e1&#039;&#039; where &#039;&#039;e2&#039;&#039; has been substituted for &#039;&#039;x&#039;&#039;. This substitution is not
+trivial, however, since it must not change the scope of variables
+involved in the substitution. So, we define e1[e2/x] as:
+
+&lt;code lisp&gt;
+               x1[e/x1] = e
+               x2[e/x1] = x2 if x1 is not x2
+(lambda (x1) e1)[e2/x1] = (lambda (x1) e1)
+(lambda (x1) e1)[e2/x2] = (lambda (x3) e1[x3/x1][e2/x2])
+                          if x1 is not x2,
+                             x2 is not x3,
+                             x3 is not a free variable in (lambda (x1) e1)
+                             and x3 is not a free variable in e2
+          (e1 e2)[e3/x] = (e1[e3/x] e2[e3/x])
+                 n[e/x] = n if n is a constant
+    (if e1 e2 e3)[e4/x] = (if e1[e4/x] e2[e4/x] e3[e4/x])
+       (zero? e1)[e2/x] = (zero? e1[e2/x])
+                  and so on  ...
+&lt;/code&gt;
+
+There are other rewriting rules for constants as well as for deciding
+where in a nested expression to apply the next rewriting rule. We
+aren&#039;t providing those here, but we are including them in the provided
+starter code. For another description of substitutions that may be used for redexes, see //([[http://www.divms.uiowa.edu/~slonnegr/plf/Book/ | Formal Syntax and Semantics of Programming Languages]], Ken Slonneger and 
+Barry L. Kurt,  Addison-Wesley Publishing Company, 1995. 146 - 149.)//: {{:sub.pdf}}
+
+If we rewrite a term until no more rewriting rules apply, we have
+found a term&#039;s //normal form//, or we&#039;ve encountered an error. This
+process is called //normalization//. 
+
+&lt;code lisp&gt;
+   ((lambda (x) (+ x 3)) 5)
+-&gt; (+ 5 3)
+-&gt; 8 ;; normal form
+&lt;/code&gt;
+
+&lt;code lisp&gt;
+   ((lambda (x) (3 x)) 5)
+-&gt; (3 5) ;; error
+&lt;/code&gt;
+
+==== Assignment ====
+
+Complete the following definitions to implement normalization for
+&#039;&#039;lambda-n&#039;&#039;. After testing your code, answer the questions at the
+bottom of the page. Remember, you can use &#039;&#039;(gensym &quot;x&quot;)&#039;&#039; to get a
+new unique symbol. Use &#039;&#039;(print-gensym &#039;pretty/suffix)&#039;&#039; at the REPL to make those
+unique symbols print nicely.
+
+&lt;code lisp&gt;
+(define subst
+  (lambda (e^ x e)
+    (pmatch e
+      [`,n (guard (integer? n)) n]
+      [`,b (guard (boolean? b)) b]
+      [`(if ,e1 ,e2 ,e3)
+       (let ([e1^ (subst e^ x e1)]
+             [e2^ (subst e^ x e2)]
+             [e3^ (subst e^ x e3)])
+         `(if ,e1^ ,e2^ ,e3^))]
+      [`(zero? ,e1)
+       (let ([e1^ (subst e^ x e1)])
+         `(zero? ,e1^))]
+      [`(sub1 ,e1)
+       (let ([e1^ (subst e^ x e1)])
+         `(sub1 ,e1^))]
+      [`(* ,e1 ,e2)
+       (let ([e1^ (subst e^ x e1)]
+             [e2^ (subst e^ x e2)])
+         `(* ,e1^ ,e2^))]
+      ;; Finish me!
+      [`(,e1 ,e2)
+       (let ([e1^ (subst e^ x e1)]
+             [e2^ (subst e^ x e2)])
+         `(,e1^ ,e2^))])))
+
+(define value?
+  (lambda (exp)
+    (pmatch exp
+      [`,x (guard (symbol? x)) #t]
+      [`,n (guard (integer? n)) #t]
+      [`,b (guard (boolean? b)) #t]
+      ;; Finish me!
+      [`,else #f])))
+
+(define norm
+  (lambda (exp)
+    (pmatch exp
+      [`,v (guard (value? v)) v]
+      [`(if #t ,conseq ,altern)
+       (norm conseq)]
+      [`(if #f ,conseq ,altern)
+       (norm altern)]
+      [`(if ,test ,conseq, altern)
+       (let ([test^ (norm test)])
+         (norm `(if ,test^ ,conseq ,altern)))]
+      [`(zero? 0) #t]
+      [`(zero? ,e)
+       (let ([e^ (norm e)])
+         (norm `(zero? ,e^)))]
+      [`(sub1 ,n)
+       (guard (integer? n))
+       (sub1 n)]
+      [`(sub1 ,e)
+       (let ([e^ (norm e)])
+         (norm `(sub1 ,e^)))]
+      [`(* ,n1 ,n2)
+       (guard (integer? n1) (integer? n2))
+       (* n1 n2)]
+      [`(* ,n1 ,e)
+       (guard (integer? n1))
+       (let ([e^ (norm e)])
+         (norm `(* ,n1 ,e^)))]
+      [`(* ,e1 ,e2)
+       (let ([e1^ (norm e1)])
+         (norm `(* ,e1^ e2)))]
+      [`(lambda (,x) ,e)
+       (let ([e^ (norm e)])
+         (norm `(lambda (,x) ,e^)))]
+      [`(,x ,v)
+       (guard (symbol? x) (value? v))
+       `(,x ,v)]
+      [`(,x ,e)
+       (guard (symbol? x))
+       (let ([e^ (norm e)])
+         (norm `(,x ,e^)))]
+      [`((lambda (,x) ,e1) ,e2)
+       ;; Finish me!
+       ]
+      [`(,e1 ,e2)
+       (let ([e1^ (norm e1)])
+         (norm `(,e1^ ,e2)))]
+      [`,x (errorf &#039;norm &quot;invalid expression ~s&quot; x)])))
+&lt;/code&gt;
+
+When you have completed the above, you should be able to reduce expressions in this language to normal form. Notice you make no use of an environment when doing so.
+
+---- other version----
+Recall the {{:beta.scm|definitions}} of norm and company that were discussed in class. In the definition of norm, we used a call-by-name (or normal order) approach to normalization.  This means that we substitute the rand without normalizing. For example, assuming + and numbers have been added, the current definition of norm (as discussed in class) would yield this result after the first step (**Note that you may use beta-reduce to see the result of norm after the first step.**):
+
+&lt;code lisp&gt;
+&gt; ((lambda (x) (+ x x)) (+ 3 5))
+(+ (+ 3 5) (+ 3 5))
+&lt;/code&gt;
+
+However, we would like to normalize the rand, too, so that the first step of norm would instead yield (+ 8 8), and the second step would yield 16.
+
+=== Things to do for Part ??? ===
+
+  * **First,** modify norm and any others so that they also work with + and numbers.
+  * **Second,** understand exactly how norm works, and then revise it to yield the new desired behavior, which is call-by-value (or applicative order).
+
+The assignment is to implement a //single-argument// interpreter for the pure lambda calculus. This interpreter has three major parts:
+
+== The Redex List ==
+
+Given a lambda calculus expression, you should generate (by a pre-order walk) a list of all possible //redexes// that may be applied to the expression. Then, only apply the first one. Iterate until the expression is in //normal form//.
+
+
+== The Grammar ==
+
+The official grammar is as follows:
+
+&lt;code lisp&gt;
+exp ::=   x 
+      | (lambda (x) e) 
+      | (e1 e2)
+&lt;/code&gt;
+
+You may extend the grammar to include all of the following. 
+
+&lt;code lisp&gt;
+exp ::= x 
+      | (lambda (x) e) 
+      | (e1 e2) 
+      | (let ((x a) e)
+      | (sub1 e) 
+      | (zero? e) 
+      | (* e1 e2) 
+      | (if e1 e2 e3)
+&lt;/code&gt;
+
+Implement &#039;&#039;sub1&#039;&#039;, &#039;&#039;zero?&#039;&#039;, &#039;&#039;*&#039;&#039;, and &#039;&#039;if&#039;&#039; as native Scheme forms . The end goal is to run the &#039;&#039;poorman&#039;s y combinator&#039;&#039; version of &#039;&#039;(factorial 5)&#039;&#039;
+
+&lt;code lisp&gt;
+((let ((! (lambda (!)
+            (lambda (n)
+              (if (zero? n) 1 (* n ((! !) (sub1 n))))))))
+   (! !))
+ 5)
+&lt;/code&gt;
+
+using only pure lambda calculus. (Hint: getting rid of &#039;&#039;let&#039;&#039; is easy.)
+
+== The Single Argument ==
+
+As stated above, the interpreter should take only one argument: the expression! //Do not simply call a function with an extra argument; this is not what we are asking you do to.//
+
+==== Hard Brainteaser ====
+
+Extend your interpreter to add &#039;&#039;wet&#039;&#039; to your interpreter. Study the
+example below to determine the semantics of &#039;&#039;wet&#039;&#039;. **Hint**: It will
+help to study the &#039;&#039;set!&#039;&#039; brainteaser for [[Assignment 3]].
+
+&lt;code lisp&gt;
+(define wet-test
+  &#039;(let ([x 5])
+     (let ([f (lambda (y) (+ x y))])
+       (let ([g (lambda (z) (+ (f z) z))])
+         (+ (wet ([x 6])
+              (g 7))
+            x)))))
+
+(test &quot;wet-test&quot;
+  (value-of-dynamic wet-test (empty-env))
+  25)
+&lt;/code&gt;
+
+--->
+
+</p>
+
+</div>
+
+    <!-- ......... wikipage stop  ......... -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+ 
+  <!--  footer -->  
+  <div class="stylefoot">
+
+        <div class="meta">
+      <div class="doc">
+		<p>assignment-4.txt · Last modified: 2015/09/19 13:24 by jhemann</p>
+      </div>
+   </div>
+
+    <div>
+       <!--  breadcrumbs and search -->
+	  	
+	  
+
+       
+      <div class="clearer"></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="no"><img src="./C311_B521_A596 Programming Languages [Assignment 4_ Dynamic Scope]_files/indexer.php" width="1" height="1" alt=""></div>
+
+
+</body></html>

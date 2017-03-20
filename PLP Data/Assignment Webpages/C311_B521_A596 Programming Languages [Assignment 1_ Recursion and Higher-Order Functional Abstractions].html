@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0059)https://cgi.soic.indiana.edu/~c311/doku.php?id=assignment-1 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="google-site-verification" content="CHpL8-yKEGFx7Gy37uNcU2lz9oRZydQdifkiJNj6-P4">
+  
+  <title>
+    C311/B521/A596 Programming Languages    [Assignment 1: Recursion and Higher-Order Functional Abstractions]
+  </title>
+
+  <meta name="generator" content="DokuWiki Release 2009-02-14b">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2015-10-25T16:58:28-0400">
+<meta name="keywords" content="assignment-1">
+<link rel="search" type="application/opensearchdescription+xml" href="https://cgi.soic.indiana.edu/~c311/lib/exe/opensearch.php" title="C311/B521/A596 Programming Languages">
+<link rel="start" href="https://cgi.soic.indiana.edu/~c311/">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cgi.soic.indiana.edu/~c311/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="https://cgi.soic.indiana.edu/~c311/feed.php?mode=list&amp;ns=">
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cgi.soic.indiana.edu/~c311/doku.php?do=export_xhtml&amp;id=assignment-1">
+<link rel="stylesheet" media="all" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 1_ Recursion and Higher-Order Functional Abstractions]_files/css.php">
+<link rel="stylesheet" media="screen" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 1_ Recursion and Higher-Order Functional Abstractions]_files/css(1).php">
+<link rel="stylesheet" media="print" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 1_ Recursion and Higher-Order Functional Abstractions]_files/css(2).php">
+<script type="text/javascript" charset="utf-8" src="./C311_B521_A596 Programming Languages [Assignment 1_ Recursion and Higher-Order Functional Abstractions]_files/js.php"></script>
+
+  <link rel="shortcut icon" href="https://cgi.soic.indiana.edu/~c311/lib/tpl/doogiestpl/images/favicon.ico">
+
+  </head>
+
+
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+      <div class="header_left"></div>
+      <div class="logo">
+        <a href="https://cgi.soic.indiana.edu/~c311/doku.php" name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]">C311/B521/A596 Programming Languages</a>      </div>
+
+      <div id="tabnavi" class="tabnavi">
+	    <ul>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=home">Home</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=course-policies">Policies</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=instructors">Instructors</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=resources">Resources</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=schedule">Schedule</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignments">Assignments</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=b621">B621</a></li>
+</ul>
+	  </div>
+	  
+	  <div class="clearer"></div>
+      	</div>  
+  </div>
+    
+  
+   <div style="float: right;">
+            <form class="button btn_login" method="get" action="https://cgi.soic.indiana.edu/~c311/doku.php"><div class="no"><input type="hidden" name="do" value="login"><input type="hidden" name="sectok" value="bb41d96766a4f618105208cecf4ca075"><input type="hidden" name="id" value="assignment-1"><input type="submit" value="Login" class="button" title="Login"></div></form>       &nbsp;  &nbsp;  &nbsp;
+   </div>
+  <div class="clearer">&nbsp;</div>
+
+
+  <div class="page">
+    <!-- ......... wikipage start ......... -->
+    
+
+
+<h1><a name="assignment-1recursion-and-higher-order-functional-abstractions" id="assignment-1recursion-and-higher-order-functional-abstractions">Assignment 1: Recursion and Higher-Order Functional Abstractions</a></h1>
+<div class="level1">
+
+<blockquote cite="./C311_B521_A596 Programming Languages [Assignment 1_ Recursion and Higher-Order Functional Abstractions]_files/Alan Perlis" class="blockquote-plugin">
+<p>
+Recursion is the root of computation since it trades description for time. 
+
+</p>
+
+</blockquote>
+
+</div>
+
+<h2><a name="guidelines-for-this-assignment" id="guidelines-for-this-assignment">Guidelines for this assignment</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Solutions must be recursive (<strong>naturally recursive</strong> unless not possible), or credit will not be given. </div>
+</li>
+<li class="level1"><div class="li"> You may not use built-in procedures that handle the bulk of the work. </div>
+</li>
+<li class="level1"><div class="li"> Please feel free to submit your work as many times as you wish, we will grade the last submission prior to the due date (and time).</div>
+</li>
+<li class="level1"><div class="li"> Named lets (aka “let loop”) should not be used on this assignment.</div>
+</li>
+<li class="level1"><div class="li"> The objective is not simply to write programs that get the correct answers; it is to write answers in the style of programs written in class. </div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> To get our same answers, you'll want to either set <code>(print-as-expression #f)</code> in your file, or in DrRacket go to Language&gt;Output Language&gt;Output Syntax and change the Output Style radio button from <code>print</code> to <code>write</code>.</div>
+</li>
+<li class="level1"><div class="li"> <strong> Make sure to title your file <code>a1.rkt</code> when you submit your homework. </strong></div>
+</li>
+</ul>
+
+</div>
+
+<h2><a name="testing-your-assignment" id="testing-your-assignment">Testing your assignment</a></h2>
+<div class="level2">
+
+<p>
+
+You must test your solutions before submitting your assignment. We have provided a suite of test cases to get you started. To run these tests, you must download the <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=a1-student-tests.rkt" class="media mediafile mf_rkt" title="a1-student-tests.rkt">a1-student-tests.rkt</a> test file. To use these tools, do the following in a Racket REPL (the code and test suite must be located in the same directory):
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>require <span class="st0">"a1-student-tests.rkt"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>test<span class="sy0">-</span>file #:<span class="me1">file</span><span class="sy0">-</span><span class="kw1">name</span> <span class="st0">"a1.rkt"</span><span class="br0">)</span>
+...</pre>
+<p>
+and that should get you going. Of course, <strong>these tests are not exhaustive; you should add your own tests as well</strong>. 
+</p>
+
+</div>
+
+<h2><a name="note" id="note">Note</a></h2>
+<div class="level2">
+
+<p>
+
+As you proceed with this assignment, you may find the following resources helpful. 
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=acker.scm" class="media mediafile mf_scm" title="acker.scm">Notes</a> on recursive functions for repeated addition/multiplication/exponentiation/etc.</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=ackermann.scm" class="media mediafile mf_scm" title="ackermann.scm">Simplification</a> of the Ackermann function to standard form.</div>
+</li>
+</ul>
+
+</div>
+
+<h2><a name="assignment" id="assignment">Assignment</a></h2>
+<div class="level2">
+
+<p>
+
+<strong>Write the following recursive Racket procedures. Place all of your code in a file named <code>a1.rkt</code>, and submit it via <a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=oncourse" class="wikilink1" title="oncourse">Oncourse</a>.</strong> Please make sure your file has exactly this filename, and that it runs, before submitting. 
+</p>
+
+<p>
+
+0. <strong>We've recently updated the course policies for the semester. Please <a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=course-policies" class="wikilink1" title="course-policies">read</a> through them before beginning the rest of the assignment. </strong>
+</p>
+
+<p>
+1. Define and test a procedure <code>countdown</code> that takes a natural number and returns a list of the natural numbers less than or equal to that number, in descending order.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>countdown <span class="nu0">5</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">5</span> <span class="nu0">4</span> <span class="nu0">3</span> <span class="nu0">2</span> <span class="nu0">1</span> 0<span class="br0">)</span></pre>
+<p>
+2. Define and test a procedure <code>insertR</code> that takes two symbols and a list and returns a new list with the second symbol inserted after each occurrence of the first symbol.
+<strong> For this and later questions, these functions need only hold over <code>eqv?</code>-comparable structures.</strong>
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>insertR 'x 'y '<span class="br0">(</span>x z z x y x<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>x y z z x y y x y<span class="br0">)</span></pre>
+<p>
+3. Define and test a procedure <code>remv-1st</code> that takes a a symbol and a list and returns a new list with the first occurrence of the symbol removed.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>remv<span class="sy0">-</span>1st 'x '<span class="br0">(</span>x y z x<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>y z x<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>remv<span class="sy0">-</span>1st 'y '<span class="br0">(</span>x y z y x<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>x z y x<span class="br0">)</span></pre>
+<p>
+4. Define and test a procedure <code>list-index-ofv?</code> that takes an element and a list and returns the (base 0) index of that element in the list. A list missing that element will be considered bad data. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>list<span class="sy0">-</span>index<span class="sy0">-</span>ofv? 'x '<span class="br0">(</span>x y z x x<span class="br0">)</span><span class="br0">)</span>
+0
+<span class="sy0">&gt;</span> <span class="br0">(</span>list<span class="sy0">-</span>index<span class="sy0">-</span>ofv? 'x '<span class="br0">(</span>y z x x<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">2</span></pre>
+<p>
+5. Define and test a procedure <code>filter</code> that takes a predicate and a list and returns a new list containing the elements that satisfy the predicate. A <em>predicate</em> is a procedure that takes a single argument and returns either <code>#t</code> or <code>#f</code>. The <code>number?</code> predicate, for example, returns <code>#t</code> if its argument is a number and <code>#f</code> otherwise. The argument satisfies the predicate, then, if the predicate returns <code>#t</code> for that argument.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>filter even? '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">2</span> <span class="nu0">4</span> <span class="nu0">6</span><span class="br0">)</span></pre>
+<p>
+6. Define and test a procedure <code>zip</code> that takes two lists and forms a new list, each element of which is a pair formed by combining the corresponding elements of the two input lists. If the two lists are of uneven length, then drop the tail of the longer one. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>zip '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span> '<span class="br0">(</span>a b c<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> . a<span class="br0">)</span> <span class="br0">(</span><span class="nu0">2</span> . b<span class="br0">)</span> <span class="br0">(</span><span class="nu0">3</span> . c<span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>zip '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span><span class="br0">)</span> '<span class="br0">(</span>a b c<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> . a<span class="br0">)</span> <span class="br0">(</span><span class="nu0">2</span> . b<span class="br0">)</span> <span class="br0">(</span><span class="nu0">3</span> . c<span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>zip '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span> '<span class="br0">(</span>a b c d e f<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> . a<span class="br0">)</span> <span class="br0">(</span><span class="nu0">2</span> . b<span class="br0">)</span> <span class="br0">(</span><span class="nu0">3</span> . c<span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+7. Define and test a procedure <code>map</code> that takes a procedure <code>p</code> of one argument and a list <code>ls</code> and returns a new list containing the results of applying <code>p</code> to the elements of <code>ls</code>. Do not use Racket's built-in <code>map</code> in your definition.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>map add1 '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span><span class="br0">)</span></pre>
+<p>
+8. Define and test a procedure <code>append</code> that takes two lists, <code>ls1</code> and <code>ls2</code>, and appends <code>ls1</code> to <code>ls2</code>.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">append</span> '<span class="br0">(</span>a b c<span class="br0">)</span> '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>a b c <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span><span class="br0">)</span></pre>
+<p>
+9. Define and test a procedure <code>reverse</code> that takes a list and returns the reverse of that list.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span><span class="kw1">reverse</span> '<span class="br0">(</span>a <span class="nu0">3</span> x<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>x <span class="nu0">3</span> a<span class="br0">)</span></pre>
+<p>
+10. Define and test a procedure <code>fact</code> that takes a natural number and computes the factorial of that number. The factorial of a number is computed by multiplying it by the factorial of its predecessor. The factorial of <code>0</code> is defined to be <code>1</code>.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>fact 0<span class="br0">)</span>
+<span class="nu0">1</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>fact <span class="nu0">5</span><span class="br0">)</span>
+<span class="nu0">120</span></pre>
+<p>
+11. Define and test a procedure <code>memv</code> that takes an element and a list and returns the first <code>cdr</code> whose <code>car</code> is <code>eqv?</code> to the element, or <code>#f</code> if the element is absent from the list.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>memv 'a '<span class="br0">(</span>a b c<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>a b c<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>memv 'b '<span class="br0">(</span>a ? c<span class="br0">)</span><span class="br0">)</span>
+#f
+<span class="sy0">&gt;</span> <span class="br0">(</span>memv 'b '<span class="br0">(</span>a b c b<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>b c b<span class="br0">)</span></pre>
+<p>
+12. Define and test a procedure <code>fib</code> that takes a natural number <code>n</code> as input and computes the <em>n</em>th number, starting from zero, in the Fibonacci sequence (0, 1, 1, 2, 3, 5, 8, 13, 21, …). Each number in the sequence is computed by adding the two previous numbers. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>fib 0<span class="br0">)</span>
+0
+<span class="sy0">&gt;</span> <span class="br0">(</span>fib <span class="nu0">1</span><span class="br0">)</span>
+<span class="nu0">1</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>fib <span class="nu0">7</span><span class="br0">)</span>
+<span class="nu0">13</span></pre>
+<p>
+13. The expressions <code>(a b)</code> and <code>(a . (b . ()))</code> are equivalent. Using this knowledge, rewrite the expression <code>(</code><code>(w x) y (z))</code> using as many dots as possible. Be sure to test your solution using Racket's <code>equal?</code> predicate.  (You do not have to define a <code>rewrite</code> procedure; just rewrite the given expression by hand and place it in a comment.)
+</p>
+
+<p>
+14. Define and test a procedure <code>binary-</code><code>&gt;natural</code> that takes a flat list of <code>0</code>s and <code>1</code>s representing an unsigned binary number in reverse bit order and returns that number. For example:
+
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>binary<span class="sy0">-&gt;</span>natural '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+0
+<span class="sy0">&gt;</span> <span class="br0">(</span>binary<span class="sy0">-&gt;</span>natural '<span class="br0">(</span>0 0 <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">4</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>binary<span class="sy0">-&gt;</span>natural '<span class="br0">(</span>0 0 <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">12</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>binary<span class="sy0">-&gt;</span>natural '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">15</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>binary<span class="sy0">-&gt;</span>natural '<span class="br0">(</span><span class="nu0">1</span> 0 <span class="nu0">1</span> 0 <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">21</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>binary<span class="sy0">-&gt;</span>natural '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">8191</span></pre>
+<p>
+15. Define subtraction using natural recursion. Your subtraction function, <code>minus</code>, need only take nonnegative inputs where the result will be nonnegative.
+</p>
+<pre class="code">&gt; (minus 5 3)
+2
+&gt; (minus 100 50)
+50
+</pre>
+
+<p>
+16. Define division using natural recursion. Your division function, <code>div</code>, need only work when the second number evenly divides the first. Division by zero is of course bad data. 
+</p>
+<pre class="code">&gt; (div 25 5)
+5
+&gt; (div 36 6)
+6
+</pre>
+
+<p>
+17. Define a function <code>append-map</code> that, similar to <code>map</code>, takes both a procedure <code>p</code> of one argument a list of inputs <code>ls</code> and applies <code>p</code> to each of the elements of <code>ls</code>. Here, though, we mandate that the result of <code>p</code> on each element of <code>ls</code> is a list, and we <code>append</code> together the intermediate results. Do not use Racket's built-in <code>append-map</code> in your definition.
+</p>
+<pre class="code">&gt; (append-map countdown (countdown 5))
+(5 4 3 2 1 0 4 3 2 1 0 3 2 1 0 2 1 0 1 0 0)
+</pre>
+
+<p>
+18. Define a function <code>set-difference</code> that takes two flat sets (lists with no duplicate elements) <code>s1</code> and <code>s2</code> and returns a list containing all the elements in <code>s1</code> that are <strong>not</strong> in <code>s2</code>.
+</p>
+<pre class="code">&gt; (set-difference '(1 2 3 4 5) '(2 4 6 8))
+(1 3 5)
+</pre>
+
+</div>
+
+<h2><a name="brainteasers" id="brainteasers">Brainteasers</a></h2>
+<div class="level2">
+
+<p>
+19. In mathematics, the power set of any set S, denoted P(S), is the set of all subsets of S, including the empty set and S itself. 
+</p>
+
+<p>
+<a href="https://cgi.soic.indiana.edu/~c311/lib/exe/detail.php?id=assignment-1&amp;media=ps-set.png" class="media" title="ps-set.png"><img src="./C311_B521_A596 Programming Languages [Assignment 1_ Recursion and Higher-Order Functional Abstractions]_files/fetch.php" class="media" alt=""></a>
+</p>
+
+<p>
+<a href="https://cgi.soic.indiana.edu/~c311/lib/exe/detail.php?id=assignment-1&amp;media=powerset.png" class="media" title="powerset.png"><img src="./C311_B521_A596 Programming Languages [Assignment 1_ Recursion and Higher-Order Functional Abstractions]_files/fetch(1).php" class="media" alt=""></a>
+</p>
+
+<p>
+The procedure <code>powerset</code> takes a list and returns the power set of the elements in the list. The exact order of your lists may differ; this is acceptable.
+</p>
+<pre class="code">&gt; (powerset '(3 2 1))
+((3 2 1) (3 2) (3 1) (3) (2 1) (2) (1) ())
+&gt; (powerset '())
+(())
+</pre>
+
+<p>
+20. The <em>cartesian-product</em> is defined over a list of sets (again simply lists that by our agreed upon convention don't have duplicates). The result is a list of tuples (i.e. lists). Each tuple has in the first position an element of the first set, in the second position an element of the second set, etc. The output list should contains all such combinations. The exact order of your tuples may differ; this is acceptable. 
+</p>
+<pre class="code">&gt; (cartesian-product '((5 4) (3 2 1)))
+((5 3) (5 2) (5 1) (4 3) (4 2) (4 1))
+</pre>
+
+<p>
+21. Rewrite some of the natural-recursive programs from above instead using <code><a href="http://docs.racket-lang.org/reference/pairs.html?q=foldr#%28def._%28%28lib._racket%2Fprivate%2Flist..rkt%29._foldr%29%29" class="urlextern" title="http://docs.racket-lang.org/reference/pairs.html?q=foldr#%28def._%28%28lib._racket%2Fprivate%2Flist..rkt%29._foldr%29%29" rel="nofollow">foldr</a></code>. That is, the bodies of your definitions should not refer to themselves. The names should be the following:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <code>insertR-fr</code></div>
+</li>
+<li class="level1"><div class="li"> <code>filter-fr</code></div>
+</li>
+<li class="level1"><div class="li"> <code>map-fr</code></div>
+</li>
+<li class="level1"><div class="li"> <code>append-fr</code></div>
+</li>
+<li class="level1"><div class="li"> <code>reverse-fr</code></div>
+</li>
+<li class="level1"><div class="li"> <code>binary-</code><code>&gt;natural-fr</code></div>
+</li>
+<li class="level1"><div class="li"> <code>append-map-fr</code></div>
+</li>
+<li class="level1"><div class="li"> <code>set-difference-fr</code></div>
+</li>
+<li class="level1"><div class="li"> <code>powerset-fr</code></div>
+</li>
+<li class="level1"><div class="li"> <code>cartesian-product-fr</code></div>
+</li>
+</ul>
+
+<p>
+
+22. Consider a function <code>f</code> defined as below
+</p>
+
+<p>
+<a href="https://cgi.soic.indiana.edu/~c311/lib/exe/detail.php?id=assignment-1&amp;media=collatz.png" class="media" title="collatz.png"><img src="./C311_B521_A596 Programming Languages [Assignment 1_ Recursion and Higher-Order Functional Abstractions]_files/fetch(2).php" class="media" alt=""></a>
+</p>
+
+<p>
+It is an open question in mathematics, known as the <a href="http://en.wikipedia.org/wiki/Collatz_conjecture" class="urlextern" title="http://en.wikipedia.org/wiki/Collatz_conjecture" rel="nofollow">Collatz Conjecture</a>, as to whether, for every positive integer <code>n</code>, <code>(f n)</code> is 1. 
+</p>
+
+<p>
+Your task is to, complete the below definition of <code>collatz</code>. <code>collatz</code> should be a function which will, when given a positive integer as an input, operate in a manner similar to the mathematical description above. 
+</p>
+<pre class="code lisp"><span class="br0">(</span>define collatz
+  <span class="br0">(</span>letrec
+    <span class="br0">(</span><span class="br0">(</span>odd<span class="sy0">-</span><span class="kw1">case</span>
+       <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>recur<span class="br0">)</span>
+         <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span>
+           <span class="br0">(</span><span class="kw1">cond</span> 
+            <span class="br0">(</span><span class="br0">(</span><span class="kw1">and</span> <span class="br0">(</span>positive? x<span class="br0">)</span> <span class="br0">(</span>odd? x<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>collatz <span class="br0">(</span>add1 <span class="br0">(</span><span class="sy0">*</span> x <span class="nu0">3</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> 
+            <span class="br0">(</span>else <span class="br0">(</span>recur x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+     <span class="br0">(</span>even<span class="sy0">-</span><span class="kw1">case</span>
+       <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>recur<span class="br0">)</span>
+         <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span>
+           <span class="br0">(</span><span class="kw1">cond</span> 
+            <span class="br0">(</span><span class="br0">(</span><span class="kw1">and</span> <span class="br0">(</span>positive? x<span class="br0">)</span> <span class="br0">(</span>even? x<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>collatz <span class="br0">(</span><span class="sy0">/</span> x <span class="nu0">2</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> 
+            <span class="br0">(</span>else <span class="br0">(</span>recur x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+     <span class="br0">(</span>one<span class="sy0">-</span><span class="kw1">case</span>
+       <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>recur<span class="br0">)</span>
+         <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span>
+           <span class="br0">(</span><span class="kw1">cond</span>
+            <span class="br0">(</span><span class="br0">(</span>zero? <span class="br0">(</span>sub1 x<span class="br0">)</span><span class="br0">)</span> <span class="nu0">1</span><span class="br0">)</span>
+            <span class="br0">(</span>else <span class="br0">(</span>recur x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+     <span class="br0">(</span>base
+       <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span>
+         <span class="br0">(</span><span class="kw1">error</span> '<span class="kw1">error</span> <span class="st0">"Invalid value ~s~n"</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+    ... <span class="co1">;; this should be a single line, without lambda</span>
+    <span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+
+Your completed answer should be very short. It should be no more than one (prettily-indented) line long, and should not use lambda. Your <code>collatz</code> should compute the collatz of positive integers; for non-positive integers, it should signal an error “Invalid value”. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>collatz <span class="nu0">12</span><span class="br0">)</span>
+<span class="nu0">1</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>collatz <span class="nu0">120</span><span class="br0">)</span>
+<span class="nu0">1</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>collatz <span class="nu0">9999</span><span class="br0">)</span>
+<span class="nu0">1</span></pre>
+</div>
+
+<h2><a name="just-dessert" id="just-dessert">Just Dessert</a></h2>
+<div class="level2">
+
+<p>
+
+21. A <code>quine</code> is a program whose output is the listings (i.e. source code) of the original program. In Racket, <code>5</code> and <code>#t</code> are both quines. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="nu0">5</span>
+<span class="nu0">5</span>
+<span class="sy0">&gt;</span> #t
+#t</pre>
+<p>
+We will call a quine in Racket that is neither a number nor a boolean an <em>interesting Racket quine</em>. Below is an interesting Racket quine. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">list</span> x <span class="br0">(</span><span class="kw1">list</span> '<span class="kw1">quote</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+  '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">list</span> x <span class="br0">(</span><span class="kw1">list</span> '<span class="kw1">quote</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">list</span> x <span class="br0">(</span><span class="kw1">list</span> '<span class="kw1">quote</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+  '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">list</span> x <span class="br0">(</span><span class="kw1">list</span> '<span class="kw1">quote</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Write your own interesting Racket quine, and define it as <code>quine</code>. The following should then be true.
+</p>
+<pre class="code">&gt; (equal? quine (eval quine))
+#t
+&gt; (equal? quine (eval (eval quine)))
+#t
+</pre>
+
+<p>
+Not every Racket list is a quine; Racket's standard printing convention will prepend a quote to a list. Make sure to use the above tests.
+<!---
+
+These just aren&#039;t my favorite problems.
+
+20. Define and test a procedure &#039;&#039;natural-&#039;&#039;&#039;&#039;&gt;binary&#039;&#039; that takes a number and returns a flat list of &#039;&#039;0&#039;&#039;s and &#039;&#039;1&#039;&#039;s representing that unsigned binary number in reverse bit order. For example:
+&lt;code lisp&gt;
+&gt; (natural-&gt;binary 0)
+()
+&gt; (natural-&gt;binary 4)
+(0 0 1)
+&gt; (natural-&gt;binary 12)
+(0 0 1 1)
+&gt; (natural-&gt;binary 15)
+(1 1 1 1)
+&gt; (natural-&gt;binary 21)
+(1 0 1 0 1)
+&gt; (natural-&gt;binary 8191)
+(1 1 1 1 1 1 1 1 1 1 1 1 1)
+&lt;/code&gt;
+
+   ;; (test-suite &quot;natural-&gt;binary&quot;   
+   ;;   (test-equal-if-defined natural-&gt;binary
+   ;;     [(natural-&gt;binary 0) &#039;()]
+   ;;     [(natural-&gt;binary 4) &#039;(0 0 1)]
+   ;;     [(natural-&gt;binary 12) &#039;(0 0 1 1)]
+   ;;     [(natural-&gt;binary 15) &#039;(1 1 1 1)]
+   ;;     [(natural-&gt;binary 21) &#039;(1 0 1 0 1)]
+   ;;     [(natural-&gt;binary 8191) &#039;(1 1 1 1 1 1 1 1 1 1 1 1 1)]))
+
+
+You can solve this problem multiple ways, but you may want to look up [[http://docs.racket-lang.org/reference/generic-numbers.html?q=mod#%28def._%28%28quote._~23~25kernel%29._quotient%2Fremainder%29%29 | quotient/remainder]] in the Racket documentation.
+
+19. The following recursive algorithm computes &#039;&#039;x&lt;sup&gt;n&lt;/sup&gt;&#039;&#039; for a non-negative integer &#039;&#039;n&#039;&#039;:
+
+{{:expbysquaring.png}}
+
+Write a Racket procedure &#039;&#039;power&#039;&#039; that uses this algorithm to raise a base &#039;&#039;x&#039;&#039; to a power &#039;&#039;n&#039;&#039;. For example:
+&lt;code lisp&gt;
+&gt; (power 2 0)
+1
+&gt; (power 2 2)
+4
+&gt; (power 2 10)
+1024
+&gt; (power 10 5)
+100000
+&gt; (power 3 31)
+617673396283947
+&gt; (power 3 32)
+1853020188851841
+&lt;/code&gt;
+   (test-suite &quot;power&quot;   
+     (test-equal-if-defined power
+       [(power 2 0) 1]
+       [(power 2 2) 4]
+       [(power 2 10) 1024]
+       [(power 10 5) 100000]
+       [(power 3 31) 617673396283947]
+       [(power 3 32) 1853020188851841]))
+       
+18. Write another variant of the &#039;&#039;fact&#039;&#039; procedure, &#039;&#039;fact-acc&#039;&#039;, that is properly tail-recursive. That is, any last operation performed by the function is a recursive call (the tail call), or returns a value without recursion. (Hint: &#039;&#039;fact-acc&#039;&#039; must take two arguments.) 
+
+   (test-suite &quot;fact-acc&quot;   
+     (test-equal-if-defined fact-acc
+       [(fact 5) 120]))
+
+-->
+</p>
+
+</div>
+
+    <!-- ......... wikipage stop  ......... -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+ 
+  <!--  footer -->  
+  <div class="stylefoot">
+
+        <div class="meta">
+      <div class="doc">
+		<p>assignment-1.txt · Last modified: 2015/10/25 16:58 by jhemann</p>
+      </div>
+   </div>
+
+    <div>
+       <!--  breadcrumbs and search -->
+	  	
+	  
+
+       
+      <div class="clearer"></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="no"><img src="./C311_B521_A596 Programming Languages [Assignment 1_ Recursion and Higher-Order Functional Abstractions]_files/indexer.php" width="1" height="1" alt=""></div>
+
+
+</body></html>

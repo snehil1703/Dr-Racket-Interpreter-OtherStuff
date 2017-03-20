@@ -1,0 +1,8 @@
+#lang racket
+
+(define G
+  (lambda (u)
+    (cond
+      [(zero? u) plus]
+      [(zero? (sub1 u)) times]
+      []

@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0135)https://a9.schedulething.com/?is-widget=true&widgetLocation=https%3A%2F%2Fcgi.soic.indiana.edu%2F%7Ec311%2Fdoku.php%3Fid%3Dassignment-9 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+	  	<meta name="robots" content="noindex, nofollow">
+	  	<meta name="robots" content="noarchive">
+	  	<meta name="application-name" content="Book This Room">
+	  	<meta name="msapplication-TileColor" content="#000000">
+		<meta name="msapplication-square70x70logo" content="/provider/img/tiles/tiny.png">
+		<meta name="msapplication-square150x150logo" content="/provider/img/tiles/square.png">
+	  	<meta name="msapplication-wide310x150logo" content="/provider/img/tiles/wide.png">
+	  	<meta name="msapplication-square310x310logo" content="/provider/img/tiles/large.png">
+		<title>
+						311/521 - Powered by ScheduleThing		</title>
+		<link rel="shortcut icon" href="https://a9.schedulething.com/favicon.ico">
+		<link href="jquery-ui-1.8.9.custom.css" media="screen" rel="stylesheet" type="text/css">
+				<link href="common.css" media="screen" rel="stylesheet" type="text/css">		<link href="css.css" media="screen" rel="stylesheet" type="text/css">
+				<!--[if IE 7]>
+		<link rel="stylesheet" href="/provider/css/ie7.css" type="text/css" media="screen, projection" />
+		<![endif]-->
+		<!--[if IE 6]>
+		<link rel="stylesheet" href="/provider/css/ie6.css" type="text/css" media="screen, projection" />
+		<script src="/js/iepngfix_tilebg.js" type="text/javascript"></script>
+		<![endif]-->
+		<script src="jquery-1.4.4.min.js" type="text/javascript"></script>
+		<script src="jquery-ui-1.8.9.custom.js" type="text/javascript"></script>
+		<script src="util.js" type="text/javascript"></script>
+		<script type="text/javascript" src="jquery.scrollTo.js"></script>
+<script type="text/javascript" src="jquery.json-1.3.js"></script>
+<script type="text/javascript" src="jquery.tools.min.js"></script>
+<script type="text/javascript" src="js_phpdate.js"></script>
+<script type="text/javascript" src="reservation.js"></script>
+<script type="text/javascript" src="jquery.ui.datepicker-en.js"></script>	</head>
+	
+	
+	<body class="isWidget">
+		<div class="container">
+						
+			<div class="header">
+            						<h1><a href="https://a9.schedulething.com/">311/521</a></h1>
+							            
+								<div class="contactInfo">
+															<a href="http://cgi.soic.indiana.edu/~c311/doku.php?id=home">cgi.soic.indiana.edu/~c311/doku.php?id=home</a>				</div>
+  		</div>  
+		
+			<script type="text/javascript">
+$(document).ready(function(){
+  $reservation = new Reservation(
+    { 
+      hasCustomQuestions: false,
+      hasTags:            false,
+      hasSubcategories:   false,
+      populateData:       null,
+      errors:             [],
+      isWidget:           1,
+      slotsToReschedule:  0,
+      serverOffset:       -18000,
+      directBooking:      "",
+      selectionMessage:   "You have selected",
+      providerLocale:     "en"
+    }
+  );
+
+	document.forms[0].onsubmit = function () {
+	if ((document.forms[0].email.value == null || document.forms[0].email.value == "") && (document.forms[0].require_confirm.checked))
+	  {
+	  alert("You can't require confirmation without an email address.");
+	  return false;
+	  }
+	};
+});
+
+</script>
+<form method="post" accept-charset="UTF-8" action="https://a9.schedulething.com/index/index?is-widget=true&amp;widgetLocation=https%3A%2F%2Fcgi.soic.indiana.edu%2F%7Ec311%2Fdoku.php%3Fid%3Dassignment-9">  
+<input type="hidden" name="allDay" value="0" class="" id="allDay">  
+      
+              
+    <div class="step used" id="availReservationTypes" style="">
+    		      <h2>
+        <span>1. </span>
+        Book a time    </h2>
+              <div>
+      <ul class="column">
+            
+          <li>
+          <a href="https://a9.schedulething.com/?is-widget=true&amp;widgetLocation=https%3A%2F%2Fcgi.soic.indiana.edu%2F%7Ec311%2Fdoku.php%3Fid%3Dassignment-9#" id="573b3bae-3a91-11e3-acd2-40400a2b9077" class=" tag-Show_All" seatsperbooking="1">
+            Code Review                      </a>
+        </li></ul>
+      </div>
+    
+    
+<input type="hidden" name="reservationTypeId" value="" class="" id="reservationTypeId">    </div>
+  
+              
+
+<div id="startDatetime" class="step" style="display: none;">
+          <a href="" id="dateback" class="jq_stepBack">« Back</a>
+      <h2><span>2. </span>Choose a Date  </h2>
+     
+  <div class="dateChooseLine"><img src="Clock-Spin-2.gif" height="180" width="210" id="clockSpinner" style="display: none"></div>
+  <div class="dateChooseLine" id="datepicker_error" style="display:none">Failed to load the calendar, please <a href="https://a9.schedulething.com/?is-widget=true&amp;widgetLocation=https%3A%2F%2Fcgi.soic.indiana.edu%2F%7Ec311%2Fdoku.php%3Fid%3Dassignment-9#">click here</a> to try again.</div>
+  <div class="dateChooseLine" id="jq_datePicker"></div>
+  <div class="dateChooseLine" id="datesList"></div>
+
+    
+<input type="hidden" name="startDate" value="2015-12-10" class=" required  required" id="startDate">    <input type="button" value="Next Step »" class="jq_nextStep" style="display:none;">
+</div>
+
+<div id="availResources" class="step" style="display: none;">
+  
+</div>
+
+<div id="availTimeslots" class="step" style="display: none;">
+  </div>
+
+<div id="customerForm" class="step" style="display: none;">
+	         <a href="" class="jq_stepBack">« Back</a>
+      <h2>
+    <span>3. </span>
+        We don't need your phone#, You can leave that blank      </h2>
+  
+<div id="customerFormWrap">
+  <table id="customerFormTable">
+      <tbody><tr>
+          <th><label for="firstName" class="">First Name</label></th>
+          <td>
+<input type="text" name="firstName" id="firstName" value="" autocomplete="off" maxlength="64" class="text required"></td>
+      </tr>
+      <tr>
+          <th><label for="lastName" class="">Last Name</label></th>
+          <td>
+<input type="text" name="lastName" id="lastName" value="" autocomplete="off" maxlength="64" class="text required"></td>
+      </tr>
+      <tr id="numSeatsElement">
+          <th><label for="numSeats" class="">How many are in your party?</label></th>
+          <td>
+<select name="numSeats" id="numSeats" class="select required">
+    <option value="1" label="1">1</option>
+</select></td>
+      </tr>
+            <tr>
+          <th><label for="phone" class="">Telephone Number</label></th>
+          <td>
+<input type="text" name="phone" id="phone" value="" autocomplete="off" maxlength="20" class="text"></td>
+      </tr>
+      
+	  <tr>
+          <th><label for="email" class="">Email</label></th>
+		  		  <td>
+<input type="text" name="email" id="email" value="" autocomplete="off" maxlength="128" class="text required"></td>
+      </tr>
+            <tr>
+          <th><label for="comments" class="">Comments</label></th>
+          <td>
+<textarea name="comments" id="comments" class="textarea" rows="24" cols="80"></textarea></td>
+      </tr>
+            <tr>
+        <th></th>
+        <td>
+<input type="hidden" name="rememberMe" value="0"><input type="checkbox" name="rememberMe" id="rememberMe" value="1" checked="checked" class="checkbox"><label for="rememberMe" class="">Remember my information</label></td>
+    </tr>
+             </tbody></table>
+
+  
+    </div>
+    
+<input type="submit" name="submit" id="submit" value="Continue »" class="submit"></div>
+<!-- 
+ -->
+</form>
+  <div id="stWidgetTag"><a href="https://www.schedulething.com/" target="_blank">Online Scheduling System powered by ScheduleThing</a> </div>
+
+ 
+		
+      		</div>
+	
+
+</body></html>

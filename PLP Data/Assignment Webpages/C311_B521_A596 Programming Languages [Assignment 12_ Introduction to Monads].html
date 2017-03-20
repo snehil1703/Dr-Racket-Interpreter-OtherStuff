@@ -1,0 +1,848 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0053)https://cgi.soic.indiana.edu/~c311/doku.php?id=monads -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="google-site-verification" content="CHpL8-yKEGFx7Gy37uNcU2lz9oRZydQdifkiJNj6-P4">
+  
+  <title>
+    C311/B521/A596 Programming Languages    [Assignment 12: Introduction to Monads]
+  </title>
+
+  <meta name="generator" content="DokuWiki Release 2009-02-14b">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2015-11-21T19:22:54-0500">
+<meta name="keywords" content="monads">
+<link rel="search" type="application/opensearchdescription+xml" href="https://cgi.soic.indiana.edu/~c311/lib/exe/opensearch.php" title="C311/B521/A596 Programming Languages">
+<link rel="start" href="https://cgi.soic.indiana.edu/~c311/">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cgi.soic.indiana.edu/~c311/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="https://cgi.soic.indiana.edu/~c311/feed.php?mode=list&amp;ns=">
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cgi.soic.indiana.edu/~c311/doku.php?do=export_xhtml&amp;id=monads">
+<link rel="stylesheet" media="all" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 12_ Introduction to Monads]_files/css.php">
+<link rel="stylesheet" media="screen" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 12_ Introduction to Monads]_files/css(1).php">
+<link rel="stylesheet" media="print" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 12_ Introduction to Monads]_files/css(2).php">
+<script type="text/javascript" charset="utf-8" src="./C311_B521_A596 Programming Languages [Assignment 12_ Introduction to Monads]_files/js.php"></script>
+
+  <link rel="shortcut icon" href="https://cgi.soic.indiana.edu/~c311/lib/tpl/doogiestpl/images/favicon.ico">
+
+  </head>
+
+
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+      <div class="header_left"></div>
+      <div class="logo">
+        <a href="https://cgi.soic.indiana.edu/~c311/doku.php" name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]">C311/B521/A596 Programming Languages</a>      </div>
+
+      <div id="tabnavi" class="tabnavi">
+	    <ul>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=home">Home</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=course-policies">Policies</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=instructors">Instructors</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=resources">Resources</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=schedule">Schedule</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignments">Assignments</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=b621">B621</a></li>
+</ul>
+	  </div>
+	  
+	  <div class="clearer"></div>
+      	</div>  
+  </div>
+    
+  
+   <div style="float: right;">
+            <form class="button btn_login" method="get" action="https://cgi.soic.indiana.edu/~c311/doku.php"><div class="no"><input type="hidden" name="do" value="login"><input type="hidden" name="sectok" value="bb41d96766a4f618105208cecf4ca075"><input type="hidden" name="id" value="monads"><input type="submit" value="Login" class="button" title="Login"></div></form>       &nbsp;  &nbsp;  &nbsp;
+   </div>
+  <div class="clearer">&nbsp;</div>
+
+
+  <div class="page">
+    <!-- ......... wikipage start ......... -->
+    
+
+
+<h1><a name="assignment-12introduction-to-monads" id="assignment-12introduction-to-monads">Assignment 12: Introduction to Monads</a></h1>
+<div class="level1">
+
+<p>
+<!--
+&lt;blockquote James Iry, attributed to Phil Wadler &gt;
+A monad is just a monoid in the category of endofunctors. What&#039;s the problem?
+&lt;/blockquote&gt; ([[http://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html|&quot;A Brief, Incomplete, and Mostly Wrong History of Programming Languages&quot;]])
+
+&lt;blockquote Brent Yorgey&gt;
+&quot;Of course!&quot; Joe thinks. &quot;It’s all so simple now. The key to understanding monads is that they are Like Burritos.&quot;
+&lt;/blockquote&gt;
+
+([[https://byorgey.wordpress.com/2009/01/12/abstraction-intuition-and-the-monad-tutorial-fallacy/|Abstraction, intuition, and the “monad tutorial fallacy”]])
+-->
+</p>
+
+<blockquote cite="./C311_B521_A596 Programming Languages [Assignment 12_ Introduction to Monads]_files/Simon Peyton Jones" class="blockquote-plugin">
+<p>
+Our biggest mistake: using the scary term “monad” rather than “warm fuzzy thing”.
+
+</p>
+
+</blockquote>
+
+</div>
+
+<h2><a name="assignment" id="assignment">Assignment</a></h2>
+<div class="level2">
+
+<p>
+
+<strong>Please complete the problems below. When you are finished, place all of your
+code in a file named <code>a12.rkt</code> and submit it to <a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=oncourse" class="wikilink1" title="oncourse">Oncourse</a>. </strong>
+</p>
+
+<p>
+There are an abundance of lecture notes you could use for this assignment.
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=http%3A%2F%2Fcs.indiana.edu%2F~cswords%2Fmonads.pdf" class="media mediafile mf_pdf" title="http://cs.indiana.edu/~cswords/monads.pdf">Cameron's lecture notes</a> are probably those which hew closest to the homework.</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=manymonads.pdf" class="media mediafile mf_pdf" title="manymonads.pdf">Dan and Adam's View of Monads</a> and its earlier iteration …</div>
+</li>
+<li class="level1"><div class="li"> … <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=schemersviewdan.pdf" class="media mediafile mf_pdf" title="schemersviewdan.pdf">Dan's Schemer's View</a> may also be of some use.</div>
+</li>
+<li class="level1"><div class="li"> Cameron, of Cameron's notes, also suggests <a href="http://homepages.inf.ed.ac.uk/wadler/papers/marktoberdorf/baastad.pdf" class="urlextern" title="http://homepages.inf.ed.ac.uk/wadler/papers/marktoberdorf/baastad.pdf" rel="nofollow">this explanation from Phil Wadler</a></div>
+</li>
+</ul>
+
+</div>
+
+<h2><a name="requirements" id="requirements">Requirements</a></h2>
+<div class="level2">
+
+<p>
+
+In order to receive credit:
+</p>
+<ul>
+<li class="level1"><div class="li"> You should use the <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=monads.rkt" class="media mediafile mf_rkt" title="monads.rkt">monads.rkt</a> file. You should add it to your C311 directory. This contains all the monad definitions you should need. </div>
+</li>
+<li class="level1"><div class="li"> You should also pull down and use the <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=a12-student-tests.rkt" class="media mediafile mf_rkt" title="a12-student-tests.rkt">a12-student-tests.rkt</a> test file. </div>
+</li>
+<li class="level1"><div class="li"> Use monadic style.</div>
+</li>
+<li class="level1"><div class="li"> Do not use <code>set!</code> or any another Racket procedures that perform side effects.</div>
+</li>
+<li class="level1"><div class="li"> Unless otherwise specified, you may use <code>do</code> to write any program below.</div>
+</li>
+</ul>
+
+</div>
+
+<h2><a name="maybe-monad" id="maybe-monad">Maybe Monad</a></h2>
+<div class="level2">
+
+<p>
+
+Recall the definition of the <code>maybe</code> monad presented in lecture.
+</p>
+
+<p>
+<strong> 1. </strong> The function <code>assv</code> takes an association list and a value to look up. In our implementation, we will either return a value if one is found or <code>(Nothing)</code> if no match is found in the list.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>assv<span class="sy0">-</span>maybe 'c '<span class="br0">(</span><span class="br0">(</span>a . <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>b . <span class="nu0">2</span><span class="br0">)</span> <span class="br0">(</span>c . <span class="nu0">3</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>Just <span class="nu0">3</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>assv<span class="sy0">-</span>maybe 'd '<span class="br0">(</span><span class="br0">(</span>a . <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>b . <span class="nu0">2</span><span class="br0">)</span> <span class="br0">(</span>c . <span class="nu0">3</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>Nothing<span class="br0">)</span></pre>
+</div>
+
+<h2><a name="writer-monad" id="writer-monad">Writer Monad</a></h2>
+<div class="level2">
+
+<p>
+
+The <code>writer</code> monad provides a mechanism to write data separately from the actual return value. If we use a list to represent these writes, we can use this monad to implement some rather useful functions.
+</p>
+
+<p>
+<strong> 2. </strong> The function <code>partition</code> takes a list and a predicate, returning a dotted pair with the values that do not pass the predicate in the first position and the values that do in the second position. Implement this using the <code>writer</code> monad. <em>Do not use <code>do</code> syntax for this problem.</em>
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>partition<span class="sy0">-</span>writer even? '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span> <span class="nu0">7</span> <span class="nu0">8</span> <span class="nu0">9</span> <span class="nu0">10</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> <span class="nu0">3</span> <span class="nu0">5</span> <span class="nu0">7</span> <span class="nu0">9</span><span class="br0">)</span> . <span class="br0">(</span><span class="nu0">2</span> <span class="nu0">4</span> <span class="nu0">6</span> <span class="nu0">8</span> <span class="nu0">10</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>partition<span class="sy0">-</span>writer odd? '<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span> <span class="nu0">7</span> <span class="nu0">8</span> <span class="nu0">9</span> <span class="nu0">10</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="nu0">2</span> <span class="nu0">4</span> <span class="nu0">6</span> <span class="nu0">8</span> <span class="nu0">10</span><span class="br0">)</span> . <span class="br0">(</span><span class="nu0">1</span> <span class="nu0">3</span> <span class="nu0">5</span> <span class="nu0">7</span> <span class="nu0">9</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+<strong> 3. </strong> Exponentiation by squaring is a method for quickly raising
+numbers to integer powers. Here is the definition of <code>power</code>, a
+function that raises a base <code>x</code> to a power <code>n</code> using this
+algorithm:
+</p>
+<pre class="code lisp"><span class="br0">(</span>define power
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x n<span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">cond</span>
+      <span class="br0">[</span><span class="br0">(</span>zero? n<span class="br0">)</span> <span class="nu0">1</span><span class="br0">]</span>
+      <span class="br0">[</span><span class="br0">(</span><span class="sy0">=</span> n <span class="nu0">1</span><span class="br0">)</span> x<span class="br0">]</span>
+      <span class="br0">[</span><span class="br0">(</span>odd? n<span class="br0">)</span> <span class="br0">(</span><span class="sy0">*</span> x <span class="br0">(</span>power x <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span><span class="br0">(</span>even? n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>nhalf <span class="br0">(</span><span class="sy0">/</span> n <span class="nu0">2</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+                   <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>y <span class="br0">(</span>power x nhalf<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+                     <span class="br0">(</span><span class="sy0">*</span> y y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Using the writer monad, implement the <code>powerXpartials</code> procedure,
+which also takes a base and an exponent. It should return the
+answer as a natural value, along with each partial result computed along the way.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>powerXpartials <span class="nu0">2</span> <span class="nu0">6</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">64</span> . <span class="br0">(</span><span class="nu0">2</span> <span class="nu0">4</span> <span class="nu0">8</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>powerXpartials <span class="nu0">3</span> <span class="nu0">5</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">243</span> . <span class="br0">(</span><span class="nu0">3</span> <span class="nu0">9</span> <span class="nu0">81</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>powerXpartials <span class="nu0">5</span> <span class="nu0">7</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">78125</span> . <span class="br0">(</span><span class="nu0">5</span> <span class="nu0">25</span> <span class="nu0">125</span> <span class="nu0">15625</span><span class="br0">)</span><span class="br0">)</span></pre>
+</div>
+
+<h2><a name="state-monad" id="state-monad">State Monad</a></h2>
+<div class="level2">
+
+<p>
+
+Recall from lecture that the <code>state</code> monad uses a state and works with <code>return-state</code> and <code>bind-state</code>.
+</p>
+
+<p>
+<strong> 4. </strong> Given a symbol <code>x</code> and a deeply-nested list of symbols <code>ls*</code> (i.e. a tree), via a preorder walk replace every occurrence of <code>x</code> with the number of <code>x</code>s that have been seen so far. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>replace<span class="sy0">-</span>with<span class="sy0">-</span>count 'o '<span class="br0">(</span>a o <span class="br0">(</span>t o <span class="br0">(</span>e o t <span class="br0">(</span><span class="br0">(</span>n<span class="br0">)</span> o<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> 0<span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span>a 0 <span class="br0">(</span>t <span class="nu0">1</span> <span class="br0">(</span>e <span class="nu0">2</span> t <span class="br0">(</span><span class="br0">(</span>n<span class="br0">)</span> <span class="nu0">3</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> . <span class="nu0">4</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>replace<span class="sy0">-</span>with<span class="sy0">-</span>count 'o '<span class="br0">(</span><span class="br0">(</span>h <span class="br0">(</span>i s o<span class="br0">)</span> a<span class="br0">)</span> o s <span class="br0">(</span>o e n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> 0<span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>h <span class="br0">(</span>i s 0<span class="br0">)</span> a<span class="br0">)</span> <span class="nu0">1</span> s <span class="br0">(</span><span class="nu0">2</span> e n<span class="br0">)</span><span class="br0">)</span> . <span class="nu0">3</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>replace<span class="sy0">-</span>with<span class="sy0">-</span>count 'o '<span class="br0">(</span>o <span class="br0">(</span>h <span class="br0">(</span>o s o<span class="br0">)</span> o<span class="br0">)</span> o<span class="br0">)</span><span class="br0">)</span> 0<span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span>0 <span class="br0">(</span>h <span class="br0">(</span><span class="nu0">1</span> s <span class="nu0">2</span><span class="br0">)</span> <span class="nu0">3</span><span class="br0">)</span> <span class="nu0">4</span><span class="br0">)</span> . <span class="nu0">5</span><span class="br0">)</span></pre>
+</div>
+
+<h2><a name="mixed-monads-problems" id="mixed-monads-problems">Mixed Monads Problems</a></h2>
+<div class="level2">
+
+<p>
+
+One of the neat things about monadic code is that it can reveal the underlying structure in the code that <em>uses</em> them. This enables you to parameterize your code over the monad. You can then drop in a different monad and monadic operation, and get different behavior as a result. We'll do that here.
+</p>
+
+<p>
+You'll use the following <code>traverse</code> in the next three problems.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define traverse
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">return</span> bind f<span class="br0">)</span>
+      <span class="br0">(</span>letrec
+        <span class="br0">(</span><span class="br0">(</span>trav
+           <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>tree<span class="br0">)</span>
+             <span class="br0">(</span><span class="kw1">cond</span>
+               <span class="br0">[</span><span class="br0">(</span>pair? tree<span class="br0">)</span>
+                <span class="br0">(</span><span class="kw1">do</span> bind
+                  <span class="br0">(</span>a <span class="sy0">&lt;-</span> <span class="br0">(</span>trav <span class="br0">(</span><span class="kw1">car</span> tree<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+                  <span class="br0">(</span>d <span class="sy0">&lt;-</span> <span class="br0">(</span>trav <span class="br0">(</span><span class="kw1">cdr</span> tree<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+                  <span class="br0">(</span><span class="kw1">return</span> <span class="br0">(</span><span class="kw1">cons</span> a d<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+               <span class="br0">[</span>else <span class="br0">(</span>f tree<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+        trav<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+<strong> 5. </strong> The reciprocal of a number <code>n</code> is computed by <code>(/ 1 n)</code>. Note that <code>0</code> has no reciprocal. Implement <code>reciprocal</code> using the <code>maybe</code> monad, returning any value computed and <code>(Nothing)</code> when <code>0</code> is provided.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>reciprocal 0<span class="br0">)</span>
+<span class="br0">(</span>Nothing<span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>reciprocal <span class="nu0">2</span><span class="br0">)</span>
+<span class="br0">(</span>Just <span class="nu0">1</span><span class="sy0">/</span><span class="nu0">2</span><span class="br0">)</span></pre>
+<p>
+Using this, we can return a tree of reciprocals, and instead signal
+failure if the tree contains a <code>0</code>.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define traverse<span class="sy0">-</span>reciprocal
+    <span class="br0">(</span>traverse return<span class="sy0">-</span>maybe bind<span class="sy0">-</span>maybe reciprocal<span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>traverse<span class="sy0">-</span>reciprocal '<span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> . <span class="nu0">2</span><span class="br0">)</span> . <span class="br0">(</span><span class="nu0">3</span> . <span class="br0">(</span><span class="nu0">4</span> . <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>Just <span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> . <span class="nu0">1</span><span class="sy0">/</span><span class="nu0">2</span><span class="br0">)</span> . <span class="br0">(</span><span class="nu0">1</span><span class="sy0">/</span><span class="nu0">3</span> . <span class="br0">(</span><span class="nu0">1</span><span class="sy0">/</span><span class="nu0">4</span> . <span class="nu0">1</span><span class="sy0">/</span><span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>traverse<span class="sy0">-</span>reciprocal '<span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> . <span class="nu0">2</span><span class="br0">)</span> . <span class="br0">(</span>0 . <span class="br0">(</span><span class="nu0">4</span> . <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>Nothing<span class="br0">)</span></pre>
+<p>
+<strong> 6. </strong> Halve. Implement the function <code>halve</code> that, given a number, either will return in the monad half the number, or, if the number is not divisible by two, will instead leave the original number in place, and also log that number (using the writer monad). 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>halve <span class="nu0">6</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">3</span> . <span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>halve <span class="nu0">5</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">5</span> . <span class="br0">(</span><span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+
+Using this, we can return a tree in which the even numbers have been halved, the odds remain in place, and in which we've logged the odd numbers (which are not cleanly divisible by 2).
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define traverse<span class="sy0">-</span>halve
+    <span class="br0">(</span>traverse return<span class="sy0">-</span>writer bind<span class="sy0">-</span>writer halve<span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>traverse<span class="sy0">-</span>halve '<span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> . <span class="nu0">2</span><span class="br0">)</span> . <span class="br0">(</span><span class="nu0">3</span> . <span class="br0">(</span><span class="nu0">4</span> . <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> . <span class="nu0">1</span><span class="br0">)</span> . <span class="br0">(</span><span class="nu0">3</span> . <span class="br0">(</span><span class="nu0">2</span> . <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> . <span class="br0">(</span><span class="nu0">1</span> <span class="nu0">3</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+<strong> 7. </strong> State/sum. Implement a function <code>state/sum</code> which will, when given a number, return the current state as the value, and add that number to the current state.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>state<span class="sy0">/</span>sum <span class="nu0">5</span><span class="br0">)</span> 0<span class="br0">)</span>
+<span class="br0">(</span>0 . <span class="nu0">5</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>state<span class="sy0">/</span>sum <span class="nu0">2</span><span class="br0">)</span> 0<span class="br0">)</span>
+<span class="br0">(</span>0 . <span class="nu0">2</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>state<span class="sy0">/</span>sum <span class="nu0">2</span><span class="br0">)</span> <span class="nu0">3</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">3</span> . <span class="nu0">5</span><span class="br0">)</span></pre>
+<p>
+
+Using this, we can return a tree consisting of partial sums of the elements, and in which the state contains the final sum of the tree.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define traverse<span class="sy0">-</span>state<span class="sy0">/</span>sum
+    <span class="br0">(</span>traverse return<span class="sy0">-</span>state bind<span class="sy0">-</span>state state<span class="sy0">/</span>sum<span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>traverse<span class="sy0">-</span>state<span class="sy0">/</span>sum '<span class="br0">(</span><span class="br0">(</span><span class="nu0">1</span> . <span class="nu0">2</span><span class="br0">)</span> . <span class="br0">(</span><span class="nu0">3</span> . <span class="br0">(</span><span class="nu0">4</span> . <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> 0<span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span>0 . <span class="nu0">1</span><span class="br0">)</span> <span class="nu0">3</span> <span class="nu0">6</span> . <span class="nu0">10</span><span class="br0">)</span>
+<span class="nu0">15</span></pre>
+</div>
+
+<h3><a name="brainteasercontinuation-monad" id="brainteasercontinuation-monad">Brainteaser: Continuation monad</a></h3>
+<div class="level3">
+
+<p>
+
+Take a look in the <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=monads.rkt" class="media mediafile mf_rkt" title="monads.rkt">monads.rkt</a> file for the definition of the continuation monad. 
+</p>
+
+<p>
+For more examples using the <code>Cont</code> monad, see pp. 16-18 of <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=manymonads.pdf" class="media mediafile mf_pdf" title="manymonads.pdf">A Schemer's View of Monads</a>.
+</p>
+
+</div>
+
+<h4><a name="cps-monad-interpreter" id="cps-monad-interpreter">CPS Monad Interpreter</a></h4>
+<div class="level4">
+
+<p>
+
+The following interpreter is a direct style interpreter resembling what Dan wrote in class:
+
+</p>
+<pre class="code lisp"><span class="br0">(</span>define value<span class="sy0">-</span>of
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>expr env<span class="br0">)</span>
+    <span class="br0">(</span>match expr
+      <span class="br0">[</span><span class="br0">(</span>? number?<span class="br0">)</span> expr<span class="br0">]</span>
+      <span class="br0">[</span><span class="br0">(</span>? boolean?<span class="br0">)</span> expr<span class="br0">]</span>      
+      <span class="br0">[</span><span class="br0">(</span>? <span class="kw1">symbol</span>?<span class="br0">)</span> <span class="br0">(</span>apply<span class="sy0">-</span>env env expr<span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span><span class="sy0">*</span> ,x1 ,x2<span class="br0">)</span> <span class="br0">(</span><span class="sy0">*</span> <span class="br0">(</span>value<span class="sy0">-</span>of x1 env<span class="br0">)</span> <span class="br0">(</span>value<span class="sy0">-</span>of x2 env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span>sub1 ,x<span class="br0">)</span> <span class="br0">(</span>sub1 <span class="br0">(</span>value<span class="sy0">-</span>of x env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span>zero? ,x<span class="br0">)</span> <span class="br0">(</span>zero? <span class="br0">(</span>value<span class="sy0">-</span>of x env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span><span class="kw1">if</span> ,test ,conseq ,alt<span class="br0">)</span> <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>value<span class="sy0">-</span>of test env<span class="br0">)</span>
+                                   <span class="br0">(</span>value<span class="sy0">-</span>of conseq env<span class="br0">)</span>
+                                   <span class="br0">(</span>value<span class="sy0">-</span>of alt env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span>capture ,k<span class="sy0">-</span>id ,body<span class="br0">)</span> <span class="br0">(</span>call<span class="sy0">/</span>cc <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>k<span class="br0">)</span>
+                                         <span class="br0">(</span>value<span class="sy0">-</span>of body <span class="br0">(</span>extend<span class="sy0">-</span>env k<span class="sy0">-</span>id k env<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span><span class="kw1">return</span> ,k<span class="sy0">-</span><span class="kw1">exp</span> ,v<span class="sy0">-</span><span class="kw1">exp</span><span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>value<span class="sy0">-</span>of k<span class="sy0">-</span><span class="kw1">exp</span> env<span class="br0">)</span> <span class="br0">(</span>value<span class="sy0">-</span>of v<span class="sy0">-</span><span class="kw1">exp</span> env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>,id<span class="br0">)</span> ,body<span class="br0">)</span> <span class="br0">(</span>closure id body env<span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>`<span class="br0">(</span>,rator ,rand<span class="br0">)</span> <span class="br0">(</span>apply<span class="sy0">-</span>proc <span class="br0">(</span>value<span class="sy0">-</span>of rator env<span class="br0">)</span> <span class="br0">(</span>value<span class="sy0">-</span>of rand env<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Use the <code>Cont</code> monad to create a monadic <code>value-of</code>, and call it
+<code>value-of-cps</code>. Provide your own <code>empty-env</code>, <code>apply-env</code>,
+<code>extend-env</code>, <code>closure</code>, and <code>apply-proc</code> in representations of
+your choice. Most of the same helpers should work for both <code>value-of</code> and
+<code>value-of-cps</code>. Here are some tests your interpreter should pass:
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define fact<span class="sy0">-</span><span class="nu0">5</span>
+    '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+        <span class="br0">(</span><span class="br0">(</span>f f<span class="br0">)</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span>
+          <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span>zero? n<span class="br0">)</span>
+            <span class="nu0">1</span>
+            <span class="br0">(</span><span class="sy0">*</span> n <span class="br0">(</span><span class="br0">(</span>f f<span class="br0">)</span> <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>cps fact<span class="sy0">-</span><span class="nu0">5</span> <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>v<span class="br0">)</span> v<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">120</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>define capture<span class="sy0">-</span>fun
+    '<span class="br0">(</span><span class="sy0">*</span> <span class="nu0">3</span> <span class="br0">(</span>capture q <span class="br0">(</span><span class="sy0">*</span> <span class="nu0">2</span> <span class="br0">(</span><span class="kw1">return</span> q <span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>value<span class="sy0">-</span>of<span class="sy0">-</span>cps capture<span class="sy0">-</span>fun <span class="br0">(</span>empty<span class="sy0">-</span>env<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>v<span class="br0">)</span> v<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">12</span></pre>
+</div>
+
+<h3><a name="just-dessertthe-fringe" id="just-dessertthe-fringe">Just Dessert: The Fringe</a></h3>
+<div class="level3">
+
+<p>
+
+Like baking soda, the <code>traverse</code> function above has many applications. Here's one more. We're going to use the <code>Cont</code> monad to achieve a kind of trampolining or multitasking.
+</p>
+
+<p>
+The <em>fringe</em> of a tree is the list of its leaves in left-to-right order. For example, the fringe of
+
+</p>
+<pre class="code lisp"><span class="br0">(</span><span class="br0">(</span><span class="st0">"Time"</span> . <span class="st0">"flies"</span><span class="br0">)</span> . <span class="br0">(</span><span class="st0">"like"</span> . <span class="br0">(</span><span class="st0">"an"</span> . <span class="st0">"arrow"</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+
+is the list of strings
+
+</p>
+<pre class="code lisp"><span class="br0">(</span><span class="st0">"Time"</span> <span class="st0">"flies"</span> <span class="st0">"like"</span> <span class="st0">"an"</span> <span class="st0">"arrow"</span><span class="br0">)</span></pre>
+<p>
+Given two trees, the <code>driver</code> function compares their fringes while ignoring any differences in capitalization.  If the two fringes are the same, then <code>driver</code> returns the two trees (in a list) with their leaves swapped.  If the two fringes have bigger differences than mere capitalization, then <code>driver</code> returns <code>#f</code>.
+</p>
+
+<p>
+For example, here are two tests:
+
+</p>
+<pre class="code lisp">&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>driver '<span class="br0">(</span><span class="br0">(</span><span class="st0">"Time"</span> . <span class="st0">"flies"</span><span class="br0">)</span> . <span class="br0">(</span><span class="st0">"like"</span> . <span class="br0">(</span><span class="st0">"an"</span> . <span class="st0">"arrow"</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+	  '<span class="br0">(</span><span class="st0">"time"</span> . <span class="br0">(</span><span class="st0">"FLIES"</span> . <span class="br0">(</span><span class="br0">(</span><span class="st0">"like"</span> . <span class="st0">"an"</span><span class="br0">)</span> . <span class="st0">"aRrOw"</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="st0">"time"</span> . <span class="st0">"FLIES"</span><span class="br0">)</span> . <span class="br0">(</span><span class="st0">"like"</span> . <span class="br0">(</span><span class="st0">"an"</span> . <span class="st0">"aRrOw"</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+ <span class="br0">(</span><span class="st0">"Time"</span> . <span class="br0">(</span><span class="st0">"flies"</span> . <span class="br0">(</span><span class="br0">(</span><span class="st0">"like"</span> . <span class="st0">"an"</span><span class="br0">)</span> . <span class="st0">"arrow"</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>driver '<span class="br0">(</span><span class="br0">(</span><span class="st0">"Time"</span> . <span class="st0">"flies"</span><span class="br0">)</span> . <span class="br0">(</span><span class="st0">"like"</span> . <span class="br0">(</span><span class="st0">"arrow"</span> . <span class="st0">"an"</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+          '<span class="br0">(</span><span class="st0">"time"</span> . <span class="br0">(</span><span class="st0">"FLIES"</span> . <span class="br0">(</span><span class="br0">(</span><span class="st0">"like"</span> . <span class="st0">"an"</span><span class="br0">)</span> . <span class="st0">"aRrOw"</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#f</pre>
+<p>
+Below is most of the definition of <code>driver</code>.  <strong>Your mission is to complete the definition by defining <code>yield-cont</code>.</strong>
+
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define exchange
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>$<span class="nu0">1</span> $<span class="nu0">2</span><span class="br0">)</span>
+      <span class="br0">(</span>match `<span class="br0">(</span>,$<span class="nu0">1</span> ,$<span class="nu0">2</span><span class="br0">)</span>
+        <span class="br0">[</span>`<span class="br0">(</span><span class="br0">(</span>stopped ,tree1<span class="br0">)</span> <span class="br0">(</span>stopped ,tree2<span class="br0">)</span><span class="br0">)</span>
+         `<span class="br0">(</span>,tree1 ,tree2<span class="br0">)</span><span class="br0">]</span>
+        <span class="br0">[</span>`<span class="br0">(</span><span class="br0">(</span>yielding ,x1 ,k1<span class="br0">)</span> <span class="br0">(</span>yielding ,x2 ,k2<span class="br0">)</span><span class="br0">)</span>
+         #:<span class="me1">when</span> <span class="br0">(</span>string<span class="sy0">-</span>ci<span class="sy0">=</span>? x1 x2<span class="br0">)</span>
+         <span class="br0">(</span>exchange <span class="br0">(</span>k1 x2<span class="br0">)</span> <span class="br0">(</span>k2 x1<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+        <span class="br0">[</span>else #f<span class="br0">]</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>define tree<span class="sy0">-&gt;</span>stream
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>tree<span class="br0">)</span>
+      <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>traverse return<span class="sy0">-</span>cont bind<span class="sy0">-</span>cont yield<span class="sy0">-</span>cont<span class="br0">)</span>
+        tree<span class="br0">)</span>
+       <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>tree<span class="br0">)</span> `<span class="br0">(</span>stopped ,tree<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="sy0">&gt;</span> <span class="br0">(</span>define driver
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>tree1 tree2<span class="br0">)</span>
+      <span class="br0">(</span>exchange <span class="br0">(</span>tree<span class="sy0">-&gt;</span>stream tree1<span class="br0">)</span> <span class="br0">(</span>tree<span class="sy0">-&gt;</span>stream tree2<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+
+<strong> Just Dessert 2 </strong>
+</p>
+
+<p>
+Here is the <a href="https://lukepalmer.wordpress.com/2008/08/10/mindfuck-the-reverse-state-monad/" class="urlextern" title="https://lukepalmer.wordpress.com/2008/08/10/mindfuck-the-reverse-state-monad/" rel="nofollow">Reverse State monad</a>. Do something interesting with it. You might have to use <a href="http://docs.racket-lang.org/lazy/index.html?q=lazy" class="urlextern" title="http://docs.racket-lang.org/lazy/index.html?q=lazy" rel="nofollow">Lazy Racket</a>. Since it might be in a different language, you should leave your answer commented out at the bottom of your file. Of course, if you want to go forward <strong>and</strong> backward through time, you'd use a <a href="https://hackage.haskell.org/package/tardis-0.3.0.0/docs/Control-Monad-Tardis.html" class="urlextern" title="https://hackage.haskell.org/package/tardis-0.3.0.0/docs/Control-Monad-Tardis.html" rel="nofollow">Tardis</a>.
+</p>
+
+<p>
+<!-- BELOW HERE IS A BIG HONKIN&#039; PILE OF OLD MONAD QUESTIONS. PILLAGE AT WILL -->
+</p>
+
+<p>
+
+<!-- ** 4. ** We can use &#039;&#039;return-state&#039;&#039; and &#039;&#039;bind-state&#039;&#039; to write &#039;&#039;remberevensXsumevens&#039;&#039;, which takes a flat list of integers and returns a pair containing the list with all even integers
+removed as its &#039;&#039;car&#039;&#039; and the sum of those number as its &#039;&#039;cdr&#039;&#039;.
+
+&lt;code lisp&gt;
+(test &quot;remberevensXsumevens-1&quot;
+  ((remberevensXsumevens &#039;(1 3 5 3 1 3 5 3 1)) 0)
+  &#039;((1 3 5 3 1 3 5 3 1) . 0))
+
+(test &quot;remberevensXsumevens-2&quot;
+  ((remberevensXsumevens &#039;(2 4)) 0)
+  &#039;(() . 6))
+
+(test &quot;remberevensXsumevens-3&quot;
+  ((remberevensXsumevens &#039;(1 2 3 4 5)) 0)
+  &#039;((1 3 5) . 6))
+
+(test &quot;remberevensXsumevens-4&quot;
+  ((remberevensXsumevens &#039;(2 3 7 4 5 6 8 9 2)) 0)
+  &#039;((3 7 5 9) . 22))
+&lt;/code&gt;
+
+-->
+<!--
+
+&lt;code lisp&gt;
+(define rember*evenXhowmanyeven
+  (lambda (l)
+    (cond
+      ((null? l) (unit_state &#039;()))
+      ((pair? (car l))
+       (bind_state (rember*evenXhowmanyeven (car l))
+         (lambda (a)
+           (bind_state (rember*evenXhowmanyeven (cdr l))
+             (lambda (d) (unit_state (cons a d)))))))
+      ((odd? (car l))
+       (bind_state (rember*evenXhowmanyeven (cdr l))
+         (lambda (d) (unit_state (cons (car l) d)))))
+      (else
+       (bind_state (lambda (s) `(__ . ,(add1 s)))
+         (lambda (__) (rember*evenXhowmanyeven (cdr l))))))))
+
+&lt;/code&gt;
+
+Here is a sample call to &#039;&#039;rember*evenXhowmanyeven&#039;&#039;.  It returns the
+original list with &#039;&#039;2&#039;&#039;, &#039;&#039;4&#039;&#039;, &#039;&#039;6&#039;&#039;, &#039;&#039;8&#039;&#039;, and &#039;&#039;2&#039;&#039; removed,
+together in a pair with &#039;&#039;5&#039;&#039; because 5 elements were removed from the
+list.
+
+&lt;code lisp&gt;
+&gt; ((rember*evenXhowmanyeven &#039;(2 3 (7 4 5 6) 8 (9) 2)) 0)
+((3 (7 5) (9)) . 5)
+&lt;/code&gt;
+
+Notice that &#039;&#039;(rember*evenXhowmanyeven &#039;(2 3 (7 4 5 6) 8 (9) 2))&#039;&#039;
+actually returns a state monad computation to which we must pass &#039;&#039;0&#039;&#039;
+as the initial state.
+
+When we examine the result of a state monad computation, we are either
+interested in the natural value, the final state, or both. The
+following trivial definitions (they are merely a convenience), given a
+state monad computation and an initial state will return one of these
+views of the result:
+
+&lt;code lisp&gt;
+;; return natural value and state
+(define run_state
+  (lambda (ma s)
+    (ma s)))
+
+;; return only natural value
+(define eval_state
+  (lambda (ma s)
+    (car (ma s))))
+
+;; return only final state
+(define exec_state
+  (lambda (ma s)
+    (cdr (ma s))))
+&lt;/code&gt;
+
+For more on the state monad, see the first section of
+{{:schemersviewofmonads.pdf|A Schemer&#039;s View of Monads}}.
+
+After studying &#039;&#039;rember*evenXhowmanyeven&#039;&#039; and convincing yourself of
+how it works, implement the following programs in monadic style using
+&#039;&#039;unit_state&#039;&#039; and &#039;&#039;bind_state&#039;&#039;.
+
+** 1. ** &#039;&#039;rember*noneXhowmanyeven&#039;&#039; removes no elements from an
+arbitrarily nested list of integers (i.e., it copies the list), and
+counts the even integers in that list.
+
+&lt;code lisp&gt;
+&gt; (run_state (rember*noneXhowmanyeven &#039;(2 3 (7 4 5 6) 8 (9) 2)) 0)
+((2 3 (7 4 5 6) 8 (9) 2) . 5)
+&lt;/code&gt;
+
+** 2. ** &#039;&#039;rember*evenXsumofeven&#039;&#039; removes all even integers from an
+arbitrarily nested list, and sums the even integers in that list.
+
+&lt;code lisp&gt;
+&gt; (run_state (rember*evenXsumofeven &#039;(2 3 (7 4 5 6) 8 (9) 2)) 0)
+((3 (7 5) (9)) . 22)
+&lt;/code&gt;
+
+** 3. ** &#039;&#039;rember*evenXdifferenceofoddsandevens&#039;&#039; removes all even
+integers from an arbitrarily nested list, and takes the difference of
+the values of the odd and even numbers in that list. If the sum of the
+odds is greater than the sum of evens, the number will be positive. If
+those sums are equal, it will be zero. Otherwise, it will be
+negative. For example:
+
+&lt;code lisp&gt;
+&gt; (run_state (rember*evenXdifferenceofoddsandevens &#039;(2 3 (7 4 5 6) 8 (9) 2)) 0)
+((3 (7 5) (9)) . 2)
+&gt; (run_state (rember*evenXdifferenceofoddsandevens &#039;(2 3 (7 4 5 6) 8 (9) 2 20)) 0)
+((3 (7 5) (9)) . -18)
+&lt;/code&gt;
+
+-->
+</p>
+
+<p>
+<!--
+** 6. ** Here is the definition of &#039;&#039;number*&#039;&#039;:
+
+&lt;code lisp&gt;
+(define number*
+  (lambda (ls)
+    (cond
+      [(null? ls) (unit_state &#039;())]
+      [(pair? (car ls))
+       (bind_state (number* (car ls))
+         (lambda (a)
+           (bind_state (number* (cdr ls))
+             (lambda (d)
+               (unit_state (cons a d))))))]
+      [else (bind_state (element-number (car ls))
+              (lambda (a)
+                (bind_state (number* (cdr ls))
+                  (lambda (d)
+                    (unit_state (cons a d))))))])))
+&lt;/code&gt;
+
+&#039;&#039;number*&#039;&#039; replaces each element of an arbitrarily-nested list
+with the order in which that element first appears in the list. For
+example:
+
+&lt;code lisp&gt;
+&gt; (eval_state (number* &#039;()) initial-number*-state)
+()
+&gt; (eval_state (number* &#039;(5 #f a &quot;foo&quot;)) initial-number*-state)
+(0 1 2 3)
+&gt; (eval_state (number* &#039;(5 #f a &quot;foo&quot; a 5 #f)) initial-number*-state)
+(0 1 2 3 2 0 1)
+&gt; (eval_state (number* &#039;(5 ((#f a) (&quot;foo&quot;)) (a (5 #f)))) initial-number*-state)
+(0 ((1 2) (3)) (2 (0 1)))
+&lt;/code&gt;
+
+Define the helper procedure &#039;&#039;element-number&#039;&#039; and the top-level
+variable &#039;&#039;initial-number*-state&#039;&#039; so that &#039;&#039;number*&#039;&#039; works as shown
+above. Since you get to define &#039;&#039;initial-number*-state&#039;&#039;, you are free
+to choose how you represent the state as long as you use no side
+effects like &#039;&#039;set!&#039;&#039;, &#039;&#039;set-car!&#039;&#039;, or their relatives.
+
+ -->
+</p>
+
+<p>
+<!--
+
+===== Reader Monad =====
+
+Here is the Reader monad, along with some helpful functions for writing Reader programs:
+
+&lt;code lisp&gt;
+(define return-reader
+  (lambda (a)
+    (lambda (v) a)))
+
+(define bind-reader
+  (lambda (ma f)
+    (lambda (v)
+      (let ([a (ma v)])
+        (let ([mb (f a)])
+          (mb v))))))
+
+(define run-reader
+  (lambda (ma v)
+    (ma v)))
+
+(define get-reader
+  (lambda (v) v))
+
+(define local-reader
+  (lambda (f ma)
+    (lambda (v)
+      (run-reader ma (f v)))))
+&lt;/code&gt;
+
+==== Brainteaser: List Monad ====
+
+Here is the list monad:
+&lt;code lisp&gt;
+(define return-list
+  (lambda (a)
+    `(,a)))
+
+(define bind-list
+  (lambda (ma f)
+    (mapcan f ma)))
+
+(define mapcan
+  (lambda (f ls)
+    (cond
+      [(null? ls) &#039;()]
+      [else (append (f (car ls)) (mapcan f (cdr ls)))])))
+&lt;/code&gt;
+
+Consider the partially-complete definition of &#039;&#039;fifteens&#039;&#039;, which
+computes all the combinations of three numbers between zero and seven
+that sum to 15.
+
+&lt;code lisp&gt;
+(define fifteens
+  (lambda ()
+    (let ([range &#039;(0 1 2 3 4 5 6 7)])
+      ...)))
+&lt;/code&gt;
+
+Complete the definition of &#039;&#039;fifteens&#039;&#039; using the list
+monad.
+
+&lt;code lisp&gt;
+&gt; (fifteens)
+((1 7 7) (2 6 7) (2 7 6) (3 5 7) (3 6 6) (3 7 5) (4 4 7)
+ (4 5 6) (4 6 5) (4 7 4) (5 3 7) (5 4 6) (5 5 5) (5 6 4)
+ (5 7 3) (6 2 7) (6 3 6) (6 4 5) (6 5 4) (6 6 3) (6 7 2)
+ (7 1 7) (7 2 6) (7 3 5) (7 4 4) (7 5 3) (7 6 2) (7 7 1))
+&lt;/code&gt;
+
+==== Brainteaser: List Monad 2 ====
+
+A nice use of the list monad is the parsing of ambiguous grammars. In this case, we will be parsing strings that could either be a hex number, decimal number, string of words, or any combination. Given the following definitions, write a parser that will parse a string to produce the appropriate interpretation of the string. The following helpers should aid you in this task.
+
+&lt;code lisp&gt;
+(define mzero_list &#039;())
+
+(define mplus_list append)
+
+(define char-hex?
+  (lambda (c)
+    (or (char-numeric? c) (char&lt;=? #\a c #\f))))
+
+(define char-hex-&gt;integer
+  (lambda (c)
+    (if (char-hex? c)
+        (return_list (- (char-&gt;integer c)
+                        (if (char-numeric? c)
+                            (char-&gt;integer #\0)
+                            (- (char-&gt;integer #\a) 10))))
+        mzero_list)))
+
+(define char-numeric-&gt;integer
+  (lambda (c)
+    (if (char-numeric? c)
+        (return_list (- (char-&gt;integer c) 48))
+        mzero_list)))
+
+(define parse-string
+  (lambda (s)
+    (bind_list (mplus_list
+                 (return_list &#039;(hex-number . 0))
+                 (return_list &#039;(decimal-number . 0))
+                 (return_list &#039;(word-string . &quot;&quot;)))
+               (lambda (a)
+                 (parse-c* a (string-&gt;list s))))))
+&lt;/code&gt;
+
+Your definition of parse-c* should be written such that the following tests pass:
+
+&lt;code lisp&gt;
+&gt; (parse-string &quot;ab&quot;)
+((hex-number . 171) (word-string . &quot;ab&quot;))
+&gt; (parse-string &quot;123&quot;)
+((hex-number . 291)
+  (decimal-number . 123)
+  (word-string . &quot;123&quot;))
+&gt; (parse-string &quot;abc@x&quot;)
+()
+&lt;/code&gt;
+
+-->
+</p>
+
+<p>
+<!---
+** 5. ** Using the state monad, implement the &#039;&#039;binaryXdecimal-left&#039;&#039;,
+which takes a list of &#039;&#039;0&#039;&#039;s and &#039;&#039;1&#039;&#039;s representing a binary number
+in regular digit order and returns that list along with the decimal
+representation of that number. //Do not use &#039;&#039;do&#039;&#039; syntax for this problem.//
+
+&lt;code lisp&gt;
+(test &quot;binaryXdecimal-left-1&quot;
+  ((binaryXdecimal-left &#039;(1 0 1 0 1)) 0)
+  &#039;((1 0 1 0 1) . 21))
+
+(test &quot;binaryXdecimal-left-2&quot;
+  ((binaryXdecimal-left &#039;(1 0 1 0 0 1)) 0)
+  &#039;((1 0 1 0 0 1) . 41))
+
+(test &quot;binaryXdecimal-left-3&quot;
+  ((binaryXdecimal-left &#039;(1 0 0 1)) 0)
+  &#039;((1 0 0 1) . 9))
+&lt;/code&gt;
+
+** 6. ** Using the state monad, implement the &#039;&#039;binaryXdecimal-right&#039;&#039;,
+which takes a list of &#039;&#039;0&#039;&#039;s and &#039;&#039;1&#039;&#039;s representing a binary number
+in reverse digit order and returns that list along with the decimal
+representation of that number. (Hint: this can be accomplished by swapping the ordering of your answer for &#039;&#039;binaryXdecimal-left&#039;&#039;.)
+
+&lt;code lisp&gt;
+(test &quot;binaryXdecimal-right-1&quot;
+  ((binaryXdecimal-right &#039;(1 0 1 0 1)) 0)
+  &#039;((1 0 1 0 1) . 21))
+
+(test &quot;binaryXdecimal-right-2&quot;
+  ((binaryXdecimal-right &#039;(1 0 1 0 0 1)) 0)
+  &#039;((1 0 1 0 0 1) . 37))
+
+(test &quot;binaryXdecimal-right-3&quot;
+  ((binaryXdecimal-right &#039;(1 0 0 1)) 0)
+  &#039;((1 0 0 1) . 9))
+&lt;/code&gt;
+--->
+</p>
+
+<p>
+<!---
+
+
+** 8. ** {{http://en.wikipedia.org/wiki/Rock-paper-scissors#Game_play|Rock-Paper-Scissors}} is a common game played by people around the world. See the linked page for the rules. We will use the &#039;&#039;state&#039;&#039; of the state monad to implement this game, using //best of three// rules. Implement &#039;&#039;rock-paper-scissors&#039;&#039; using the state monad such that is passes the tests below.
+
+&lt;code lisp&gt;
+(test &quot;rock-paper-scissors-1&quot;
+  ((rock-paper-scissors &#039;(p p p) &#039;(p p p)) &#039;(0 . 0))
+  &#039;(tie . (0 . 0)))
+
+(test &quot;rock-paper-scissors-2&quot;
+  ((rock-paper-scissors &#039;(r r r) &#039;(s s s)) &#039;(0 . 0))
+  &#039;(player-1 . (3 . 0)))
+
+(test &quot;rock-paper-scissors-3&quot;
+  ((rock-paper-scissors &#039;(r r r) &#039;(s p p)) &#039;(0 . 0))
+  &#039;(player-2 . (1 . 2)))
+&lt;/code&gt;
+
+--->
+
+</p>
+
+</div>
+
+    <!-- ......... wikipage stop  ......... -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+ 
+  <!--  footer -->  
+  <div class="stylefoot">
+
+        <div class="meta">
+      <div class="doc">
+		<p>monads.txt · Last modified: 2015/11/21 19:22 by jhemann</p>
+      </div>
+   </div>
+
+    <div>
+       <!--  breadcrumbs and search -->
+	  	
+	  
+
+       
+      <div class="clearer"></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="no"><img src="./C311_B521_A596 Programming Languages [Assignment 12_ Introduction to Monads]_files/indexer.php" width="1" height="1" alt=""></div>
+
+
+</body></html>

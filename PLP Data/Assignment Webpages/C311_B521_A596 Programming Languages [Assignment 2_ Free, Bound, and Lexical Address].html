@@ -1,0 +1,562 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0059)https://cgi.soic.indiana.edu/~c311/doku.php?id=assignment-2 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="google-site-verification" content="CHpL8-yKEGFx7Gy37uNcU2lz9oRZydQdifkiJNj6-P4">
+  
+  <title>
+    C311/B521/A596 Programming Languages    [Assignment 2: Free, Bound, and Lexical Address]
+  </title>
+
+  <meta name="generator" content="DokuWiki Release 2009-02-14b">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2015-09-04T09:59:36-0400">
+<meta name="keywords" content="assignment-2">
+<link rel="search" type="application/opensearchdescription+xml" href="https://cgi.soic.indiana.edu/~c311/lib/exe/opensearch.php" title="C311/B521/A596 Programming Languages">
+<link rel="start" href="https://cgi.soic.indiana.edu/~c311/">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cgi.soic.indiana.edu/~c311/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="https://cgi.soic.indiana.edu/~c311/feed.php?mode=list&amp;ns=">
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cgi.soic.indiana.edu/~c311/doku.php?do=export_xhtml&amp;id=assignment-2">
+<link rel="stylesheet" media="all" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 2_ Free, Bound, and Lexical Address]_files/css.php">
+<link rel="stylesheet" media="screen" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 2_ Free, Bound, and Lexical Address]_files/css(1).php">
+<link rel="stylesheet" media="print" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 2_ Free, Bound, and Lexical Address]_files/css(2).php">
+<script type="text/javascript" charset="utf-8" src="./C311_B521_A596 Programming Languages [Assignment 2_ Free, Bound, and Lexical Address]_files/js.php"></script>
+
+  <link rel="shortcut icon" href="https://cgi.soic.indiana.edu/~c311/lib/tpl/doogiestpl/images/favicon.ico">
+
+  </head>
+
+
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+      <div class="header_left"></div>
+      <div class="logo">
+        <a href="https://cgi.soic.indiana.edu/~c311/doku.php" name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]">C311/B521/A596 Programming Languages</a>      </div>
+
+      <div id="tabnavi" class="tabnavi">
+	    <ul>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=home">Home</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=course-policies">Policies</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=instructors">Instructors</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=resources">Resources</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=schedule">Schedule</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignments">Assignments</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=b621">B621</a></li>
+</ul>
+	  </div>
+	  
+	  <div class="clearer"></div>
+      	</div>  
+  </div>
+    
+  
+   <div style="float: right;">
+            <form class="button btn_login" method="get" action="https://cgi.soic.indiana.edu/~c311/doku.php"><div class="no"><input type="hidden" name="do" value="login"><input type="hidden" name="sectok" value="bb41d96766a4f618105208cecf4ca075"><input type="hidden" name="id" value="assignment-2"><input type="submit" value="Login" class="button" title="Login"></div></form>       &nbsp;  &nbsp;  &nbsp;
+   </div>
+  <div class="clearer">&nbsp;</div>
+
+
+  <div class="page">
+    <!-- ......... wikipage start ......... -->
+    
+
+
+<h1><a name="assignment-2free-bound-and-lexical-address" id="assignment-2free-bound-and-lexical-address">Assignment 2: Free, Bound, and Lexical Address</a></h1>
+<div class="level1">
+
+<blockquote cite="./C311_B521_A596 Programming Languages [Assignment 2_ Free, Bound, and Lexical Address]_files/Alonzo Church, writing about the lambda calculus in 1932" class="blockquote-plugin">
+<p>
+There may, indeed, be other applications of the system than its use as a logic.
+
+</p>
+
+</blockquote>
+
+</div>
+
+<h2><a name="guidelines-for-this-assignment" id="guidelines-for-this-assignment">Guidelines for this assignment</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> You must test your solutions before submitting your assignment. We have provided some test cases for each exercise to get you started, but the provided test cases are not exhaustive.</div>
+</li>
+<li class="level1"><div class="li"> Like last time, we have a test file for you: <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=a2-student-tests.rkt" class="media mediafile mf_rkt" title="a2-student-tests.rkt">a2-student-tests.rkt</a>. You may find your order of answers on <code>vars</code>, <code>unique-vars</code>, <code>unique-free-vars</code>, or <code>unique-bound-vars</code> are different than what we expected. This is totally acceptable.</div>
+</li>
+<li class="level1"><div class="li"> You may have the <code>var-occurs-free?</code> and <code>var-occurs-bound?</code> predicates in your notes from lecture this week.  However, <em>don't</em> use these versions in this assignment.</div>
+</li>
+<li class="level1"><div class="li"> You may, however, find <a href="http://docs.racket-lang.org/reference/pairs.html?q=assv#%28def._%28%28lib._racket%2Fprivate%2Flist..rkt%29._assv%29%29" class="urlextern" title="http://docs.racket-lang.org/reference/pairs.html?q=assv#%28def._%28%28lib._racket%2Fprivate%2Flist..rkt%29._assv%29%29" rel="nofollow">assv</a> and <a href="http://docs.racket-lang.org/reference/pairs.html?q=remv&amp;q=assv#%28def._%28%28lib._racket%2Fprivate%2Flist..rkt%29._remv%29%29" class="urlextern" title="http://docs.racket-lang.org/reference/pairs.html?q=remv&amp;q=assv#%28def._%28%28lib._racket%2Fprivate%2Flist..rkt%29._remv%29%29" rel="nofollow">remv</a> useful. </div>
+</li>
+<li class="level1"><div class="li"> For the purposes of this assignment, assume that <em>lambda-calculus expressions</em> consist of:</div>
+<ul>
+<li class="level2"><div class="li"> variables</div>
+</li>
+<li class="level2"><div class="li"> <code>lambda</code> expressions that take exactly one argument and have exactly one body</div>
+</li>
+<li class="level2"><div class="li">  applications of two lambda calculus expressions</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Place all of your code in a file named <code>a2.rkt</code> and submit it via <a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=oncourse" class="wikilink1" title="oncourse">Oncourse</a>.</div>
+</li>
+</ul>
+
+</div>
+
+<h2><a name="assignment" id="assignment">Assignment</a></h2>
+<div class="level2">
+
+</div>
+
+<h2><a name="part-1natural-recursion-refresher" id="part-1natural-recursion-refresher">Part 1: Natural Recursion Refresher</a></h2>
+<div class="level2">
+
+<p>
+
+1. Consider the following partial definition of the <code>list-ref</code> function. It is intended to operate similarly to Racket's <a href="http://docs.racket-lang.org/reference/pairs.html?q=list-ref&amp;q=remv&amp;q=assv#%28def._%28%28quote._~23~25kernel%29._list-ref%29%29" class="urlextern" title="http://docs.racket-lang.org/reference/pairs.html?q=list-ref&amp;q=remv&amp;q=assv#%28def._%28%28quote._~23~25kernel%29._list-ref%29%29" rel="nofollow">list-ref</a>. 
+</p>
+<pre class="code lisp"><span class="br0">(</span>define list<span class="sy0">-</span>ref
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>ls n<span class="br0">)</span>
+    <span class="br0">(</span>letrec
+      <span class="br0">(</span><span class="br0">(</span>nth<span class="sy0">-</span><span class="kw1">cdr</span>
+         <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span>
+	   <span class="co1">;; complete the definition     </span>
+              <span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">car</span> <span class="br0">(</span>nth<span class="sy0">-</span><span class="kw1">cdr</span> n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+The body of the function that is the right-hand side of <code>nth-cdr</code> is missing. Complete the definition of list-ref with a naturally-recursive implementation of <code>nth-cdr</code>, so that the following work correctly.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>list<span class="sy0">-</span>ref '<span class="br0">(</span>a b c<span class="br0">)</span> <span class="nu0">2</span><span class="br0">)</span>
+c
+<span class="sy0">&gt;</span> <span class="br0">(</span>list<span class="sy0">-</span>ref '<span class="br0">(</span>a b c<span class="br0">)</span> 0<span class="br0">)</span>
+a</pre>
+<p>
+Remember, you need not consider bad data in your definition.
+</p>
+
+<p>
+2. Define and test a procedure <code>union</code> that takes two lists with no duplicates, and returns a list containing the union of the two input lists. You may find it helpful to use Racket's <code><a href="http://docs.racket-lang.org/reference/pairs.html?q=memv&amp;q=list-ref&amp;q=remv&amp;q=assv#%28def._%28%28lib._racket%2Fprivate%2Flist..rkt%29._memv%29%29" class="urlextern" title="http://docs.racket-lang.org/reference/pairs.html?q=memv&amp;q=list-ref&amp;q=remv&amp;q=assv#%28def._%28%28lib._racket%2Fprivate%2Flist..rkt%29._memv%29%29" rel="nofollow">memv</a></code> for this definition. Again, the order of the elements in your answer does not matter.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>union '<span class="br0">(</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>union '<span class="br0">(</span>x<span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>x<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>union '<span class="br0">(</span>x<span class="br0">)</span> '<span class="br0">(</span>x<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>x<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>union '<span class="br0">(</span>x y<span class="br0">)</span> '<span class="br0">(</span>x z<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>x y z<span class="br0">)</span></pre>
+<p>
+3. Define and test a procedure <code>extend</code> that takes two arguments, say <code>x</code> and <code>pred</code>. The second argument <code>pred</code> is a predicate. (Recall what predicates are and how to use them from the previous assignment.) What <code>extend</code> returns should be another predicate. The returned predicate should be satisfied exactly by those things that are <code>eqv?</code> to <code>x</code> or satisfy <code>pred</code>.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>extend <span class="nu0">1</span> even?<span class="br0">)</span> 0<span class="br0">)</span>
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>extend <span class="nu0">1</span> even?<span class="br0">)</span> <span class="nu0">1</span><span class="br0">)</span>
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>extend <span class="nu0">1</span> even?<span class="br0">)</span> <span class="nu0">2</span><span class="br0">)</span>
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span><span class="br0">(</span>extend <span class="nu0">1</span> even?<span class="br0">)</span> <span class="nu0">3</span><span class="br0">)</span>
+#f
+<span class="sy0">&gt;</span> <span class="br0">(</span>filter <span class="br0">(</span>extend <span class="nu0">1</span> even?<span class="br0">)</span> '<span class="br0">(</span>0 <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>0 <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">4</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>filter <span class="br0">(</span>extend <span class="nu0">3</span> <span class="br0">(</span>extend <span class="nu0">1</span> even?<span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span>0 <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>0 <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>filter <span class="br0">(</span>extend <span class="nu0">7</span> <span class="br0">(</span>extend <span class="nu0">3</span> <span class="br0">(</span>extend <span class="nu0">1</span> even?<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span>0 <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>0 <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span><span class="br0">)</span></pre>
+<p>
+4. Define and test a procedure <code>walk-symbol</code> that takes a symbol <code>x</code> and an association list <code>s</code>. An <em>association list</em> is a list of pairs of associated values.  For example, the following is an association list: 
+</p>
+<pre class="code lisp"><span class="br0">(</span><span class="br0">(</span>a . <span class="nu0">5</span><span class="br0">)</span> <span class="br0">(</span>b . <span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>c . a<span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Your procedure should search through <code>s</code> for the value associated with <code>x</code>. If the associated value is a symbol, it too must be walked in <code>s</code>. If <code>x</code> has no association, then <code>walk-symbol</code> should return <code>x</code>.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>walk<span class="sy0">-</span><span class="kw1">symbol</span> 'a '<span class="br0">(</span><span class="br0">(</span>a . <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">5</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>walk<span class="sy0">-</span><span class="kw1">symbol</span> 'a '<span class="br0">(</span><span class="br0">(</span>b . c<span class="br0">)</span> <span class="br0">(</span>a . b<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+c
+<span class="sy0">&gt;</span> <span class="br0">(</span>walk<span class="sy0">-</span><span class="kw1">symbol</span> 'a '<span class="br0">(</span><span class="br0">(</span>a . <span class="nu0">5</span><span class="br0">)</span> <span class="br0">(</span>b . <span class="nu0">6</span><span class="br0">)</span> <span class="br0">(</span>c . a<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">5</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>walk<span class="sy0">-</span><span class="kw1">symbol</span> 'c '<span class="br0">(</span><span class="br0">(</span>a . <span class="nu0">5</span><span class="br0">)</span> <span class="br0">(</span>b . <span class="br0">(</span>a . c<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>c . a<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">5</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>walk<span class="sy0">-</span><span class="kw1">symbol</span> 'b '<span class="br0">(</span><span class="br0">(</span>a . <span class="nu0">5</span><span class="br0">)</span> <span class="br0">(</span>b . <span class="br0">(</span><span class="br0">(</span>c . a<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>c . a<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span>c . a<span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>walk<span class="sy0">-</span><span class="kw1">symbol</span> 'd '<span class="br0">(</span><span class="br0">(</span>a . <span class="nu0">5</span><span class="br0">)</span> <span class="br0">(</span>b . <span class="br0">(</span><span class="nu0">1</span> <span class="nu0">2</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>c . a<span class="br0">)</span> <span class="br0">(</span>e . c<span class="br0">)</span> <span class="br0">(</span>d . e<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">5</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>walk<span class="sy0">-</span><span class="kw1">symbol</span> 'd '<span class="br0">(</span><span class="br0">(</span>a . <span class="nu0">5</span><span class="br0">)</span> <span class="br0">(</span>b . <span class="nu0">6</span><span class="br0">)</span> <span class="br0">(</span>c . f<span class="br0">)</span> <span class="br0">(</span>e . c<span class="br0">)</span> <span class="br0">(</span>d . e<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+f</pre>
+</div>
+
+<h2><a name="part-2free-bound-lexical-address" id="part-2free-bound-lexical-address">Part 2: Free, Bound, Lexical Address</a></h2>
+<div class="level2">
+
+<p>
+
+ <strong> Unless otherwise stated, you </strong>must<strong> use </strong>match<strong> in </strong>each<strong> of the remaining problems. The brainteasers might be easier with it as well.</strong> You may find some of the functions from Part 1 of use to you as well. For the most part, you should expect to be performing recursion on lambda-calculus expressions. You should only need to make use of the features of <code>match</code> demonstrated in class. 
+</p>
+
+<p>
+5. Define and test a procedure <code>lambda-</code><code>&gt;lumbda</code> that takes a lambda-calculus expression and returns the expression unchanged with the exception that each <code>lambda</code> as a keyword has been replaced with the word <code>lumbda</code> (notice occurrences of <code>lambda</code> as a variable should be left alone).
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>lambda<span class="sy0">-&gt;</span>lumbda 'x<span class="br0">)</span>
+x
+<span class="sy0">&gt;</span> <span class="br0">(</span>lambda<span class="sy0">-&gt;</span>lumbda '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>lumbda <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>lambda<span class="sy0">-&gt;</span>lumbda '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>z<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span>a z<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>h <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>h a<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>lumbda <span class="br0">(</span>z<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>lumbda <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span>a z<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>h <span class="br0">(</span>lumbda <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>h a<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>lambda<span class="sy0">-&gt;</span>lumbda '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">lambda</span><span class="br0">)</span> <span class="kw1">lambda</span><span class="br0">)</span><span class="br0">)</span> 
+<span class="br0">(</span>lumbda <span class="br0">(</span><span class="kw1">lambda</span><span class="br0">)</span> <span class="kw1">lambda</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>lambda<span class="sy0">-&gt;</span>lumbda '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">lambda</span><span class="br0">)</span> <span class="kw1">lambda</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span>lumbda <span class="br0">(</span><span class="kw1">lambda</span><span class="br0">)</span> <span class="kw1">lambda</span><span class="br0">)</span> <span class="br0">(</span>lumbda <span class="br0">(</span>y<span class="br0">)</span> y<span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>lambda<span class="sy0">-&gt;</span>lumbda '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">(</span>lumbda <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span> <span class="br0">(</span>lumbda <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+6. Define and test a procedure <code>var-occurs?</code> that takes a variable name and a lambda-calculus expression and returns a boolean answering whether that variable <strong>occurs</strong> in the expression. Here and forevermore in this class we use the word occur in its technical sense: for us, a formal parameter does <strong>not</strong> count as a variable occurrence.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs? 'x 'x<span class="br0">)</span> 
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> y<span class="br0">)</span><span class="br0">)</span>
+#f
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span>
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs? 'x '<span class="br0">(</span><span class="br0">(</span>z y<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span>
+#t</pre>
+<p>
+7. Define and test a procedure <code>vars</code> that takes a lambda-calculus expression and returns a list containing all variables that occur in the expression. This should be a straightforward modification of <code>lambda-</code><code>&gt;lumbda</code>, and the order of the variables in your answer does <strong>not</strong> matter.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>vars 'x<span class="br0">)</span>
+<span class="br0">(</span>x<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>vars '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>x<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>vars '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span>x x<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>x x x y<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>vars '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>z<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span>a z<span class="br0">)</span><span class="br0">)</span>
+                      <span class="br0">(</span>h <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>h a<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>a z h h a<span class="br0">)</span></pre>
+<p>
+8. Define and test a modification of <code>vars</code> called <code>unique-vars</code> that behaves like <code>vars</code> but does not return duplicates. Use <code>union</code> in your definition.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>unique<span class="sy0">-</span>vars '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span>x x<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>x y<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>unique<span class="sy0">-</span>vars '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>z<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span>z y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>z y x<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>unique<span class="sy0">-</span>vars '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span> <span class="br0">(</span>a b<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>c<span class="br0">)</span> <span class="br0">(</span>a c<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>b a<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>c b a<span class="br0">)</span></pre>
+<p>
+9. Define and test a procedure <code>var-occurs-free?</code> that takes a symbol and a lambda-calculus expression and returns #t if that variable <em>occurs free</em> in that expression, and #f otherwise. The solution developed in class used a list as an accumulator, your solution should not.
+
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>free? 'x 'x<span class="br0">)</span>
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>free? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> y<span class="br0">)</span><span class="br0">)</span>
+#f
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>free? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#f
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>free? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> 
+#f
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>free? 'y '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>free? 'y '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span>x y<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>free? 'x '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x x<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>x x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#t</pre>
+<p>
+10. Define and test a procedure <code>var-occurs-bound?</code> that takes a symbol and a lambda-calculus expression and returns <code>#t</code> if that variable <em>occurs bound</em> in the expression, and <code>#f</code> otherwise. The solution developed in class used an accumulator, your solution should not. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>bound? 'x 'x<span class="br0">)</span>
+#f
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>bound? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span>
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>bound? 'y '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span>
+#f
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>bound? 'x '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x x<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>x x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>bound? 'z '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>y z<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#f
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>bound? 'z '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>z<span class="br0">)</span> <span class="br0">(</span>y z<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>bound? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> y<span class="br0">)</span><span class="br0">)</span>
+#f
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>bound? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#t</pre>
+<p>
+11. Define and test a procedure <code>unique-free-vars</code> that takes a lambda-calculus expression and returns a list of all the variables that <em>occur free</em> in that expression.  Order doesn't matter, but the list must not contain duplicate variables. You may find it helpful to use the definition of <code>unique-vars</code> as a starting point. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>unique<span class="sy0">-</span>free<span class="sy0">-</span>vars 'x<span class="br0">)</span>
+<span class="br0">(</span>x<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>unique<span class="sy0">-</span>free<span class="sy0">-</span>vars '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>y<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>unique<span class="sy0">-</span>free<span class="sy0">-</span>vars '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>x y<span class="br0">)</span> e<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>c<span class="br0">)</span> <span class="br0">(</span>x <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x <span class="br0">(</span>e c<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>y e x<span class="br0">)</span></pre>
+<p>
+Note that in the third example above,
+</p>
+<pre class="code lisp"><span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>x y<span class="br0">)</span> e<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>c<span class="br0">)</span> <span class="br0">(</span>x <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x <span class="br0">(</span>e c<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+is a single lambda-calculus expression (a procedure application), not a list of lambda-calculus expressions.
+</p>
+
+<p>
+12. Define and test a procedure <code>unique-bound-vars</code> that takes a lambda-calculus expression and returns a list of all the variables that <em>occur bound</em> in the input expression.  Order doesn't matter, but the list must not contain duplicate variables.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>unique<span class="sy0">-</span>bound<span class="sy0">-</span>vars 'x<span class="br0">)</span>
+<span class="br0">(</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>unique<span class="sy0">-</span>bound<span class="sy0">-</span>vars '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> y<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>unique<span class="sy0">-</span>bound<span class="sy0">-</span>vars '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>x<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>unique<span class="sy0">-</span>bound<span class="sy0">-</span>vars '<span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span>x y<span class="br0">)</span> e<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>c<span class="br0">)</span> <span class="br0">(</span>x <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x <span class="br0">(</span>e c<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>x c<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>unique<span class="sy0">-</span>bound<span class="sy0">-</span>vars '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> y<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span>y<span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>unique<span class="sy0">-</span>bound<span class="sy0">-</span>vars '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>y z<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="br0">)</span></pre>
+<p>
+13. In a subset of Racket where <code>lambda</code>s have only one argument, the lexical address of a variable is the number of <code>lambda</code>s between the place where the variable is bound (also known as the formal parameter) and the place where it occurs.  For example, in the following expression:
+</p>
+<pre class="code lisp"><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>o<span class="br0">)</span>
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>r<span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>s<span class="br0">)</span>
+      <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>p<span class="br0">)</span>
+        <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>g<span class="br0">)</span>
+          o<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+The <code>o</code> at the very bottom is a bound occurrence. It has a lexical address of 4, because there are four <code>lambda</code> expressions between the formal parameter <code>o</code> at the top and the occurrence of <code> o</code> at the bottom. 
+</p>
+
+<p>
+Define and test a procedure <code>lex</code> that takes a lambda-calculus expression and an accumulator (which starts as the empty list), and returns the same expression with all bound variable references replaced by lists of two elements whose <code>car</code> is the symbol <code>var</code> and whose <code>cadr</code> is the lexical address of the referenced variable. You need not consider unbound variables. 
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>lex '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>var 0<span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>lex '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> y<span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>var <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>lex '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="br0">(</span>var 0<span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>lex '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="br0">(</span>var 0<span class="br0">)</span> <span class="br0">(</span>var 0<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>lex '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x y<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>c<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>d<span class="br0">)</span> <span class="br0">(</span>y c<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span> 
+<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="br0">(</span>var 0<span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="br0">(</span>var <span class="nu0">2</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>lex '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span>
+          <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>b<span class="br0">)</span>
+            <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>c<span class="br0">)</span>
+              <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span>
+                <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>b<span class="br0">)</span>
+                  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>d<span class="br0">)</span>
+                    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span>
+                      <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>e<span class="br0">)</span>
+                        <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>a b<span class="br0">)</span> c<span class="br0">)</span> d<span class="br0">)</span> e<span class="br0">)</span> a<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="kw1">lambda</span>
+  <span class="br0">(</span><span class="kw1">lambda</span>
+    <span class="br0">(</span><span class="kw1">lambda</span>
+      <span class="br0">(</span><span class="kw1">lambda</span>
+        <span class="br0">(</span><span class="kw1">lambda</span>
+          <span class="br0">(</span><span class="kw1">lambda</span>
+            <span class="br0">(</span><span class="kw1">lambda</span>
+              <span class="br0">(</span><span class="kw1">lambda</span>
+                <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>var <span class="nu0">1</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">3</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">2</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>var 0<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>lex '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span>
+          <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>b<span class="br0">)</span>
+	    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>c<span class="br0">)</span>
+	      <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>w<span class="br0">)</span>
+	        <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span>
+		  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span>
+		    <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>a<span class="br0">)</span>
+		       <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>b<span class="br0">)</span>
+			 <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>c<span class="br0">)</span>
+			   <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>a b<span class="br0">)</span> c<span class="br0">)</span> w<span class="br0">)</span> x<span class="br0">)</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+		     <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>w<span class="br0">)</span>
+		       <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span>
+			 <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span>
+			   <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>a b<span class="br0">)</span> c<span class="br0">)</span> w<span class="br0">)</span> x<span class="br0">)</span> y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="kw1">lambda</span> 
+  <span class="br0">(</span><span class="kw1">lambda</span> 
+    <span class="br0">(</span><span class="kw1">lambda</span> 
+      <span class="br0">(</span><span class="kw1">lambda</span> 
+      	<span class="br0">(</span><span class="kw1">lambda</span> 
+	  <span class="br0">(</span><span class="kw1">lambda</span> 
+	    <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span>
+	       <span class="br0">(</span><span class="kw1">lambda</span>
+	       	 <span class="br0">(</span><span class="kw1">lambda</span>
+	       	   <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>var <span class="nu0">2</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>var 0<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">5</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">3</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+	     <span class="br0">(</span><span class="kw1">lambda</span>
+	       <span class="br0">(</span><span class="kw1">lambda</span>
+		 <span class="br0">(</span><span class="kw1">lambda</span>
+		   <span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span><span class="br0">(</span>var <span class="nu0">8</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">7</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">6</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">2</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>var <span class="nu0">1</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>var 0<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+There are a number of ways you can approach this problem. My suggestion is to build some lambda expressions on pen and paper, and then by hand find the lexical addresses of some variables that occur in them. Try and do it almost mechanically, starting from the top of the expression and working your way down. Then think about what it is you're doing, and try and figure out how to do it without having to go back up the tree. That is, ensure that when you get to a variable position in the expression where you need to fill in the lexical address, that you already have all the information you need to figure it out. 
+</p>
+
+</div>
+
+<h2><a name="brainteasers" id="brainteasers">Brainteasers</a></h2>
+<div class="level2">
+
+<p>
+
+14. Consider again the scenario of the <code>walk-symbol</code> problem. Imagine that we frequently look up values in that association list. Walking the full chain every time may become prohibitively expensive, as certain perverse chains may be arbitrarily long. Consider the work you would have to do to walk <code>a</code> twice in the following association list. 
+</p>
+<pre class="code lisp">'<span class="br0">(</span><span class="br0">(</span>z . <span class="nu0">26</span><span class="br0">)</span> <span class="br0">(</span>y . z<span class="br0">)</span> <span class="br0">(</span>x . y<span class="br0">)</span> ... <span class="br0">(</span>b . c<span class="br0">)</span> <span class="br0">(</span>a . b<span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+To partially alleviate this burden, we will implement <code>walk-symbol-update</code> with <em>path-compression</em>, in the following manner. We will write our association list such that the right-hand side of each association is always a <a href="http://docs.racket-lang.org/reference/boxes.html" class="urlextern" title="http://docs.racket-lang.org/reference/boxes.html" rel="nofollow">box</a> that contains a value. Boxes are mutable memory references, meaning we can change the value the box contains. Then, when we walk the association list to find the final value for the symbol we started with, we can also change the values in boxes we had to walk through along the way, so that the right-hand side of each of those also contains the final value. Thus, if we have to walk that same symbol again, the lookup will be faster. See the following example.  
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>define a<span class="sy0">-</span><span class="kw1">list</span> `<span class="br0">(</span><span class="br0">(</span>c . ,<span class="br0">(</span>box <span class="nu0">15</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>e . ,<span class="br0">(</span>box 'f<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>b . ,<span class="br0">(</span>box 'c<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>a . ,<span class="br0">(</span>box 'b<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> a<span class="sy0">-</span><span class="kw1">list</span>
+<span class="br0">(</span><span class="br0">(</span>c . #<span class="sy0">&amp;</span><span class="nu0">15</span><span class="br0">)</span> <span class="br0">(</span>e . #<span class="sy0">&amp;</span>f<span class="br0">)</span> <span class="br0">(</span>b . #<span class="sy0">&amp;</span>c<span class="br0">)</span> <span class="br0">(</span>a . #<span class="sy0">&amp;</span>b<span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>walk<span class="sy0">-</span>symbol<span class="sy0">-</span>update 'a a<span class="sy0">-</span><span class="kw1">list</span><span class="br0">)</span>
+<span class="nu0">15</span>
+<span class="sy0">&gt;</span> a<span class="sy0">-</span><span class="kw1">list</span>
+<span class="br0">(</span><span class="br0">(</span>c . #<span class="sy0">&amp;</span><span class="nu0">15</span><span class="br0">)</span> <span class="br0">(</span>e . #<span class="sy0">&amp;</span>f<span class="br0">)</span> <span class="br0">(</span>b . #<span class="sy0">&amp;</span><span class="nu0">15</span><span class="br0">)</span> <span class="br0">(</span>a . #<span class="sy0">&amp;</span><span class="nu0">15</span><span class="br0">)</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>walk<span class="sy0">-</span>symbol<span class="sy0">-</span>update 'a a<span class="sy0">-</span><span class="kw1">list</span><span class="br0">)</span>
+<span class="nu0">15</span>
+<span class="sy0">&gt;</span> a<span class="sy0">-</span><span class="kw1">list</span>
+<span class="br0">(</span><span class="br0">(</span>c . #<span class="sy0">&amp;</span><span class="nu0">15</span><span class="br0">)</span> <span class="br0">(</span>e . #<span class="sy0">&amp;</span>f<span class="br0">)</span> <span class="br0">(</span>b . #<span class="sy0">&amp;</span><span class="nu0">15</span><span class="br0">)</span> <span class="br0">(</span>a . #<span class="sy0">&amp;</span><span class="nu0">15</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Without boxes (or some side-effect) we would have been required to re-copy the entire data structure each time we wanted to change a portion of it. 
+You will find it useful to consult the Racket Documentation about <a href="http://docs.racket-lang.org/reference/boxes.html" class="urlextern" title="http://docs.racket-lang.org/reference/boxes.html" rel="nofollow">boxes</a> for information about the <code>box</code>, <code>unbox</code>, and <code>set-box!</code> functions for this problem. 
+</p>
+
+</div>
+
+<h3><a name="just-dessert" id="just-dessert">Just Dessert</a></h3>
+<div class="level3">
+
+<p>
+15. A variable can both occur free and occur bound in the same expression. Define a predicate <code>var-occurs-both?</code> that takes a variable <code>x</code> and a lambda-calculus expression, and returns two <strong>values</strong>, the first of which is a boolean answering whether the variable occurs free in the expression, and the second is a boolean answering whether the var occurs bound in the expression. Your solution should be a <strong>one-pass</strong> <strong>solution</strong>, meaning you should not recur over the same data twice, and you should not use an accumulator. In order to return multiple values, you should see the Racket documentation on <a href="http://docs.racket-lang.org/reference/values.html?q=values#%28def._%28%28quote._~23~25kernel%29._values%29%29" class="urlextern" title="http://docs.racket-lang.org/reference/values.html?q=values#%28def._%28%28quote._~23~25kernel%29._values%29%29" rel="nofollow">values</a>, <a href="http://docs.racket-lang.org/reference/let.html?q=values#%28form._%28%28quote._~23~25kernel%29._let-values%29%29" class="urlextern" title="http://docs.racket-lang.org/reference/let.html?q=values#%28form._%28%28quote._~23~25kernel%29._let-values%29%29" rel="nofollow">let-values</a>, and <a href="http://docs.racket-lang.org/reference/values.html?q=call-with-values#%28def._%28%28quote._~23~25kernel%29._call-with-values%29%29" class="urlextern" title="http://docs.racket-lang.org/reference/values.html?q=call-with-values#%28def._%28%28quote._~23~25kernel%29._call-with-values%29%29" rel="nofollow">call-with-values</a>.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>both? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#f
+#t 
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>both? 'x '<span class="br0">(</span>x <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#t
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>both? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span>x <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> 
+#t
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>both? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#f
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>both? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#f
+#t
+<span class="sy0">&gt;</span> <span class="br0">(</span>var<span class="sy0">-</span>occurs<span class="sy0">-</span>both? 'x '<span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>y<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>z<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> <span class="br0">(</span>x <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>x<span class="br0">)</span> x<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+#f
+#t</pre>
+<p>
+<!---
+Just too complicated for what it&#039;s worth
+
+13. Here is the &#039;&#039;walk*&#039;&#039; procedure, which takes a term &#039;&#039;v&#039;&#039; and an association list &#039;&#039;s&#039;&#039;:
+
+&lt;code lisp&gt;
+(define walk*
+  (lambda (v s)
+    (let ((v (cond ((symbol? v) (walk-symbol v s))
+                   (else v))))
+      (cond ((pair? v)
+             (cons (walk* (car v) s)
+                   (walk* (cdr v) s)))
+            (else v)))))
+&lt;/code&gt;
+
+We say that two terms &#039;&#039;u&#039;&#039; and &#039;&#039;v&#039;&#039; are //equivalent// relative to &#039;&#039;s&#039;&#039; if any of the following properties hold:
+
+  * &#039;&#039;u&#039;&#039; and &#039;&#039;v&#039;&#039; are &#039;&#039;equal?&#039;&#039;, or
+  * if we were to replace all the symbols in &#039;&#039;u&#039;&#039; and &#039;&#039;v&#039;&#039; with the result of calling &#039;&#039;walk*&#039;&#039; on them, the resulting values would be &#039;&#039;equal?&#039;&#039;, or
+  * we can add associations to &#039;&#039;s&#039;&#039; to make &#039;&#039;u&#039;&#039; and &#039;&#039;v&#039;&#039; equivalent with respect to the extended association list.
+
+Define and test a procedure &#039;&#039;unify&#039;&#039; that takes two terms &#039;&#039;u&#039;&#039; and &#039;&#039;v&#039;&#039; and an association list &#039;&#039;s&#039;&#039;.  &#039;&#039;unify&#039;&#039; behaves as follows: it returns &#039;&#039;#f&#039;&#039; if &#039;&#039;u&#039;&#039; and &#039;&#039;v&#039;&#039; are not equivalent; otherwise, it returns &#039;&#039;s&#039;&#039; or a possibly extended association list in which &#039;&#039;u&#039;&#039; and &#039;&#039;v&#039;&#039; are equivalent.  When you are finished, you will have a procedure that performs [[http://en.wikipedia.org/wiki/Unification_(computer_science)|unification]].
+
+One thing to keep in mind is that you cannot have a constant (such as 5) on the left-hand side of a pair in &#039;&#039;s&#039;&#039;.  You can only have variables (such as &#039;&#039;x&#039;&#039;) on the left-hand side of a pair.  Two different constants such as 5 and 6 can never be equivalent, no matter what &#039;&#039;s&#039;&#039; is.  A logic programmer would say, &quot;5 can never unify with 6.&quot;
+
+&lt;code lisp&gt;
+&gt; (unify &#039;x &#039;y &#039;()) 
+((x . y)) ;; Another correct answer: ((y . x)) 
+&gt; (unify &#039;(x) &#039;(y) &#039;()) 
+((x . y)) ;; Another correct answer: ((y . x)) 
+&gt; (unify 5 5 &#039;())
+()
+&gt; (unify 5 6 &#039;())
+#f
+&gt; (unify &#039;(5 6) &#039;(x y) &#039;()) ;; Another correct answer: ((y . 6) (x . 5))
+((x . 5) (y . 6))
+&gt; (unify &#039;(z 5) &#039;(5 x) &#039;((z . 3) (x . z)))
+#f
+&gt; (unify &#039;((x . 5) (y . z)) &#039;((y . 5) (x . 5)) &#039;((z . 5) (x . y))) ;; Another correct answer: ((x . y) (z . 5))
+((z . 5) (x . y)) 
+&lt;/code&gt;
+
+--->
+</p>
+
+<p>
+
+<!-- Really, it can be most generally defined on expressions with no free instances of old or new, but is it worth making that distinction? -->
+</p>
+
+<p>
+<!--
+13. Alpha equivalence is the notion that the particular name of a bound variable in an expression does not matter. Alpha equivalence is defined for closed lambda expressions. For instance, &#039;&#039;(lambda (x) x)&#039;&#039; and &#039;&#039;(lambda (y) y)&#039;&#039; are alpha equivalent, however the variables &#039;&#039;x&#039;&#039; and &#039;&#039;y&#039;&#039; by themselves aren&#039;t alpha equivalent.
+
+Define and test a procedure &#039;&#039;alpha-conv&#039;&#039; that implements alpha conversion. The function &#039;&#039;alpha-conv&#039;&#039; takes three arguments, &#039;&#039;old&#039;&#039;, &#039;&#039;new&#039;&#039;, and &#039;&#039;exp&#039;&#039;, where &#039;&#039;old&#039;&#039; and &#039;&#039;new&#039;&#039; are symbols and &#039;&#039;exp&#039;&#039; is a lambda-calculus expression. Our &#039;&#039;alpha conv&#039;&#039; returns a new expression, alpha equivalent to the original &#039;&#039;exp&#039;&#039;, in which all outermost-bound occurrences of &#039;&#039;old&#039;&#039; have been replaced with &#039;&#039;new&#039;&#039;.
+
+&lt;code lisp&gt;
+&gt; (alpha-conv &#039;foo &#039;bar &#039;(lambda (y) (lambda (x) (lambda (foo) (foo (x y))))))
+(lambda (y) (lambda (x) (lambda (bar) (bar (x y)))))
+&gt; (alpha-conv &#039;x &#039;y &#039;(lambda (x) ((lambda (x) x) x)))
+(lambda (y) ((lambda (x) x) y))
+&lt;/code&gt;
+
+Note that if the new variable is the same as any formal parameters found inside the expression, the existing formal parameter and the variable it binds should be replaced by a new unique value to ensure the variable names don&#039;t collide. Consider using &#039;&#039;[[http://www.scheme.com/csug8/objects.html#./objects:s48|(gensym)]]&#039;&#039;.
+
+Here is an example of an answer that uses &#039;&#039;gensym&#039;&#039;:
+
+&lt;code lisp&gt;
+&gt; (alpha-conv &#039;bar &#039;foo &#039;(lambda (bar) (lambda (foo) (foo bar))))
+(lambda (foo)
+  (lambda (g4.4) (g4.4 foo)))
+&lt;/code&gt;
+
+Note that the unique identifiers in the &#039;&#039;gensym&#039;&#039;s are the same. To hide the unique identifiers in order to make tests more readable, you can set the &#039;&#039;print-gensym&#039;&#039; parameter as follows: &#039;&#039;(print-gensym &#039;pretty/suffix)&#039;&#039;.
+-->
+</p>
+
+</div>
+
+    <!-- ......... wikipage stop  ......... -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+ 
+  <!--  footer -->  
+  <div class="stylefoot">
+
+        <div class="meta">
+      <div class="doc">
+		<p>assignment-2.txt · Last modified: 2015/09/04 09:59 by jhemann</p>
+      </div>
+   </div>
+
+    <div>
+       <!--  breadcrumbs and search -->
+	  	
+	  
+
+       
+      <div class="clearer"></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="no"><img src="./C311_B521_A596 Programming Languages [Assignment 2_ Free, Bound, and Lexical Address]_files/indexer.php" width="1" height="1" alt=""></div>
+
+
+</body></html>

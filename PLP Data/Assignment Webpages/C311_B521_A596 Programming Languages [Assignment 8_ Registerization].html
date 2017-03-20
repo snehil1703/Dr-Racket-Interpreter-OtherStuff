@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0059)https://cgi.soic.indiana.edu/~c311/doku.php?id=assignment-8 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="google-site-verification" content="CHpL8-yKEGFx7Gy37uNcU2lz9oRZydQdifkiJNj6-P4">
+  
+  <title>
+    C311/B521/A596 Programming Languages    [Assignment 8: Registerization]
+  </title>
+
+  <meta name="generator" content="DokuWiki Release 2009-02-14b">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2015-10-15T18:01:37-0400">
+<meta name="keywords" content="assignment-8">
+<link rel="search" type="application/opensearchdescription+xml" href="https://cgi.soic.indiana.edu/~c311/lib/exe/opensearch.php" title="C311/B521/A596 Programming Languages">
+<link rel="start" href="https://cgi.soic.indiana.edu/~c311/">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cgi.soic.indiana.edu/~c311/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="https://cgi.soic.indiana.edu/~c311/feed.php?mode=list&amp;ns=">
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cgi.soic.indiana.edu/~c311/doku.php?do=export_xhtml&amp;id=assignment-8">
+<link rel="stylesheet" media="all" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 8_ Registerization]_files/css.php">
+<link rel="stylesheet" media="screen" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 8_ Registerization]_files/css(1).php">
+<link rel="stylesheet" media="print" type="text/css" href="./C311_B521_A596 Programming Languages [Assignment 8_ Registerization]_files/css(2).php">
+<script type="text/javascript" charset="utf-8" src="./C311_B521_A596 Programming Languages [Assignment 8_ Registerization]_files/js.php"></script>
+
+  <link rel="shortcut icon" href="https://cgi.soic.indiana.edu/~c311/lib/tpl/doogiestpl/images/favicon.ico">
+
+  </head>
+
+
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+      <div class="header_left"></div>
+      <div class="logo">
+        <a href="https://cgi.soic.indiana.edu/~c311/doku.php" name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]">C311/B521/A596 Programming Languages</a>      </div>
+
+      <div id="tabnavi" class="tabnavi">
+	    <ul>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=home">Home</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=course-policies">Policies</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=instructors">Instructors</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=resources">Resources</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=schedule">Schedule</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=assignments">Assignments</a></li>
+<li><a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=b621">B621</a></li>
+</ul>
+	  </div>
+	  
+	  <div class="clearer"></div>
+      	</div>  
+  </div>
+    
+  
+   <div style="float: right;">
+            <form class="button btn_login" method="get" action="https://cgi.soic.indiana.edu/~c311/doku.php"><div class="no"><input type="hidden" name="do" value="login"><input type="hidden" name="sectok" value="bb41d96766a4f618105208cecf4ca075"><input type="hidden" name="id" value="assignment-8"><input type="submit" value="Login" class="button" title="Login"></div></form>       &nbsp;  &nbsp;  &nbsp;
+   </div>
+  <div class="clearer">&nbsp;</div>
+
+
+  <div class="page">
+    <!-- ......... wikipage start ......... -->
+    
+
+
+<h1><a name="assignment-8registerization" id="assignment-8registerization">Assignment 8: Registerization</a></h1>
+<div class="level1">
+
+<blockquote cite="./C311_B521_A596 Programming Languages [Assignment 8_ Registerization]_files/Thomas Friedman" class="blockquote-plugin">
+<p>
+A trampoline is strong enough to catch you before you hit the ground, but not so cushy that you can live on it forever
+
+</p>
+
+</blockquote>
+
+</div>
+
+<h2><a name="note" id="note">Note</a></h2>
+<div class="level2">
+
+<p>
+As you proceed with this assignment, you may find it useful the following resources helpful. 
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=reg-tramp.pdf" class="media mediafile mf_pdf" title="reg-tramp.pdf">Notes</a> on registerization and trampolinizing.</div>
+</li>
+</ul>
+
+<p>
+
+Do also consult your class notes and any files distributed to you from lecture or lab. 
+</p>
+
+<p>
+As usual, you can use the <a href="https://cgi.soic.indiana.edu/~c311/lib/exe/fetch.php?media=a8-student-tests.rkt" class="media mediafile mf_rkt" title="a8-student-tests.rkt">a8-student-tests.rkt</a> tests file to test your submission, although these tests are not exhaustive.
+</p>
+
+</div>
+
+<h2><a name="assignment" id="assignment">Assignment</a></h2>
+<div class="level2">
+
+<p>
+
+Consider the following four procedures:
+</p>
+<pre class="code lisp"><span class="br0">(</span>define ack
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>m n k<span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">cond</span>
+      <span class="br0">[</span><span class="br0">(</span>zero? m<span class="br0">)</span> <span class="br0">(</span>k <span class="br0">(</span>add1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span><span class="br0">(</span>zero? n<span class="br0">)</span> <span class="br0">(</span>ack <span class="br0">(</span>sub1 m<span class="br0">)</span> <span class="nu0">1</span> k<span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>else <span class="br0">(</span>ack m <span class="br0">(</span>sub1 n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>v<span class="br0">)</span> <span class="br0">(</span>ack <span class="br0">(</span>sub1 m<span class="br0">)</span> v k<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="br0">(</span>define depth
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>ls k<span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">cond</span>
+      <span class="br0">[</span><span class="br0">(</span><span class="kw1">null</span>? ls<span class="br0">)</span> <span class="br0">(</span>k <span class="nu0">1</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span><span class="br0">(</span>pair? <span class="br0">(</span><span class="kw1">car</span> ls<span class="br0">)</span><span class="br0">)</span>
+       <span class="br0">(</span>depth <span class="br0">(</span><span class="kw1">car</span> ls<span class="br0">)</span>
+	      <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="kw1">l</span><span class="br0">)</span>
+		<span class="br0">(</span>depth <span class="br0">(</span><span class="kw1">cdr</span> ls<span class="br0">)</span>
+		       <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>r<span class="br0">)</span>
+			 <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span><span class="kw1">l</span> <span class="br0">(</span>add1 <span class="kw1">l</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+			   <span class="br0">(</span><span class="kw1">if</span> <span class="br0">(</span><span class="sy0">&lt;</span> <span class="kw1">l</span> r<span class="br0">)</span> <span class="br0">(</span>k r<span class="br0">)</span> <span class="br0">(</span>k <span class="kw1">l</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+      <span class="br0">[</span>else <span class="br0">(</span>depth <span class="br0">(</span><span class="kw1">cdr</span> ls<span class="br0">)</span> k<span class="br0">)</span><span class="br0">]</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="br0">(</span>define fact
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n k<span class="br0">)</span>
+    <span class="br0">(</span><span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>fact k<span class="br0">)</span>
+       <span class="br0">(</span>fact fact n k<span class="br0">)</span><span class="br0">)</span>
+     <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>fact n k<span class="br0">)</span>
+       <span class="br0">(</span><span class="kw1">cond</span>
+         <span class="br0">[</span><span class="br0">(</span>zero? n<span class="br0">)</span> <span class="br0">(</span>k <span class="nu0">1</span><span class="br0">)</span><span class="br0">]</span>
+         <span class="br0">[</span>else <span class="br0">(</span>fact fact <span class="br0">(</span>sub1 n<span class="br0">)</span> <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>v<span class="br0">)</span> <span class="br0">(</span>k <span class="br0">(</span><span class="sy0">*</span> n v<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span><span class="br0">)</span>
+     k<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+&nbsp;
+<span class="br0">(</span>define pascal
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n k<span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>pascal
+           <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>pascal k<span class="br0">)</span>
+             <span class="br0">(</span>k <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>m a k<span class="br0">)</span>
+		  <span class="br0">(</span><span class="kw1">cond</span>
+		    <span class="br0">[</span><span class="br0">(</span><span class="sy0">&gt;</span> m n<span class="br0">)</span> <span class="br0">(</span>k '<span class="br0">(</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span>
+		    <span class="br0">[</span>else <span class="br0">(</span><span class="kw1">let</span> <span class="br0">(</span><span class="br0">(</span>a <span class="br0">(</span><span class="sy0">+</span> a m<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+			    <span class="br0">(</span>pascal pascal <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span> <span class="br0">(</span>f <span class="br0">(</span>add1 m<span class="br0">)</span> a <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>v<span class="br0">)</span> <span class="br0">(</span>k <span class="br0">(</span><span class="kw1">cons</span> a v<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+      <span class="br0">(</span>pascal pascal <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>f<span class="br0">)</span> <span class="br0">(</span>f <span class="nu0">1</span> 0 k<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Here are examples of how to call these procedures:
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>ack <span class="nu0">2</span> <span class="nu0">2</span> <span class="br0">(</span>empty<span class="sy0">-</span>k<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">7</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>depth '<span class="br0">(</span><span class="nu0">1</span> <span class="br0">(</span><span class="nu0">2</span> <span class="br0">(</span><span class="nu0">3</span> <span class="br0">(</span><span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>empty<span class="sy0">-</span>k<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">4</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>fact <span class="nu0">5</span> <span class="br0">(</span>empty<span class="sy0">-</span>k<span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">120</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>pascal <span class="nu0">10</span> <span class="br0">(</span>empty<span class="sy0">-</span>k<span class="br0">)</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">3</span> <span class="nu0">6</span> <span class="nu0">10</span> <span class="nu0">15</span> <span class="nu0">21</span> <span class="nu0">28</span> <span class="nu0">36</span> <span class="nu0">45</span> <span class="nu0">55</span><span class="br0">)</span></pre>
+<p>
+For each of the four initial programs, you should write a registerized version of the original. You <strong>should not</strong> trampoline these procedures. You should also construct driver functions, to be invoked as follows. Each of these driver programs will take the arguments taken by the original, pre-CPSed program. The job of the driver will be to populate the registers with initial values and call the registerized program. Once again, you don't need to trampoline your registerized programs.  
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>ack<span class="sy0">-</span>reg<span class="sy0">-</span>driver <span class="nu0">2</span> <span class="nu0">2</span><span class="br0">)</span>
+<span class="nu0">7</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>depth<span class="sy0">-</span>reg<span class="sy0">-</span>driver '<span class="br0">(</span><span class="nu0">1</span> <span class="br0">(</span><span class="nu0">2</span> <span class="br0">(</span><span class="nu0">3</span> <span class="br0">(</span><span class="nu0">4</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+<span class="nu0">4</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>fact<span class="sy0">-</span>reg<span class="sy0">-</span>driver <span class="nu0">5</span><span class="br0">)</span>
+<span class="nu0">120</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>pascal<span class="sy0">-</span>reg<span class="sy0">-</span>driver <span class="nu0">10</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">1</span> <span class="nu0">3</span> <span class="nu0">6</span> <span class="nu0">10</span> <span class="nu0">15</span> <span class="nu0">21</span> <span class="nu0">28</span> <span class="nu0">36</span> <span class="nu0">45</span> <span class="nu0">55</span><span class="br0">)</span></pre>
+<p>
+As you do the assignment, keep the following points in mind:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> All definitions must be <em>representation-independent with respect to continuations</em>. You must use a <em>data-structural</em> representation of continuations.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Make sure to name your drivers exactly as above, or we will not be able to grade your submission! </strong></div>
+</li>
+</ul>
+
+<p>
+
+When you are finished, place all of your code in a file named <code>a8.rkt</code> and submit it to <a href="https://cgi.soic.indiana.edu/~c311/doku.php?id=oncourse" class="wikilink1" title="oncourse">Oncourse</a>.
+</p>
+
+</div>
+
+<h2><a name="brainteaser" id="brainteaser">Brainteaser</a></h2>
+<div class="level2">
+
+<p>
+
+Trampolines can be used to execute multiple trampolinized programs simultaneously. Write a trampoline-like procedure <code>rampoline</code> that takes three thunks containing trampolinized procedure calls, and executes them in random order, returning the value of the first to complete. Note that the procedures may go into an infinite loop. To show that <code>rampoline</code> works correctly, CPS and trampolinize the following definition of <code>fib</code>:
+</p>
+<pre class="code lisp"><span class="br0">(</span>define fib
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n<span class="br0">)</span>
+    <span class="br0">(</span><span class="kw1">cond</span>
+      <span class="br0">[</span><span class="br0">(</span><span class="sy0">=</span> n 0<span class="br0">)</span> <span class="nu0">1</span><span class="br0">]</span>
+      <span class="br0">[</span><span class="br0">(</span><span class="sy0">=</span> n <span class="nu0">1</span><span class="br0">)</span> <span class="nu0">1</span><span class="br0">]</span>
+      <span class="br0">[</span>else <span class="br0">(</span><span class="sy0">+</span> <span class="br0">(</span>fib <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span> <span class="br0">(</span>fib <span class="br0">(</span>sub1 <span class="br0">(</span>sub1 n<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">]</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+<p>
+Use the following as a driver to your trampolinized fib: 
+
+</p>
+<pre class="code lisp"><span class="br0">(</span>define fib<span class="sy0">-</span>ramp<span class="sy0">-</span>driver
+  <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>n1 n2 n3<span class="br0">)</span>
+    <span class="br0">(</span>call<span class="sy0">/</span>cc
+      <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span>jumpout<span class="br0">)</span>
+	<span class="br0">(</span>rampoline
+	    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="br0">)</span>
+	      <span class="br0">(</span>fib n1 <span class="br0">(</span>empty<span class="sy0">-</span>k jumpout<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+	    <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="br0">)</span>
+	      <span class="br0">(</span>fib n2 <span class="br0">(</span>empty<span class="sy0">-</span>k jumpout<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span>
+            <span class="br0">(</span><span class="kw1">lambda</span> <span class="br0">(</span><span class="br0">)</span>
+	      <span class="br0">(</span>fib n3 <span class="br0">(</span>empty<span class="sy0">-</span>k jumpout<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span></pre>
+</div>
+
+<h3><a name="just-dessert" id="just-dessert">Just Dessert</a></h3>
+<div class="level3">
+
+<p>
+
+A trampoline can be used to interleave executions of two trampolinized programs, we've seen how executing two such programs in a trampoline can return the first answer that completes. But what if we want /both/ answers? 
+</p>
+
+<p>
+Devise a way to return both answers, wherein:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> We still interleave executions of both programs with a trampoline.</div>
+</li>
+<li class="level1"><div class="li"> We get back a list with both answers.</div>
+</li>
+<li class="level1"><div class="li"> The answers are listed in the order they complete.</div>
+</li>
+<li class="level1"><div class="li"> We don't redo any work after finding the first answer. </div>
+</li>
+</ul>
+
+<p>
+ 
+You will probably need to define a <code>bi-trampoline</code>, a <code>bi-tramp-driver</code>, and a trampolinized function of your choosing to test it (e.g. fibonacci). Automated tests are set to run <code>bi-tramp-driver</code> with two numbers.
+</p>
+<pre class="code lisp"><span class="sy0">&gt;</span> <span class="br0">(</span>bi<span class="sy0">-</span>tramp<span class="sy0">-</span>driver <span class="nu0">3</span> <span class="nu0">4</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">3</span> <span class="nu0">5</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>bi<span class="sy0">-</span>tramp<span class="sy0">-</span>driver <span class="nu0">4</span> <span class="nu0">3</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">3</span> <span class="nu0">5</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="br0">(</span>bi<span class="sy0">-</span>tramp<span class="sy0">-</span>driver <span class="nu0">6</span> <span class="nu0">6</span><span class="br0">)</span>
+<span class="br0">(</span><span class="nu0">13</span> <span class="nu0">13</span><span class="br0">)</span></pre>
+<p>
+<!--- Cannibalized for previous assignment. 
+== Extra-super-hard Brainteaser ==
+
+As mentioned in class, it is possible to write a program that automatically performs CPS transformations. Write a procedure that takes an expression and returns a CPSed version of that expression. Your procedure should be able to handle &#039;&#039;fact&#039;&#039;, &#039;&#039;fib&#039;&#039;, and &#039;&#039;product&#039;&#039; (see below).
+
+&#039;&#039;product&#039;&#039; takes a list and returns the product of every number in that list. Using &#039;&#039;call/cc&#039;&#039;, it is possible to optimize &#039;&#039;product&#039;&#039; so that no multiplications are performed if there is a 0 in the list. The optimized version of &#039;&#039;product&#039;&#039; looks like this:
+
+&lt;code lisp&gt;
+(define product
+  (lambda (ls k)
+    (cond
+      [(null? ls) 1]
+      [(zero? (car ls)) (k 0)]
+      [else (* (car ls) (product (cdr ls) k))])))
+
+&gt; (call/cc (lambda (k) (product &#039;(1 2 3 4 5 6) k)))
+720
+&gt; (call/cc (lambda (k) (product &#039;(1 2 3 4 5 0 6) k)))
+0
+&lt;/code&gt;
+
+-->
+
+</p>
+
+</div>
+
+    <!-- ......... wikipage stop  ......... -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+ 
+  <!--  footer -->  
+  <div class="stylefoot">
+
+        <div class="meta">
+      <div class="doc">
+		<p>assignment-8.txt · Last modified: 2015/10/15 18:01 by jhemann</p>
+      </div>
+   </div>
+
+    <div>
+       <!--  breadcrumbs and search -->
+	  	
+	  
+
+       
+      <div class="clearer"></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="no"><img src="./C311_B521_A596 Programming Languages [Assignment 8_ Registerization]_files/indexer.php" width="1" height="1" alt=""></div>
+
+
+</body></html>

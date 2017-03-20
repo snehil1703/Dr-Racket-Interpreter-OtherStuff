@@ -1,0 +1,269 @@
+#lang racket
+
+;Question 1
+
+(define filter
+  (lambda (s ls)
+    (cond
+      [(null? ls) '()]
+      [(s (car ls)) (cons (car ls) (filter s (cdr ls)))]
+      [else (filter s (cdr ls))]
+      )))
+
+(define filter-sps
+  (lambda (s ls store)
+    (cond
+      [(null? ls) (values '() store)]
+      [(s (car ls)) (let-values (((u store) (filter-sps s (cdr ls) store)))
+                      (values (cons (car ls) u) store))]
+      [else (let-values (((u store) (filter-sps s (cdr ls) store)))
+              (values u `(,(car ls) . ,store)))]
+      )))
+
+;(filter-sps even? '(1 2 3 4 5 6 7 8 9 10) '())
+;(2 4 6 8 10)
+;(1 3 5 7 9)
+ 
+;(filter-sps odd? '(1 2 3 4 5 6 7) '())
+;(1 3 5 7)
+;(2 4 6)
+ 
+;(filter-sps (lambda (x) (or (> x 6) (< x 2))) '(1 2 3 4 5 6 7) '())
+;(1 7)
+;(2 3 4 5 6)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;Question 2
+
+(define filter*
+  (lambda (s ls)
+    (cond
+      [(null? ls) '()]
+      [(pair? (car ls))
+       (cons (filter* s (car ls)) (filter* s (cdr ls)))]
+      [(null? (car ls)) '()]
+      [(s (car ls)) (cons (car ls) (filter* s (cdr ls)))]
+      [else (filter* s (cdr ls))])))
+
+(define filter*-sps
+  (lambda (s ls store)
+    (cond
+      [(null? ls) (values '() store)]
+      [(pair? (car ls)) (let*-values (((u store1) (filter*-sps s (car ls) store))
+                                     ((v store2) (filter*-sps s (cdr ls) store)))
+                          (values (cons u v) (cons store1 store2)))]
+      [(s (car ls)) (let-values (((u store) (filter*-sps s (cdr ls) store)))
+                      (values (cons (car ls) u) store))]
+      [(null? (car ls)) (values '() store)]
+      [else (let-values (((u store) (filter*-sps s (cdr ls) store)))
+              (values u `(,(car ls) . ,store)))]
+      )))
+
+;(filter* even? '(1 2 3 4 5 6))
+;(2 4 6)
+ 
+;(filter* odd? '(1 (2 3 (4 5)) 6 7))
+;(1 (3 (5)) 7)
+ 
+;(filter* (lambda (x) (or (even? x) (< 7 x))) '(1 (2 3 (4 5)) 6 7 ((8 9) 10)))
+;((2 (4)) 6 ((8 9) 10))
+
+;(filter*-sps even? '(1 2 3 4 5 6) '())
+;(2 4 6)
+;(1 3 5)
+ 
+;(filter*-sps odd? '(1 (2 3 (4 5)) 6 7) '())
+;(1 (3 (5)) 7)
+;((2 (4)) 6)
+ 
+;(filter*-sps (lambda (x) (or (even? x) (< 7 x))) '(1 (2 3 (4 5)) 6 7 ((8 9) 10)) '())
+;((2 (4)) 6 ((8 9) 10))
+;(1 (3 (5)) 7 (()))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;Question 3
+
+(define fib
+  (lambda (n)
+    (if (< n 2)
+        n
+        (+ (fib (sub1 n)) (fib (- n 2))))))
+
+(define fib-sps
+  (lambda (n store)
+    (cond
+      ((assv n store) =>
+       (lambda (pr) (values (cdr pr) store)))
+      ((zero? n) (values n `((,n . 0) . ,store)))
+      ((= 1 n) (values n `((,n . 1) . ,store)))
+      (else
+       (let*-values (((u store) (fib-sps (sub1 (sub1 n)) store))
+                     ((v store) (fib-sps (sub1 n) store)))
+         (values (+ u v) `((,n . ,(+ u v)) . ,store)))))))
+
+;(fib-sps 0 '())
+;0
+;((0 . 0))
+ 
+;(fib-sps 1 '())
+;1
+;((1 . 1))
+ 
+;(fib-sps 3 '())
+;2
+;((3 . 2) (2 . 1) (0 . 0) (1 . 1))
+ 
+;(fib-sps 10 '())
+;55
+;((10 . 55)
+ ;(9 . 34)
+ ;(8 . 21)
+ ;(7 . 13)
+ ;(6 . 8)
+ ;(5 . 5)
+ ;(4 . 3)
+ ;(3 . 2)
+ ;(2 . 1)
+ ;(1 . 1)
+ ;(0 . 0))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;Question 4
+
+(define-syntax and*
+  (syntax-rules ()
+     ((_) #t)
+     ((_ ns0) ns0)
+     ((_ ns0 ns1 ...) (if ns0 (and* ns1 ...) #f))
+     ))
+
+;(and* 1 2 3)
+;3
+
+;(and* #f)
+;#f
+
+;(and*)
+;#t
+
+;(and* 'a)
+;a
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;Question 5
+
+(define-syntax cons*
+  (syntax-rules ()
+     ((_) (error 'cons-* "Incorrect argument-count to cons*"))
+     ((_ ns0) ns0)
+     ((_ ns0 ns1 ...) `(,ns0 . ,(cons* ns1 ...)))
+     ))
+
+;(cons* 1 2 '(3 4 5))
+;(1 2 3 4 5)
+
+;(cons* 1 2 3)
+;(1 2 . 3)
+
+;(cons* 1)
+;1
+
+;(cons* 'a 'b 'c 'd)
+;(a b c . d)
+
+;(cons* 'a)
+;a
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;Question 5
+
+(define-syntax macro-list
+  (syntax-rules ()
+     ((_) '())
+     ((_ ns0) `(,ns0))
+     ((_ ns0 ns1 ...) `(,ns0 . ,(macro-list ns1 ...)))
+     ))
+
+;(macro-list)
+;()
+
+;(macro-list 1 'b 2 'd)
+;(1 b 2 d)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;Question 6
+
+(define-syntax mcond
+  (syntax-rules (else)
+    ((_) (void))
+    ((_ (else exec0)) exec0)
+    ((_ (chk0 exec0)) (let ((ns chk0))
+                  (if ns exec0 (void))))
+    ((_ (chk0 exec0) (chk1 exec1) ...) (let ((ns chk0))
+                                         (if ns
+                                             exec0
+                                             (mcond (chk1 exec1) ...))))
+    ))
+
+;(mcond
+ ;   (#f #t)
+  ;  (else 'dog))
+;dog
+
+;(mcond 
+ ;   (else 'cat))
+;cat
+
+;(mcond 
+ ;   (#t #t) 
+  ;  (unbound variables))
+;#t
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;Question 7
+
+(define-syntax macro-map
+  (syntax-rules ()
+    ((_ ns '()) '())
+    ((_ ns '(ns0 ns1 ...)) (cons (ns ns0) (macro-map ns '(ns1 ...))))
+    ))
+
+(define-syntax copy-code
+    (syntax-rules ()
+      [(_ x) `(,x x)]))
+
+(define-syntax quote-quote
+    (syntax-rules ()
+      [(_ e) (quote (quote e))]))
+
+;(map (lambda (x) (list x x)) '(a b c))
+;((a a) (b b) (c c))
+
+;(copy-code (lambda (x) x))
+;(#<procedure> (lambda (x) x))
+
+;(copy-code 'a)
+;(a 'a)
+
+;(macro-map quote '((trinidad and tobago) (saint vincent and the grenadines) (antigua and barbuda)))
+;((trinidad and tobago)
+ ;(saint vincent and the grenadines)
+ ;(antigua and barbuda))
+
+;(macro-map copy-code '((lambda (x) x) (lambda (x) (+ 2 x)) (lambda (x) 7)))
+;((#<procedure> (lambda (x) x))
+ ;(#<procedure> (lambda (x) (+ 2 x)))
+ ;(#<procedure> (lambda (x) 7)))
+
+;(macro-map quote-quote '((trinidad and tobago) (saint vincent and the grenadines) (antigua and barbuda)))
+;('(trinidad and tobago)
+ ;'(saint vincent and the grenadines)
+ ;'(antigua and barbuda))
+

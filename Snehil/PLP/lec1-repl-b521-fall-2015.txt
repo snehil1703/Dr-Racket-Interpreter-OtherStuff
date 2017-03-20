@@ -1,0 +1,99 @@
+Welcome to Racket v6.2.
+﻿>
+lec1.rkt﻿> 'hello
+'hello
+lec1.rkt﻿> (car '(dog))
+'dog
+lec1.rkt﻿> '(car dog)
+'(car dog)
+lec1.rkt﻿> (symbol? '(car dog))
+#f
+lec1.rkt﻿> (pair? '(car dog))
+#t
+lec1.rkt﻿> (list? '(car dog))
+#t
+lec1.rkt﻿> (cons 'foo '())
+'(foo)
+lec1.rkt﻿> (cons 'cat 'dog)
+'(cat . dog)
+lec1.rkt﻿> '(cat . dog)
+'(cat . dog)
+lec1.rkt﻿> (pair? '(cat . dog))
+#t
+lec1.rkt﻿> (list? '(cat . dog))
+#f
+lec1.rkt﻿> (cdr '(cat . dog))
+'dog
+lec1.rkt﻿> (null? (cdr '(cat . dog)))
+#f
+lec1.rkt﻿> (null? (cdr '(cat dog)))
+#f
+lec1.rkt﻿> (null? (cdr '(cat)))
+#t
+lec1.rkt﻿> (cdr '(cat))
+'()
+lec1.rkt﻿> (boolean? (null? (cdr '(cat))))
+#t
+lec1.rkt﻿> (number? 42)
+#t
+lec1.rkt﻿> 'cat
+'cat
+lec1.rkt﻿>  '(cat)
+'(cat)
+lec1.rkt﻿> cat
+; cat: undefined;
+;  cannot reference an identifier before its definition
+;   in module: "/Users/k/Desktop/c311/lec1.rkt"
+lec1.rkt﻿> (pair? 'cat)
+#f
+lec1.rkt﻿> (pair? '(cat))
+#t
+lec1.rkt﻿> factorial
+#<procedure:factorial>
+lec1.rkt﻿> (factorial 5)
+120
+lec1.rkt﻿>
+lec1.rkt﻿> (trace factorial)
+lec1.rkt﻿> (factorial 5)
+>(factorial 5)
+> (factorial 4)
+> >(factorial 3)
+> > (factorial 2)
+> > >(factorial 1)
+> > > (factorial 0)
+< < < 1
+< < <1
+< < 2
+< <6
+< 24
+<120
+120
+lec1.rkt﻿> (rember 'q '(a b q c))
+lec1.rkt﻿> (rember 'q '(a b q c))
+'(a b c)
+lec1.rkt﻿>
+lec1.rkt﻿>
+lec1.rkt﻿> (rember 'q '(a b q c))
+'(a b c) ;; yeah
+lec1.rkt﻿>
+lec1.rkt﻿> (plus 1 2)
+3
+lec1.rkt﻿> (/ 3 0)
+; /: division by zero
+lec1.rkt﻿> 23; [warning] optimizer: warning: constant-fold attempt failed: /: division by zero
+
+23
+23
+lec1.rkt﻿> (car '())
+; car: contract violation
+;   expected: pair?
+;   given: '()
+lec1.rkt﻿> ; [warning] optimizer: warning: constant-fold attempt failed: car: contract violation
+  expected: pair?
+  given: '()
+; [warning] optimizer: warning: constant-fold attempt failed: car: contract violation
+  expected: pair?
+  given: '()
+lec1.rkt﻿> (times 2 3)
+6
+lec1.rkt﻿>
